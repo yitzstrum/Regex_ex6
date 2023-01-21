@@ -1,5 +1,6 @@
 package oop.ex6.parser;
 
+import oop.ex6.SymbolTable.MethodSymbolTable;
 import oop.ex6.SymbolTable.VariableSymbolTable;
 import oop.ex6.Verifier.VerifierManager;
 
@@ -34,8 +35,8 @@ public class Tokenizer {
         }
     }
 
-    public void step(Token token, VariableSymbolTable variableSymbolTable) {
-        new VerifierManager(tokens[++curTokenIndex], variableSymbolTable).verify();
+    public void step(Token token, VariableSymbolTable variableSymbolTable, MethodSymbolTable methodSymbolTable) {
+        new VerifierManager(tokens[++curTokenIndex], variableSymbolTable, methodSymbolTable).verify();
     }
     public Token[] getTokens() {
         return tokens;

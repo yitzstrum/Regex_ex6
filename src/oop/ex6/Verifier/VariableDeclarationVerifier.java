@@ -1,5 +1,6 @@
 package oop.ex6.Verifier;
 
+import oop.ex6.SymbolTable.MethodSymbolTable;
 import oop.ex6.SymbolTable.VariableData;
 import oop.ex6.SymbolTable.VariableSymbolTable;
 import oop.ex6.parser.Token;
@@ -8,7 +9,7 @@ public class VariableDeclarationVerifier implements Verifier {
 
     private final Token token;
 
-    VariableDeclarationVerifier(Token token, VariableSymbolTable symbolTable) {
+    VariableDeclarationVerifier(Token token, VariableSymbolTable variableSymbolTable) {
         if (token.getType() != Token.TokenType.VARIABLE_DECLARATION) {
             throw new IllegalArgumentException("Token is not a variable declaration");
         }

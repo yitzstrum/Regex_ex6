@@ -16,8 +16,8 @@ public class VariableData {
         NONE
     }
 
-    private Type type;
-    private Modifier modifier;
+    private final Type type;
+    private final Modifier modifier;
 
     public VariableData(Type type, Modifier modifier) {
         this.type = type;
@@ -32,20 +32,16 @@ public class VariableData {
         return modifier == Modifier.ASSIGNED;
     }
 
+    private boolean isInitialized() {
+        return modifier != Modifier.NONE;
+    }
+
     public Type getType() {
         return type;
     }
 
     public Modifier getModifier() {
         return modifier;
-    }
-
-    public void setModifier(Modifier modifier) {
-        this.modifier = modifier;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
     }
 
     public boolean equals(VariableData other) {
