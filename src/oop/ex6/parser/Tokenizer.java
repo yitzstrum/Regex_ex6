@@ -11,20 +11,17 @@ public class Tokenizer {
     private static Tokenizer tokenizer = null;
     private Token[] tokens;
     private int curTokenIndex;
+    MethodSymbolTable methodSymbolTable;
+    VariableSymbolTable variableSymbolTable;
 
-    private Tokenizer(String filePath) throws IOException {
+    public Tokenizer(String filePath) throws IOException {
+        methodSymbolTable = new MethodSymbolTable();
+        variableSymbolTable = new VariableSymbolTable();
         curTokenIndex = 0;
         FileParser parser = new FileParser(filePath);
         initTokens(parser);
     }
 
-    public static Tokenizer getTokenizer(String filePath) throws IOException {
-
-        if (tokenizer == null) {
-            tokenizer = new Tokenizer(filePath);
-        }
-        return tokenizer;
-    }
 
     private void initTokens(FileParser parser) {
 
@@ -35,13 +32,20 @@ public class Tokenizer {
         }
     }
 
-    public void step(Token token, VariableSymbolTable variableSymbolTable, MethodSymbolTable methodSymbolTable) {
-        new VerifierManager(tokens[++curTokenIndex], variableSymbolTable, methodSymbolTable).verify();
+    public void step(VariableSymbolTable variableSymbolTable, MethodSymbolTable methodSymbolTable) {
+        new VerifierManager(this, tokens[++curTokenIndex], variableSymbolTable, methodSymbolTable).verify();
     }
+
+    public MethodSymbolTable getMethodSymbolTable() {
+        return methodSymbolTable;
+    }
+
+
+
     public Token[] getTokens() {
         return tokens;
     }
-
-
-
 }
+
+
+

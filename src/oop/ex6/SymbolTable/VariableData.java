@@ -10,6 +10,7 @@ public class VariableData {
         BOOLEAN
     }
 
+
     enum Modifier {
         FINAL,
         ASSIGNED,
