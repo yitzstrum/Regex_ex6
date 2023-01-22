@@ -1,6 +1,8 @@
 package oop.ex6.parser;
 
 
+import oop.ex6.utils.Utils;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,7 +20,6 @@ public class Token {
     private static final String METHOD_CALL_REGEX = "\\s*[a-zA-Z]\\w*\\s*\\(.*\\)\\s*;"; // assume it valid
     private static final String RETURN_STATEMENT_REGEX = "\\s*return\\s*;\\s*"; // assume it valid
 
-    private static final String SEARCH_BEGINNING = "^";
     private final TokenType type;
     private final String content;
 
@@ -63,43 +64,38 @@ public class Token {
     }
 
     private boolean isFinalVariableDeclaration(String line) {
-        return isMatch(line, FINAL_VARIABLE_DECLARATION_REGEX);
+        return Utils.isMatch(line, FINAL_VARIABLE_DECLARATION_REGEX);
     }
 
     private boolean isVariableDeclaration(String line) {
-        return isMatch(line, VARIABLE_DECLARATION_REGEX) ;
+        return Utils.isMatch(line, VARIABLE_DECLARATION_REGEX) ;
     }
 
     private boolean isVariableAssignment(String line) {
-        return isMatch(line, VARIABLE_ASSIGNMENT_REGEX);
+        return Utils.isMatch(line, VARIABLE_ASSIGNMENT_REGEX);
     }
 
     private boolean isMethodDeclaration(String line) {
         // method line must start with void
-        return isMatch(line, METHOD_DECLARATION_REGEX);
+        return Utils.isMatch(line, METHOD_DECLARATION_REGEX);
     }
     
     private boolean isEndBlock(String line) {
-        return isMatch(line, BLOCK_END_REGEX);
+        return Utils.isMatch(line, BLOCK_END_REGEX);
     }
 
     private boolean ifIsWhileBlock(String line) {
-        return isMatch(line, IF_WHILE_BLOCK_REGEX);
+        return Utils.isMatch(line, IF_WHILE_BLOCK_REGEX);
     }
 
     private boolean isMethodCall(String line) {
-        return isMatch(line, METHOD_CALL_REGEX);
+        return Utils.isMatch(line, METHOD_CALL_REGEX);
     }
 
     private boolean isReturnStatement(String line) {
-        return isMatch(line, RETURN_STATEMENT_REGEX);
+        return Utils.isMatch(line, RETURN_STATEMENT_REGEX);
     }
 
-    private boolean isMatch(String line, String regex) {
-        Pattern pattern = Pattern.compile(SEARCH_BEGINNING + regex);
-        Matcher matcher = pattern.matcher(line);
-        return matcher.find();
-    }
 
 
     public TokenType getType() {
