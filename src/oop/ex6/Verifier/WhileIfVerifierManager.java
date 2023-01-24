@@ -5,13 +5,13 @@ import oop.ex6.SymbolTable.VariableSymbolTable;
 import oop.ex6.parser.Token;
 import oop.ex6.parser.Tokenizer;
 
-public class WhileVerifierManager implements Verifier{
+public class WhileIfVerifierManager implements Verifier{
 
     private final Tokenizer tokenizer;
     private VariableSymbolTable variableSymbolTable;
     private MethodSymbolTable methodSymbolTable;
 
-    public WhileVerifierManager(Tokenizer tokenizer, VariableSymbolTable variableSymbolTable){
+    public WhileIfVerifierManager(Tokenizer tokenizer, VariableSymbolTable variableSymbolTable){
 
         this.tokenizer = tokenizer;
         this.variableSymbolTable = variableSymbolTable;

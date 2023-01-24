@@ -15,7 +15,7 @@ public class Tokenizer {
     MethodSymbolTable methodSymbolTable;
     VariableSymbolTable variableSymbolTable;
 
-    public Tokenizer(String filePath) throws IOException {
+    public Tokenizer(String filePath) throws IOException, BadLineException {
         methodSymbolTable = new MethodSymbolTable();
         variableSymbolTable = new VariableSymbolTable();
         curTokenIndex = 0;
@@ -23,14 +23,14 @@ public class Tokenizer {
         initTokens(parser);
     }
 
-    private void initTokens(FileParser parser) {
+    private void initTokens(FileParser parser) throws BadLineException {
         List<String> fileContent = parser.getFileContent();
         tokens = new Token[fileContent.size()];
         int bracketsCount = 0;
         for (int i = 0; i < tokens.length; i++) {
             tokens[i] = new Token(fileContent.get(i));
             if (bracketsCount == 0 && tokens[i].getType() == Token.TokenType.VARIABLE_DECLARATION){
-                insertMethodToSymbolTable(tokens[i]);
+                new MethodDeclarationParser(tokens[i]);
             }
             if (lineWithOpenBracket(tokens[i])){
                 bracketsCount ++;
@@ -51,8 +51,10 @@ public class Tokenizer {
                 token.getType() == Token.TokenType.IF_WHILE_BLOCK;
     }
 
-    public void step(VariableSymbolTable variableSymbolTable, MethodSymbolTable methodSymbolTable) {
-        new VerifierManager(this, tokens[++curTokenIndex], variableSymbolTable, methodSymbolTable).verify();
+    public void step(VariableSymbolTable localVariableSymbolTable,
+                     VariableSymbolTable globalVariableSymbolTable, MethodSymbolTable methodSymbolTable) {
+        new VerifierManager(this, tokens[++curTokenIndex],
+                localVariableSymbolTable, globalVariableSymbolTable, methodSymbolTable).verify();
     }
 
     public MethodSymbolTable getMethodSymbolTable() {

@@ -1,4 +1,4 @@
-package oop.ex6.Verifier;
+package oop.ex6.parser;
 
 import oop.ex6.SymbolTable.VariableData;
 import oop.ex6.utils.Pair;

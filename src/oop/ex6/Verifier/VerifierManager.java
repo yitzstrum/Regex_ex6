@@ -10,15 +10,17 @@ public class VerifierManager implements Verifier {
     private static final String MSG = "ERROR: Call to an unassigned variable. ";
     private final Tokenizer tokenizer;
     private Token token;
-    private final VariableSymbolTable variableSymbolTable;
+    private final VariableSymbolTable localVariableSymbolTable;
+    private final VariableSymbolTable globalVariableSymbolTable;
     private final MethodSymbolTable methodSymbolTable;
 
-    public VerifierManager(Tokenizer tokenizer, Token token, VariableSymbolTable variableSymbolTable,
-                           MethodSymbolTable methodSymbolTable) {
-      this.tokenizer = tokenizer;
-      this.token = token;
-      this.variableSymbolTable = variableSymbolTable;
-      this.methodSymbolTable = methodSymbolTable;
+    public VerifierManager(Tokenizer tokenizer, Token token, VariableSymbolTable localVariableSymbolTable,
+                           VariableSymbolTable globalVariableSymbolTable, MethodSymbolTable methodSymbolTable) {
+        this.tokenizer = tokenizer;
+        this.token = token;
+        this.localVariableSymbolTable = localVariableSymbolTable;
+        this.globalVariableSymbolTable = globalVariableSymbolTable;
+        this.methodSymbolTable = methodSymbolTable;
     }
 
     @Override
@@ -26,7 +28,7 @@ public class VerifierManager implements Verifier {
         Token.TokenType type = token.getType();
         switch (type) {
             case VARIABLE_DECLARATION:
-                return new VariableDeclarationVerifier(token, variableSymbolTable).verify();
+                return new VariableDeclarationVerifier(token, localVariableSymbolTable).verify();
         }
 
         return false; // error
