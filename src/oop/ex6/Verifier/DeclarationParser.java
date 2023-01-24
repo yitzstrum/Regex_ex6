@@ -34,6 +34,13 @@ public class DeclarationParser {
     private static final String CHAR_TYPE = "char";
     private final String assigment;
 
+    public DeclarationParser(String content, boolean isAssigment) {
+        this.content = content;
+        this.isFinal = false;
+        this.type = null;
+        this.assigment = extractAssigment();
+
+    }
 
     public DeclarationParser(String content) {
         this.content = content;
@@ -59,11 +66,11 @@ public class DeclarationParser {
         return Utils.isMatch(content, FINAL_PREFIX_REGEX);
     }
 
-    private List<Pair<String, String>> parseLine(String content) {
-        List<Pair<String, String>> variables = new ArrayList<>();
-        for (String arg: content.split(COMMA)) {
-            System.out.println(arg);
+    public List<Pair<String, String>> parseAssigment() {
+        // add syntax check later
 
+        List<Pair<String, String>> variables = new ArrayList<>();
+        for (String arg: assigment.split(COMMA)) {
             parseSingleArg(arg, variables);
         }
         return variables;

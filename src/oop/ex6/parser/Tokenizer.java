@@ -45,6 +45,10 @@ public class Tokenizer {
     public Token[] getTokens() {
         return tokens;
     }
+
+    public Token getCurrentToken() {
+        return tokens[curTokenIndex];
+    }
 }
 
 

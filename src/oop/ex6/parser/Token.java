@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 public class Token {
 
-    private static final String VARIABLE_DECLARATION_REGEX = "\\s*(int|double|char|boolean)\\s";
+    private static final String VARIABLE_DECLARATION_REGEX = "\\s*(String|int|double|char|boolean)\\s";
 
     private static final String FINAL_VARIABLE_DECLARATION_REGEX =
             "\\s*(final)\\s+(int|double|char|boolean)\\s";
