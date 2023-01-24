@@ -4,6 +4,6 @@ void main() {
     int y = 10;
     int z;
     bla bla int z;
+    return;
 // hey
-
 }

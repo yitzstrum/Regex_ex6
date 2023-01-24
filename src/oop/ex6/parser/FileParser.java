@@ -14,7 +14,6 @@ public class FileParser {
     private int curLine;
 
     public FileParser(String filePath) throws IOException {
-
         this.fileContent = parseFileContent(filePath);
         this.curLine = 0;
     }
@@ -41,19 +40,5 @@ public class FileParser {
     public List<String> getFileContent() {
         return fileContent;
     }
-
-
-
-
-
-
-//    public String getNextLine() {
-//        return lines[curLine++];
-//    }
-//
-//    public boolean hasNext() {
-//        return curLine < lines.length;
-//    }
-
 }
 
