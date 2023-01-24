@@ -8,20 +8,32 @@ import java.io.IOException;
 
 public class Sjavac {
 
-    public static void main(String[] args) {
+    private static final int VALID_ARGS_COUNT = 1;
+    private static final int ARG_ONE = 0;
+    private static final int IO_EXCEPTION = 2;
+    private static final int SUCCESSFUL_RUN = 0;
+    private static final String ARGS_ERR_MSG = "ERROR: The number of arguments is invalid";
 
+    public static void main(String[] args) {
         try {
-            Tokenizer parser = Tokenizer.getTokenizer("C:\\Users\\danie\\IdeaProjects\\RegexEx6\\src\\oop\\ex6" +
-                    "\\main" +
-                    "\\test" +
-                    ".txt");
-            for (Token token : parser.getTokens()) {
+            checkArguments(args);
+            Tokenizer tokenizer = new Tokenizer(args[ARG_ONE]);
+            for (Token token : tokenizer.getTokens()) {
                 System.out.println(token);
             }
+            System.out.println(SUCCESSFUL_RUN);
 
         }
         catch (IOException e) {
-            System.out.println("error"); // change later
+            System.out.println(IO_EXCEPTION);
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /* Checks that the number of arguments is valid */
+    private static void checkArguments(String[] args) throws IllegalArgumentException {
+        if (args.length != VALID_ARGS_COUNT){
+            throw new IllegalArgumentException(ARGS_ERR_MSG);
         }
     }
 }
