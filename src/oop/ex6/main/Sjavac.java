@@ -11,17 +11,16 @@ public class Sjavac {
 
     private static final int VALID_ARGS_COUNT = 1;
     private static final int ARG_ONE = 0;
-    private static final int IO_EXCEPTION = 2;
     private static final int SUCCESSFUL_RUN = 0;
+    private static final int ILLEGAL_CODE = 1;
+    private static final int IO_EXCEPTION = 2;
     private static final String ARGS_ERR_MSG = "ERROR: The number of arguments is invalid";
 
     public static void main(String[] args) {
         try {
             checkArguments(args);
             Tokenizer tokenizer = new Tokenizer(args[ARG_ONE]);
-            for (Token token : tokenizer.getTokens()) {
-                System.out.println(token);
-            }
+            tokenizer.run();
             System.out.println(SUCCESSFUL_RUN);
 
         }
@@ -30,7 +29,8 @@ public class Sjavac {
             System.out.println(e.getMessage());
         }
         catch (BadLineException e) {
-            System.out.println();
+            System.out.println(ILLEGAL_CODE);
+            System.out.println(e.getMessage());
         }
     }
 

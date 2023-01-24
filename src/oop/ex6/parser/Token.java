@@ -14,7 +14,7 @@ public class Token {
             "\\s*(final)\\s+(String|int|double|char|boolean)\\s";
 
     private static final String VARIABLE_ASSIGNMENT_REGEX = "\\s*[a-zA-Z]\\w*\\s*=\\s*";
-    private static final String METHOD_DECLARATION_REGEX = "\\s*void\\s+[a-zA-Z][a-zA-Z_0-9]*\\s+[{]\\s*";
+    private static final String METHOD_DECLARATION_REGEX = "\\s*void\\s+";
     private static final String BLOCK_END_REGEX = "\\s*}\\s*";
     private static final String IF_WHILE_BLOCK_REGEX = "\\s*(if|while)\\s*";
     private static final String METHOD_CALL_REGEX = "\\s*[a-zA-Z]\\w*\\s*\\(.*\\)\\s*;"; // assume it valid

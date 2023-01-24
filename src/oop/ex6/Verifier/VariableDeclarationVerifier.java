@@ -1,19 +1,13 @@
 package oop.ex6.Verifier;
 
-import oop.ex6.SymbolTable.MethodSymbolTable;
 import oop.ex6.SymbolTable.VariableData;
 import oop.ex6.SymbolTable.VariableSymbolTable;
 import oop.ex6.parser.DeclarationParser;
 import oop.ex6.parser.Token;
 import oop.ex6.parser.Tokenizer;
 import oop.ex6.utils.Pair;
-import oop.ex6.utils.Utils;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static oop.ex6.utils.Utils.EMPTY_STRING;
 
 public class VariableDeclarationVerifier implements Verifier {
 
@@ -26,7 +20,7 @@ public class VariableDeclarationVerifier implements Verifier {
     private final String FINAL_PREFIX_REGEX = "\\s*final\\s*";
     private final Tokenizer tokenizer;
     private final VariableSymbolTable variableSymbolTable;
-    private final DeclarationParser declartionParser;
+    private final DeclarationParser declarationParser;
 
 
     public VariableDeclarationVerifier(Tokenizer tokenizer, VariableSymbolTable variableSymbolTable) {
@@ -35,8 +29,14 @@ public class VariableDeclarationVerifier implements Verifier {
         }
         this.tokenizer = tokenizer;
         this.variableSymbolTable = variableSymbolTable;
-        this.declartionParser = new DeclarationParser(tokenizer.getCurrentToken().getContent());;
+        this.declarationParser = new DeclarationParser(tokenizer.getCurrentToken().getContent());;
+    }
 
+    public VariableDeclarationVerifier(String decLine, VariableSymbolTable variableSymbolTable){
+        tokenizer = null;
+        this.variableSymbolTable = variableSymbolTable;
+        this.declarationParser = new DeclarationParser(decLine);
+        addToTable();
     }
 
     @Override
@@ -45,14 +45,14 @@ public class VariableDeclarationVerifier implements Verifier {
         return true;
     }
     private void addToTable() {
-        List<Pair<String, String>> variables = declartionParser.parseAssigment();;
+        List<Pair<String, String>> variables = declarationParser.parseAssigment();;
         for (Pair<String, String> variable: variables) {
             addSingleArgument(variable);
         }
     }
 
     private void addSingleArgument(Pair<String, String> variable) {
-        if (declartionParser.getIsFinal()) {
+        if (declarationParser.getIsFinal()) {
             addFinalVariable(variable);
         }
         else {
@@ -62,7 +62,7 @@ public class VariableDeclarationVerifier implements Verifier {
     private void addNonFinalVariable(Pair<String, String> variable) {
         String name = variable.getFirst();
         String value = variable.getSecond();
-        VariableData.Type type = declartionParser.getType();
+        VariableData.Type type = declarationParser.getType();
         VariableData variableData;
         if (value == null) {
             variableData = new VariableData(type,  VariableData.Modifier.NONE);
@@ -83,7 +83,7 @@ public class VariableDeclarationVerifier implements Verifier {
         if (value == null) {
             // error handle later
         } else {
-            VariableData.Type type = declartionParser.getType();
+            VariableData.Type type = declarationParser.getType();
             if (!VariableAssignmentVerifier.isValidAssign(type, value)) {
                 throw new IllegalArgumentException("Invalid assignment");
             }
