@@ -7,11 +7,12 @@ public class VariableData {
         DOUBLE,
         STRING,
         CHAR,
-        BOOLEAN
+        BOOLEAN,
+        UNKNOWN
     }
 
 
-    enum Modifier {
+    public enum Modifier {
         FINAL,
         ASSIGNED,
         NONE

@@ -28,7 +28,7 @@ public class VerifierManager implements Verifier {
         Token.TokenType type = token.getType();
         switch (type) {
             case VARIABLE_DECLARATION:
-                return new VariableDeclarationVerifier(token, localVariableSymbolTable).verify();
+                return new VariableDeclarationVerifier(tokenizer, localVariableSymbolTable).verify();
         }
 
         return false; // error

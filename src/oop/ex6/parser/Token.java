@@ -11,7 +11,7 @@ public class Token {
     private static final String VARIABLE_DECLARATION_REGEX = "\\s*(int|double|char|boolean)\\s";
 
     private static final String FINAL_VARIABLE_DECLARATION_REGEX =
-            "\\s*(final)\\s+(int|double|char|boolean)\\s";
+            "\\s*(final)\\s+(String|int|double|char|boolean)\\s";
 
     private static final String VARIABLE_ASSIGNMENT_REGEX = "\\s*[a-zA-Z]\\w*\\s*=\\s*";
     private static final String METHOD_DECLARATION_REGEX = "\\s*void\\s+[a-zA-Z][a-zA-Z_0-9]*\\s+[{]\\s*";

@@ -17,4 +17,11 @@ public class Pair<V1, V2> {
     public V2 getSecond() {
         return second;
     }
+
+
+    // for debug
+    @Override
+    public String toString() {
+        return "Pair [first=" + first + ", second=" + second + "]";
+    }
 }
