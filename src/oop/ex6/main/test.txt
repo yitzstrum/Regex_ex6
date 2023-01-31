@@ -3,6 +3,11 @@ int x = 5;
 void main() {
     int y = 10;
     int z;
+    if (y) {
+     int f;
+    }
+
+
     return;
 }
 

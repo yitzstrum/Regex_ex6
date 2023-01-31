@@ -1,9 +1,6 @@
 package oop.ex6.main;
 
-import oop.ex6.parser.BadLineException;
-import oop.ex6.parser.FileParser;
-import oop.ex6.parser.Token;
-import oop.ex6.parser.Tokenizer;
+import oop.ex6.parser.*;
 
 import java.io.IOException;
 
@@ -28,7 +25,7 @@ public class Sjavac {
             System.out.println(IO_EXCEPTION);
             System.out.println(e.getMessage());
         }
-        catch (BadLineException e) {
+        catch (SJavaException | BadLineException e) {
             System.out.println(ILLEGAL_CODE);
             System.out.println(e.getMessage());
         }

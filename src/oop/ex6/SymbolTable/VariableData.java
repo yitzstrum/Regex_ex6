@@ -34,7 +34,7 @@ public class VariableData {
         return modifier == Modifier.ASSIGNED;
     }
 
-    private boolean isInitialized() {
+    public boolean isInitialized() {
         return modifier != Modifier.NONE;
     }
 

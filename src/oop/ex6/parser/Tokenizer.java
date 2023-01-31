@@ -24,7 +24,7 @@ public class Tokenizer {
         curTokenIndex = 0;
     }
 
-    public void run(){
+    public void run() throws SJavaException {
         while (curTokenIndex < tokens.length){
             step(new VariableSymbolTable(), globalVariableSymbolTable, methodSymbolTable);
         }
@@ -55,9 +55,12 @@ public class Tokenizer {
 
 
     public void step(VariableSymbolTable localVariableSymbolTable,
-                     VariableSymbolTable globalVariableSymbolTable, MethodSymbolTable methodSymbolTable) {
-        new VerifierManager(this, tokens[++curTokenIndex],
+                     VariableSymbolTable globalVariableSymbolTable, MethodSymbolTable methodSymbolTable) throws SJavaException {
+        new VerifierManager(this,
                 localVariableSymbolTable, globalVariableSymbolTable, methodSymbolTable).verify();
+
+        advanceToken();
+
     }
 
     public MethodSymbolTable getMethodSymbolTable() {
@@ -71,6 +74,10 @@ public class Tokenizer {
 
     public Token getCurrentToken() {
         return tokens[curTokenIndex];
+    }
+
+    public void advanceToken() {
+        curTokenIndex++;
     }
 
 }
