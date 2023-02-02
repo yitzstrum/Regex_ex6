@@ -72,7 +72,6 @@ public class DeclarationParser {
 
         List<Pair<String, String>> variables = new ArrayList<>();
         for (String arg: assigment.split(COMMA)) {
-
             parseSingleArg(arg, variables);
         }
         return variables;

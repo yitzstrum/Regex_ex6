@@ -1,9 +1,11 @@
 package oop.ex6.parser;
 
 import oop.ex6.SymbolTable.MethodSymbolTable;
+import oop.ex6.SymbolTable.VariableData;
 import oop.ex6.SymbolTable.VariableSymbolTable;
 import oop.ex6.Verifier.VariableDeclarationVerifier;
 import oop.ex6.Verifier.VerifierManager;
+import oop.ex6.utils.Pair;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,7 +26,7 @@ public class Tokenizer {
         curTokenIndex = 0;
     }
 
-    public void run() throws SJavaException {
+    public void run() throws SJavaException, BadLogicException, BadLineException {
         while (curTokenIndex < tokens.length){
             step(new VariableSymbolTable(), globalVariableSymbolTable, methodSymbolTable);
         }
@@ -37,16 +39,17 @@ public class Tokenizer {
         for (int i = 0; i < tokens.length; i++) {
             tokens[i] = new Token(fileContent.get(i));
             if (bracketsCount == 0 && tokens[i].getType() == Token.TokenType.VARIABLE_DECLARATION){
-                new VariableDeclarationVerifier(this, globalVariableSymbolTable).verify();
+                new VariableDeclarationVerifier(getCurrentToken(), globalVariableSymbolTable).verify();
             }
             if (tokens[i].getType() == Token.TokenType.METHOD_DECLARATION){
-                new MethodDeclarationParser(tokens[i]);
+                Pair<String, List<VariableData>> methodData = new MethodDeclarationParser(tokens[i]).getMethodData();
+                methodSymbolTable.put(methodData.getFirst(), methodData.getSecond());
                 bracketsCount ++;
             }
-            if (tokens[i].getType() == Token.TokenType.METHOD_DECLARATION) {
+            if (tokens[i].getType() == Token.TokenType.IF_WHILE_BLOCK) {
                 bracketsCount ++;
             }
-                if (tokens[i].getType() == Token.TokenType.END_BLOCK){
+            if (tokens[i].getType() == Token.TokenType.END_BLOCK){
                 bracketsCount --;
             }
             curTokenIndex ++;
@@ -55,12 +58,12 @@ public class Tokenizer {
 
 
     public void step(VariableSymbolTable localVariableSymbolTable,
-                     VariableSymbolTable globalVariableSymbolTable, MethodSymbolTable methodSymbolTable) throws SJavaException {
+                     VariableSymbolTable globalVariableSymbolTable, MethodSymbolTable methodSymbolTable) throws SJavaException, BadLogicException, BadLineException {
         new VerifierManager(this,
-                localVariableSymbolTable, globalVariableSymbolTable, methodSymbolTable).verify();
-
+                localVariableSymbolTable,
+                globalVariableSymbolTable,
+                methodSymbolTable).verify();
         advanceToken();
-
     }
 
     public MethodSymbolTable getMethodSymbolTable() {

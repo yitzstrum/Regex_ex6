@@ -9,10 +9,8 @@ import java.util.regex.Pattern;
 public class Token {
 
     private static final String VARIABLE_DECLARATION_REGEX = "\\s*(int|double|char|boolean)\\s";
-
     private static final String FINAL_VARIABLE_DECLARATION_REGEX =
             "\\s*(final)\\s+(String|int|double|char|boolean)\\s";
-
     private static final String VARIABLE_ASSIGNMENT_REGEX = "\\s*[a-zA-Z]\\w*\\s*=\\s*";
     private static final String METHOD_DECLARATION_REGEX = "\\s*void\\s+";
     private static final String BLOCK_END_REGEX = "\\s*}\\s*";
@@ -34,12 +32,12 @@ public class Token {
         RETURN_STATEMENT
     }
 
-    public Token(String line) {
+    public Token(String line) throws BadLineException {
         this.type = getTokenType(line);
         this.content = line;
     }
 
-    private TokenType getTokenType(String line) {
+    private TokenType getTokenType(String line) throws BadLineException {
         if (isVariableAssignment(line)) {
             return TokenType.VARIABLE_ASSIGNMENT;
         } else if (isVariableDeclaration(line)) {
@@ -57,7 +55,7 @@ public class Token {
         } else if (isFinalVariableDeclaration(line)) {
             return TokenType.FINAL_VARIABLE_DECLARATION;
         } else {
-            return null; // cant parse line throw exception later
+            throw new BadLineException(line);
         }
 
     }
