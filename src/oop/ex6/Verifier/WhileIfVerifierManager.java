@@ -40,7 +40,7 @@ public class WhileIfVerifierManager implements Verifier {
     }
 
     @Override
-    public boolean verify() throws SJavaException, BadLineException, BadLogicException {
+    public void verify() throws SJavaException, BadLineException, BadLogicException {
         // stack of symbol table
         Stack<VariableSymbolTable> stack = new Stack<>();
 
@@ -64,8 +64,6 @@ public class WhileIfVerifierManager implements Verifier {
                     tokenizer.step(localVariableSymbolTable, stack.lastElement(), methodSymbolTable);
             }
         } while (stack.size() > 0);
-
-        return true;
     }
 
     private void checkStatement(VariableSymbolTable globalSymbolTable) throws SJavaException {

@@ -8,7 +8,6 @@ public class VariableData {
         STRING,
         CHAR,
         BOOLEAN,
-        UNKNOWN
     }
 
 
@@ -30,24 +29,12 @@ public class VariableData {
         return modifier == Modifier.FINAL;
     }
 
-    public boolean isAssigned() {
-        return modifier == Modifier.ASSIGNED;
-    }
-
     public boolean isInitialized() {
         return modifier != Modifier.NONE;
     }
 
     public Type getType() {
         return type;
-    }
-
-    public Modifier getModifier() {
-        return modifier;
-    }
-
-    public boolean equals(VariableData other) {
-        return this.type.equals(other.type) && this.modifier == other.modifier;
     }
 
     public String toString() {

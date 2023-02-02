@@ -11,15 +11,6 @@ import java.util.List;
 
     public class VariableAssignmentVerifier implements Verifier{
 
-        private static final String UNASSIGNED_VARIABLE_REGEX = "^\\s*[a-zA-Z]\\w*\\s*";
-        private static final String ASSIGNED_VARIABLE_REGEX = "^\\s*[a-zA-Z]\\w*\\s*=\\s*\\w+\\s*";
-
-        private static final String COMMA = ",";
-        private static final String EQUALS = "=";
-
-        private static final String EMPTY_STRING = "";
-        private final String VARIABLE_ASSIGMENT_REGEX =
-                "((([a-zA-Z]\\w*\\s*)|([a-zA-Z]\\w*\\s*\\=\\s*\\w+))(,\\s*|;$))";
         private final VariableSymbolTable variableSymbolTable;
         private final DeclarationParser declarationParser;
         private Tokenizer tokenizer;
@@ -32,7 +23,7 @@ import java.util.List;
 
             this.tokenizer = tokenizer;
             this.variableSymbolTable = variableSymbolTable;
-            this.declarationParser = new DeclarationParser(tokenizer.getCurrentToken().getContent(), true);;
+            this.declarationParser = new DeclarationParser(tokenizer.getCurrentToken().getContent(), true);
 
         }
 
@@ -90,12 +81,11 @@ import java.util.List;
 
 
         @Override
-        public boolean verify() {
+        public void verify() {
             List<Pair<String, String>> assignments = declarationParser.parseAssigment();
             for (Pair<String, String> assignment : assignments) {
                 verifySingleAssigment(assignment);
             }
-            return false;
         }
 
         public static boolean  isVariableExists(VariableSymbolTable variableSymbolTable, String variableName) {

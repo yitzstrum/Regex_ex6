@@ -11,13 +11,6 @@ import java.util.List;
 
 public class VariableDeclarationVerifier implements Verifier {
 
-
-
-    private final String VARIABLE_NAME_REGEX = "\\s*[a-zA-Z]\\w+\\s*";
-
-    private final String UNINITIALIZED_VAR_REGEX = "([a-zA-Z]\\w*(;|,))";
-
-    private final String FINAL_PREFIX_REGEX = "\\s*final\\s*";
     private Token token;
     private final VariableSymbolTable variableSymbolTable;
     private final DeclarationParser declarationParser;
@@ -32,17 +25,11 @@ public class VariableDeclarationVerifier implements Verifier {
         this.declarationParser = new DeclarationParser(token.getContent());;
     }
 
-    public VariableDeclarationVerifier(String decLine, VariableSymbolTable variableSymbolTable){
-        this.variableSymbolTable = variableSymbolTable;
-        this.declarationParser = new DeclarationParser(decLine);
+    @Override
+    public void verify() {
         addToTable();
     }
 
-    @Override
-    public boolean verify() {
-        addToTable();
-        return true;
-    }
     private void addToTable() {
         List<Pair<String, String>> variables = declarationParser.parseAssigment();;
         for (Pair<String, String> variable: variables) {
@@ -73,7 +60,6 @@ public class VariableDeclarationVerifier implements Verifier {
             throw new IllegalArgumentException("Invalid assignment");
         }
         variableSymbolTable.put(name, variableData);
-
     }
 
     private void addFinalVariable(Pair<String, String> variable) {
@@ -90,6 +76,4 @@ public class VariableDeclarationVerifier implements Verifier {
             variableSymbolTable.put(name, variableData);
         }
     }
-
-
 }

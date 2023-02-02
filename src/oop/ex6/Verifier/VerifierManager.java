@@ -23,27 +23,33 @@ public class VerifierManager implements Verifier {
     }
 
     @Override
-    public boolean verify() throws SJavaException, BadLogicException, BadLineException {
+    public void verify() throws SJavaException, BadLogicException, BadLineException {
         Token.TokenType type = token.getType();
         switch (type) {
             case VARIABLE_DECLARATION:
-                return new VariableDeclarationVerifier(tokenizer.getCurrentToken(), localVariableSymbolTable).verify();
+                new VariableDeclarationVerifier(tokenizer.getCurrentToken(), localVariableSymbolTable).verify();
+                tokenizer.advanceToken();
+                break;
             case VARIABLE_ASSIGNMENT:
-                return new VariableAssignmentVerifier(tokenizer, localVariableSymbolTable).verify();
+                new VariableAssignmentVerifier(tokenizer, localVariableSymbolTable).verify();
+                tokenizer.advanceToken();
+                break;
             case IF_WHILE_BLOCK:
-                return new WhileIfVerifierManager(tokenizer, localVariableSymbolTable,
+                new WhileIfVerifierManager(tokenizer, localVariableSymbolTable,
                         globalVariableSymbolTable, methodSymbolTable).verify();
+                break;
             case METHOD_DECLARATION:
-                return new MethodDeclarationVerifier(tokenizer, localVariableSymbolTable,
+                new MethodDeclarationVerifier(tokenizer, localVariableSymbolTable,
                         globalVariableSymbolTable, methodSymbolTable).verify();
+                break;
             case METHOD_CALL:
-                return new MethodCallVerifier(tokenizer, localVariableSymbolTable,
+                new MethodCallVerifier(tokenizer, localVariableSymbolTable,
                         globalVariableSymbolTable, methodSymbolTable).verify();
+                tokenizer.advanceToken();
+                break;
 
             case END_BLOCK:
 
         }
-
-        return false; // error
     }
 }
