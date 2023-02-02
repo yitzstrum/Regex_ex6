@@ -5,6 +5,8 @@ import java.util.regex.Pattern;
 public abstract class Parser {
     protected static final int METHOD_NAME_START_IND = 4;
     protected static final String SPACE_REGEX = "\\s*";
+    protected static final String END_LINE_REGEX = "$";
+    protected static final String START_LINE_REGEX = "^";
     protected static final String ANY_CHAR_REGEX = ".*";
     protected static final String COMMA = ",";
     protected static final String SEMI_COLLEEN = ";";
@@ -17,6 +19,14 @@ public abstract class Parser {
     protected static final String TYPE_REGEX = "\\s*(int|double|String|boolean|char)\\s*";
     protected static final String SPACE_PLUS = "\\s+";
     protected static final String FINAL_REGEX = "(final\\s+)?";
+    protected static final String EQUAL_REGEX = SPACE_REGEX + "=" + SPACE_REGEX + "\\w" + SPACE_REGEX;
+    protected static final String SEMI_COLON_REGEX = SPACE_REGEX + ";" + SPACE_REGEX + END_LINE_REGEX;
+    protected static final String VARIABLE_ASSIGMENT =
+            VARIABLE_NAME_REGEX + '(' + EQUAL_REGEX + ")?";
+    protected static final String GENERAL_VARIABLE_ASSIGMENT =
+            '(' + VARIABLE_ASSIGMENT + ")*" + SEMI_COLON_REGEX;
+    protected static final String VARIABLE_DEC_REGEX = "^" +
+            TYPE_REGEX  + VARIABLE_NAME_REGEX;
 
     protected static final String TYPE_AND_NAME_REGEX =
             SPACE_REGEX + FINAL_REGEX + SPACE_REGEX +

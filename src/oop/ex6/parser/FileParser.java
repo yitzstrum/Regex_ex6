@@ -1,10 +1,7 @@
 package oop.ex6.parser;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class FileParser {
@@ -29,7 +26,7 @@ public class FileParser {
             }
             return lines;
         } catch (IOException e) {
-            throw new IOException(e.getMessage()); // edit later
+            throw new IOException(e.getMessage());
         }
     }
 
