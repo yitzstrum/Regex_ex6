@@ -1,9 +1,13 @@
 package oop.ex6.parser;
 
+import java.util.regex.Pattern;
+
 public abstract class Parser {
-    protected static final String SPACE_REGEX = "\\s*";
     protected static final int METHOD_NAME_START_IND = 4;
+    protected static final String SPACE_REGEX = "\\s*";
+    protected static final String ANY_CHAR_REGEX = ".*";
     protected static final String COMMA = ",";
+    protected static final String SEMI_COLLEEN = ";";
     protected static final String VARIABLE_NAME_REGEX = "(_+[\\w]|[a-zA-Z])[\\w]*";
     protected static final String VOID_REGEX = "void";
     protected static final String METHOD_NAME_REGEX = "([a-zA-Z]+[\\w]*)";
@@ -13,6 +17,7 @@ public abstract class Parser {
     protected static final String TYPE_REGEX = "\\s*(int|double|String|boolean|char)\\s*";
     protected static final String SPACE_PLUS = "\\s+";
     protected static final String FINAL_REGEX = "(final\\s+)?";
+
     protected static final String TYPE_AND_NAME_REGEX =
             SPACE_REGEX + FINAL_REGEX + SPACE_REGEX +
                     TYPE_REGEX + SPACE_PLUS + VARIABLE_NAME_REGEX + SPACE_REGEX;
@@ -37,4 +42,17 @@ public abstract class Parser {
             SPACE_REGEX +
             TYPE_AND_NAME_REGEX + "(" + "," + TYPE_AND_NAME_REGEX + ")*" +
             SPACE_REGEX + ")";
+
+    protected static final String METHOD_CALL_REGEX = "^" +
+            SPACE_REGEX +
+            METHOD_NAME_REGEX +
+            SPACE_REGEX +
+            OPEN_PAREN_REGEX +
+            "(" +
+            ANY_CHAR_REGEX +
+            ")" +
+            CLOSE_PAREN_REGEX +
+            SEMI_COLLEEN;
+
+    protected static final Pattern METHOD_NAME_PATTERN = Pattern.compile(METHOD_NAME_REGEX);
 }

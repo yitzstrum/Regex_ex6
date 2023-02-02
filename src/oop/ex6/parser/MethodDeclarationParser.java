@@ -11,8 +11,8 @@ public class MethodDeclarationParser extends Parser{
 
     private Token token;
 
-    public static final Pattern METHOD_NAME_PATTERN = Pattern.compile(METHOD_NAME_REGEX);
-    public static final Pattern PARAMS_PATTERN = Pattern.compile(PARAMS_REGEX);
+
+    private static final Pattern PARAMS_PATTERN = Pattern.compile(PARAMS_REGEX);
 
     private String methodName;
     private List<VariableData> methodParams = new ArrayList<>();
@@ -47,7 +47,7 @@ public class MethodDeclarationParser extends Parser{
         return new String[0];
     }
 
-    private static String getName(String decLine) {
+    private String getName(String decLine) {
         Matcher matchMethodName = METHOD_NAME_PATTERN.matcher(decLine);
         matchMethodName.find();
         return decLine.substring(matchMethodName.start(), matchMethodName.end());

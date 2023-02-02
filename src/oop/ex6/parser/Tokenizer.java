@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class Tokenizer {
+    private static final String METHOD_OVERLOADING_ERR = "Method overloading is not allowed";
     private static Tokenizer tokenizer = null;
     private Token[] tokens;
     private int curTokenIndex;
@@ -43,6 +44,9 @@ public class Tokenizer {
             }
             if (tokens[i].getType() == Token.TokenType.METHOD_DECLARATION){
                 Pair<String, List<VariableData>> methodData = new MethodDeclarationParser(tokens[i]).getMethodData();
+                if (methodSymbolTable.containsKey(methodData.getFirst())){
+                    throw new BadLogicException(METHOD_OVERLOADING_ERR);
+                }
                 methodSymbolTable.put(methodData.getFirst(), methodData.getSecond());
                 bracketsCount ++;
             }
