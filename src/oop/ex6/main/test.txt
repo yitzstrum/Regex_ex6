@@ -1,12 +1,15 @@
 int x = 5;
+boolean a = true, b, c = false;
+// hello
+
+void method(int x, int y){
+
+    return;
+}
 
 void main() {
     int y = 10;
     int z;
-    if (y) {
-     int f;
-    }
-
 
     return;
 }
