@@ -5,6 +5,7 @@ import oop.ex6.SymbolTable.VariableSymbolTable;
 import oop.ex6.parser.*;
 import oop.ex6.utils.Utils;
 
+import javax.security.auth.login.LoginException;
 import java.util.Stack;
 
 import static oop.ex6.utils.Utils.BRACKETS_REGEX;
@@ -40,7 +41,7 @@ public class WhileIfVerifierManager implements Verifier {
     }
 
     @Override
-    public void verify() throws SJavaException, BadLineException, BadLogicException {
+    public void verify() throws SJavaException, BadLineException, BadLogicException, BadLogicException {
         // stack of symbol table
         Stack<VariableSymbolTable> stack = new Stack<>();
 
@@ -66,25 +67,26 @@ public class WhileIfVerifierManager implements Verifier {
         } while (stack.size() > 0);
     }
 
-    private void checkStatement(VariableSymbolTable globalSymbolTable) throws SJavaException {
+    private void checkStatement(VariableSymbolTable globalSymbolTable) throws BadLogicException {
         checkTokenIsInRightSyntax();
         validateBrackets(globalSymbolTable);
     }
 
-    private void checkTokenIsInRightSyntax() throws SJavaException {
+    private void checkTokenIsInRightSyntax() throws BadLogicException {
         if (!Utils.isCompleteMatch(tokenizer.getCurrentToken().getContent(), IF_WHILE_SYNTAX_REGEX)) {
-            throw new SJavaException(BAD_IF_WHILE_SYNTAX_MSG);
+            throw new BadLogicException(BAD_IF_WHILE_SYNTAX_MSG);
         }
     }
 
-    private void validateBrackets(VariableSymbolTable globalVariableSymbolTable) throws SJavaException {
+    private void validateBrackets(VariableSymbolTable globalVariableSymbolTable) throws BadLogicException {
         String bracketsContent = extractBrackets(tokenizer.getCurrentToken().getContent());
         // split the content by || or && and check each part is valid
         String[] params = bracketsContent.split("(&&|\\|\\|)");
         for (String param : params) {
+            param = Utils.removeSpaces(param);
             if (!(globalVariableSymbolTable.containsKey(param) && globalVariableSymbolTable.get(param).isInitialized())) {
                 System.out.println(param);
-                throw new BadParamException(BAD_IF_WHILE_PARAMS_MSG);
+                throw new BadLogicException(tokenizer.getCurrentToken().getContent());
             }
         }
     }
