@@ -19,12 +19,12 @@ public class VariableDeclarationVerifier implements Verifier {
 
 
     public VariableDeclarationVerifier(Token token, VariableSymbolTable variableSymbolTable) {
-        if (token.getType() != Token.TokenType.VARIABLE_DECLARATION) {
+        if (token.getType() != Token.TokenType.VARIABLE_DECLARATION && token.getType() != Token.TokenType.FINAL_VARIABLE_DECLARATION) {
             throw new IllegalArgumentException("Token is not a variable declaration");
         }
         this.token = token;
         this.variableSymbolTable = variableSymbolTable;
-        this.declarationParser = new DeclarationParser(token.getContent());;
+        this.declarationParser = new DeclarationParser(token.getContent());
     }
 
     @Override
@@ -33,7 +33,7 @@ public class VariableDeclarationVerifier implements Verifier {
     }
 
     private void addToTable() throws BadLogicException {
-        List<Pair<String, String>> variables = declarationParser.parseAssigment();;
+        List<Pair<String, String>> variables = declarationParser.parseAssigment();
         for (Pair<String, String> variable: variables) {
             addSingleArgument(variable);
         }
