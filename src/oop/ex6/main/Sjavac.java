@@ -25,7 +25,7 @@ public class Sjavac {
             System.out.println(IO_EXCEPTION);
             System.out.println(e.getMessage());
         }
-        catch (SJavaException | BadLineException e) {
+        catch (SJavaException | BadLineException | BadLogicException e) {
             System.out.println(ILLEGAL_CODE);
             System.out.println(e.getMessage());
         }

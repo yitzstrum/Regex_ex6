@@ -18,22 +18,21 @@ public class VariableDeclarationVerifier implements Verifier {
     private final String UNINITIALIZED_VAR_REGEX = "([a-zA-Z]\\w*(;|,))";
 
     private final String FINAL_PREFIX_REGEX = "\\s*final\\s*";
-    private final Tokenizer tokenizer;
+    private Token token;
     private final VariableSymbolTable variableSymbolTable;
     private final DeclarationParser declarationParser;
 
 
-    public VariableDeclarationVerifier(Tokenizer tokenizer, VariableSymbolTable variableSymbolTable) {
-        if (tokenizer.getCurrentToken().getType() != Token.TokenType.VARIABLE_DECLARATION) {
+    public VariableDeclarationVerifier(Token token, VariableSymbolTable variableSymbolTable) {
+        if (token.getType() != Token.TokenType.VARIABLE_DECLARATION) {
             throw new IllegalArgumentException("Token is not a variable declaration");
         }
-        this.tokenizer = tokenizer;
+        this.token = token;
         this.variableSymbolTable = variableSymbolTable;
-        this.declarationParser = new DeclarationParser(tokenizer.getCurrentToken().getContent());;
+        this.declarationParser = new DeclarationParser(token.getContent());;
     }
 
     public VariableDeclarationVerifier(String decLine, VariableSymbolTable variableSymbolTable){
-        tokenizer = null;
         this.variableSymbolTable = variableSymbolTable;
         this.declarationParser = new DeclarationParser(decLine);
         addToTable();

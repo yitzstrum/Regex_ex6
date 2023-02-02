@@ -1,11 +1,11 @@
 package oop.ex6.parser;
 
-public class BadLineException extends Exception{
-    private static final String ERR_MSG = "ERROR: The following line has a syntax error: ";
+public class BadLogicException extends Exception{
+    private static final String ERR_MSG = "ERROR: ";
 
     private final String line;
 
-    public BadLineException(String line){
+    public BadLogicException(String line){
         this.line = line;
     }
 
@@ -16,7 +16,7 @@ public class BadLineException extends Exception{
      */
     @Override
     public String getMessage() {
-        return ERR_MSG + "'" + line + "'";
+        return ERR_MSG + line;
     }
 
 

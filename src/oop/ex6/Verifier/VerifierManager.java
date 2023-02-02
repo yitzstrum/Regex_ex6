@@ -2,9 +2,7 @@ package oop.ex6.Verifier;
 
 import oop.ex6.SymbolTable.MethodSymbolTable;
 import oop.ex6.SymbolTable.VariableSymbolTable;
-import oop.ex6.parser.SJavaException;
-import oop.ex6.parser.Token;
-import oop.ex6.parser.Tokenizer;
+import oop.ex6.parser.*;
 
 public class VerifierManager implements Verifier {
 
@@ -25,16 +23,25 @@ public class VerifierManager implements Verifier {
     }
 
     @Override
-    public boolean verify() throws SJavaException {
+    public boolean verify() throws SJavaException, BadLogicException, BadLineException {
         Token.TokenType type = token.getType();
         switch (type) {
             case VARIABLE_DECLARATION:
-                return new VariableDeclarationVerifier(tokenizer, localVariableSymbolTable).verify();
+                return new VariableDeclarationVerifier(tokenizer.getCurrentToken(), localVariableSymbolTable).verify();
             case VARIABLE_ASSIGNMENT:
                 return new VariableAssignmentVerifier(tokenizer, localVariableSymbolTable).verify();
             case IF_WHILE_BLOCK:
                 return new WhileIfVerifierManager(tokenizer, localVariableSymbolTable,
                         globalVariableSymbolTable, methodSymbolTable).verify();
+            case METHOD_DECLARATION:
+                return new MethodDeclarationVerifier(tokenizer, localVariableSymbolTable,
+                        globalVariableSymbolTable, methodSymbolTable).verify();
+            case METHOD_CALL:
+                return new MethodCallVerifier(tokenizer, localVariableSymbolTable,
+                        globalVariableSymbolTable, methodSymbolTable).verify();
+
+            case END_BLOCK:
+
         }
 
         return false; // error
