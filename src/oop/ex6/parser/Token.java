@@ -6,13 +6,12 @@ import oop.ex6.utils.Utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Token {
+public class Token extends Parser{
 
     private static final String VARIABLE_DECLARATION_REGEX = "\\s*(int|double|char|boolean)\\s";
     private static final String FINAL_VARIABLE_DECLARATION_REGEX =
             "\\s*(final)\\s+(String|int|double|char|boolean)\\s";
     private static final String VARIABLE_ASSIGNMENT_REGEX = "\\s*[a-zA-Z]\\w*\\s*=\\s*";
-    private static final String METHOD_DECLARATION_REGEX = "\\s*void\\s+";
     private static final String BLOCK_END_REGEX = "\\s*}\\s*";
     private static final String IF_WHILE_BLOCK_REGEX = "\\s*(if|while)\\s*";
     private static final String METHOD_CALL_REGEX = "\\s*[a-zA-Z]\\w*\\s*\\(.*\\)\\s*;"; // assume it valid
@@ -73,8 +72,7 @@ public class Token {
     }
 
     private boolean isMethodDeclaration(String line) {
-        // method line must start with void
-        return Utils.isMatch(line, METHOD_DECLARATION_REGEX);
+        return line.matches(METHOD_DEC_REGEX);
     }
     
     private boolean isEndBlock(String line) {
@@ -92,8 +90,6 @@ public class Token {
     private boolean isReturnStatement(String line) {
         return Utils.isMatch(line, RETURN_STATEMENT_REGEX);
     }
-
-
 
     public TokenType getType() {
         return type;

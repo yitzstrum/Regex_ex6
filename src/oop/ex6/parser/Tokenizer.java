@@ -63,7 +63,6 @@ public class Tokenizer {
                 localVariableSymbolTable,
                 globalVariableSymbolTable,
                 methodSymbolTable).verify();
-        advanceToken();
     }
 
     public MethodSymbolTable getMethodSymbolTable() {
@@ -74,6 +73,9 @@ public class Tokenizer {
         return tokens;
     }
 
+    public boolean hasNext(){
+        return curTokenIndex < tokens.length;
+    }
 
     public Token getCurrentToken() {
         return tokens[curTokenIndex];

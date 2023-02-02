@@ -8,6 +8,8 @@ public class MethodDeclarationVerifier implements Verifier{
 
     private Tokenizer tokenizer;
     private final String RETURN_ERR = "The method should have a return statement prior to closing brackets";
+    private final String CLOSING_BRACKET_ERR = "The method has no closing bracket";
+
     private final VariableSymbolTable localVariableSymbolTable;
     private final VariableSymbolTable globalVariableSymbolTable;
     private final MethodSymbolTable methodSymbolTable;
@@ -28,19 +30,22 @@ public class MethodDeclarationVerifier implements Verifier{
      * @return true if the token was handled, false otherwise
      */
     @Override
-    public boolean verify() throws SJavaException, BadLogicException, BadLineException {
+    public void verify() throws SJavaException, BadLogicException, BadLineException {
         Token currToken = tokenizer.getCurrentToken();
         Token prevToken = currToken;
-        //Todo: what if there is no closing bracket?
         while (currToken.getType() != Token.TokenType.END_BLOCK){
+            if (!tokenizer.hasNext()){
+                throw new BadLogicException(CLOSING_BRACKET_ERR);
+            }
             tokenizer.step(localVariableSymbolTable, globalVariableSymbolTable, methodSymbolTable);
+            tokenizer.advanceToken();
             prevToken = currToken;
             currToken = tokenizer.getCurrentToken();
         }
+        tokenizer.advanceToken();
         if (prevToken.getType() != Token.TokenType.RETURN_STATEMENT){
             throw new BadLogicException(RETURN_ERR);
         }
-        return true;
     }
 
     private void initiateLocalVariables(String methodDecLine) throws BadLineException {

@@ -25,8 +25,8 @@ public class MethodCallVerifier implements Verifier{
     }
 
     @Override
-    public boolean verify() throws SJavaException, BadLogicException, BadLineException {
-        return false;
+    public void verify() throws SJavaException, BadLogicException, BadLineException {
+
     }
 
 

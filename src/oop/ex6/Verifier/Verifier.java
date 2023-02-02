@@ -11,7 +11,7 @@ public interface Verifier {
      *
      * @return true if the token was handled, false otherwise
      */
-    boolean verify() throws SJavaException, BadLogicException, BadLineException;
+    void verify() throws SJavaException, BadLogicException, BadLineException;
 
 }
 
