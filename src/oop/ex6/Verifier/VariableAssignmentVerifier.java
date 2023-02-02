@@ -2,6 +2,7 @@ package oop.ex6.Verifier;
 
 import oop.ex6.SymbolTable.VariableData;
 import oop.ex6.SymbolTable.VariableSymbolTable;
+import oop.ex6.parser.BadLogicException;
 import oop.ex6.parser.DeclarationParser;
 import oop.ex6.parser.Token;
 import oop.ex6.parser.Tokenizer;
@@ -11,6 +12,7 @@ import java.util.List;
 
     public class VariableAssignmentVerifier implements Verifier{
 
+        private final static String DOESNT_EXIST_ERR = "The variable has not been declared";
         private final VariableSymbolTable variableSymbolTable;
         private final DeclarationParser declarationParser;
         private Tokenizer tokenizer;
@@ -81,7 +83,7 @@ import java.util.List;
 
 
         @Override
-        public void verify() {
+        public void verify() throws BadLogicException {
             List<Pair<String, String>> assignments = declarationParser.parseAssigment();
             for (Pair<String, String> assignment : assignments) {
                 verifySingleAssigment(assignment);
@@ -92,13 +94,13 @@ import java.util.List;
             return variableSymbolTable.containsKey(variableName);
         }
 
-        private boolean verifySingleAssigment(Pair<String, String> assignment) {
+        private void verifySingleAssigment(Pair<String, String> assignment) throws BadLogicException {
             String variableName = assignment.getFirst();
             String value = assignment.getSecond();
             if (!isVariableExists(variableSymbolTable, variableName)) {
-                return false;
+                throw new BadLogicException(DOESNT_EXIST_ERR);
             }
             VariableData variableData = variableSymbolTable.get(variableName);
-            return isValidAssign(variableData.getType(), value);
+            isValidAssign(variableData.getType(), value);
         }
     }

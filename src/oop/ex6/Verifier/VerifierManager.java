@@ -48,6 +48,10 @@ public class VerifierManager implements Verifier {
                 tokenizer.advanceToken();
                 break;
 
+            case RETURN_STATEMENT:
+                tokenizer.advanceToken();
+                break;
+
             case END_BLOCK:
 
         }

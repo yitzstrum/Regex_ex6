@@ -17,7 +17,7 @@ public class Tokenizer {
     MethodSymbolTable methodSymbolTable;
     VariableSymbolTable globalVariableSymbolTable;
 
-    public Tokenizer(String filePath) throws IOException, BadLineException {
+    public Tokenizer(String filePath) throws IOException, BadLineException, BadLogicException {
         methodSymbolTable = new MethodSymbolTable();
         globalVariableSymbolTable = new VariableSymbolTable();
         curTokenIndex = 0;
@@ -32,7 +32,7 @@ public class Tokenizer {
         }
     }
 
-    private void initTokens(FileParser parser) throws BadLineException {
+    private void initTokens(FileParser parser) throws BadLineException, BadLogicException {
         List<String> fileContent = parser.getFileContent();
         tokens = new Token[fileContent.size()];
         int bracketsCount = 0;

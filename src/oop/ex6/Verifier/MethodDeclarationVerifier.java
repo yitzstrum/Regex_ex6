@@ -17,7 +17,7 @@ public class MethodDeclarationVerifier implements Verifier{
     public MethodDeclarationVerifier(Tokenizer tokenizer,
                                      VariableSymbolTable localVariableSymbolTable,
                                      VariableSymbolTable globalVariableSymbolTable,
-                                     MethodSymbolTable methodSymbolTable) throws BadLineException {
+                                     MethodSymbolTable methodSymbolTable) throws BadLineException, BadLogicException {
         this.tokenizer = tokenizer;
         this.localVariableSymbolTable = localVariableSymbolTable;
         this.globalVariableSymbolTable = globalVariableSymbolTable;
@@ -38,7 +38,6 @@ public class MethodDeclarationVerifier implements Verifier{
                 throw new BadLogicException(CLOSING_BRACKET_ERR);
             }
             tokenizer.step(localVariableSymbolTable, globalVariableSymbolTable, methodSymbolTable);
-            tokenizer.advanceToken();
             prevToken = currToken;
             currToken = tokenizer.getCurrentToken();
         }
@@ -48,7 +47,7 @@ public class MethodDeclarationVerifier implements Verifier{
         }
     }
 
-    private void initiateLocalVariables(String methodDecLine) throws BadLineException {
+    private void initiateLocalVariables(String methodDecLine) throws BadLineException, BadLogicException {
         String[] varDeclarations = MethodDeclarationParser.getMethodParams(methodDecLine);
         for (String varDec : varDeclarations){
             Token methodVarToken = new Token(varDec);
