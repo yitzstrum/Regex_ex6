@@ -56,9 +56,9 @@ public class Tokenizer {
 
     public void step(VariableSymbolTable localVariableSymbolTable,
                      VariableSymbolTable globalVariableSymbolTable, MethodSymbolTable methodSymbolTable) throws SJavaException {
+
         new VerifierManager(this,
                 localVariableSymbolTable, globalVariableSymbolTable, methodSymbolTable).verify();
-
         advanceToken();
 
     }

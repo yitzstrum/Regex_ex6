@@ -34,7 +34,8 @@ public class VerifierManager implements Verifier {
                 return new VariableAssignmentVerifier(tokenizer, localVariableSymbolTable).verify();
             case IF_WHILE_BLOCK:
                 return new WhileIfVerifierManager(tokenizer, localVariableSymbolTable,
-                        globalVariableSymbolTable, methodSymbolTable).verify();
+                        globalVariableSymbolTable,
+                         methodSymbolTable).verify();
         }
 
         return false; // error

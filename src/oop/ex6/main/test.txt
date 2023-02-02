@@ -4,6 +4,10 @@ void main() {
     int y = 10;
     int z;
     if (y) {
+        if (y) {
+            int a;
+            int b;
+        }
      int f;
     }
 
