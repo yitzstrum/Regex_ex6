@@ -5,7 +5,7 @@ void method(int x, int y){
 }
 void main() {
     int y = 10;
-    z = 8;
+    jack( 4);
     return;
 }
 int y = 8;

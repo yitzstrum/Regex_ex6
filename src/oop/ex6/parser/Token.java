@@ -14,7 +14,6 @@ public class Token extends Parser{
     private static final String VARIABLE_ASSIGNMENT_REGEX = "\\s*[a-zA-Z]\\w*\\s*=\\s*";
     private static final String BLOCK_END_REGEX = "\\s*}\\s*";
     private static final String IF_WHILE_BLOCK_REGEX = "\\s*(if|while)\\s*";
-    private static final String METHOD_CALL_REGEX = "\\s*[a-zA-Z]\\w*\\s*\\(.*\\)\\s*;"; // assume it valid
     private static final String RETURN_STATEMENT_REGEX = "\\s*return\\s*;\\s*"; // assume it valid
 
     private final TokenType type;
@@ -83,8 +82,7 @@ public class Token extends Parser{
         return Utils.isMatch(line, IF_WHILE_BLOCK_REGEX);
     }
 
-    private boolean isMethodCall(String line) {
-        return Utils.isMatch(line, METHOD_CALL_REGEX);
+    private boolean isMethodCall(String line) {return line.matches(METHOD_CALL_REGEX);
     }
 
     private boolean isReturnStatement(String line) {
