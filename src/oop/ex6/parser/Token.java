@@ -1,10 +1,8 @@
 package oop.ex6.parser;
 
 
+import oop.ex6.exceptions.BadLineException;
 import oop.ex6.utils.Utils;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Token extends Parser{
 

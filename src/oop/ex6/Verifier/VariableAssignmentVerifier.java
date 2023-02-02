@@ -2,7 +2,7 @@ package oop.ex6.Verifier;
 
 import oop.ex6.SymbolTable.VariableData;
 import oop.ex6.SymbolTable.VariableSymbolTable;
-import oop.ex6.parser.BadLogicException;
+import oop.ex6.exceptions.BadLogicException;
 import oop.ex6.parser.DeclarationParser;
 import oop.ex6.parser.Token;
 import oop.ex6.parser.Tokenizer;

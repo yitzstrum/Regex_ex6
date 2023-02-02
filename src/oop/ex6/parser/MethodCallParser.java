@@ -1,10 +1,8 @@
 package oop.ex6.parser;
 
-import oop.ex6.SymbolTable.VariableData;
+import oop.ex6.exceptions.BadLineException;
 import oop.ex6.utils.Pair;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

@@ -2,13 +2,13 @@ package oop.ex6.Verifier;
 
 import oop.ex6.SymbolTable.MethodSymbolTable;
 import oop.ex6.SymbolTable.VariableSymbolTable;
+import oop.ex6.exceptions.BadLineException;
+import oop.ex6.exceptions.BadLogicException;
 import oop.ex6.parser.*;
 import oop.ex6.utils.Utils;
 
-import javax.security.auth.login.LoginException;
 import java.util.Stack;
 
-import static oop.ex6.utils.Utils.BRACKETS_REGEX;
 import static oop.ex6.utils.Utils.extractBrackets;
 
 public class WhileIfVerifierManager implements Verifier {

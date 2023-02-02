@@ -2,6 +2,8 @@ package oop.ex6.Verifier;
 
 import oop.ex6.SymbolTable.MethodSymbolTable;
 import oop.ex6.SymbolTable.VariableSymbolTable;
+import oop.ex6.exceptions.BadLineException;
+import oop.ex6.exceptions.BadLogicException;
 import oop.ex6.parser.*;
 
 public class MethodDeclarationVerifier implements Verifier{

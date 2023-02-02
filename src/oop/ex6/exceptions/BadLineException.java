@@ -1,4 +1,4 @@
-package oop.ex6.parser;
+package oop.ex6.exceptions;
 
 public class BadLineException extends Exception{
     private static final String ERR_MSG = "ERROR: The following line has a syntax error: ";
