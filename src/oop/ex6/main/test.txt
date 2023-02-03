@@ -1,8 +1,8 @@
-final int x = 5;
+final int true = 5;
 boolean a = true, b, c = false;
 void main(final boolean a) {
-    a = true;
     int y = 10;
     return;
 }
 int y = 8;
+return;

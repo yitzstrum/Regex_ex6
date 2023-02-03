@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class DeclarationParser extends Parser{
 
-    private static final String VAR_RESERVED_WORDS_ERR = "The variable name is a reserved word";
+    private static final String VAR_RESERVED_WORDS_ERR = "Can't use a reserved name as the variable name";
     private final String TYPE_REGEX = "^\\s*(int|double|String|boolean|char)\\s*";
 
     private final VariableData.Type type;

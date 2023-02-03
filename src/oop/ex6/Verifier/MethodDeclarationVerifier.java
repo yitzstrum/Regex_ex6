@@ -30,11 +30,8 @@ public class MethodDeclarationVerifier implements Verifier{
         tokenizer.advanceToken();
     }
 
-    /**
-     * @return true if the token was handled, false otherwise
-     */
     @Override
-    public void verify() throws SJavaException, BadLogicException, BadLineException {
+    public void verify() throws BadLogicException, BadLineException {
         Token currToken = tokenizer.getCurrentToken();
         Token prevToken = currToken;
         while (currToken.getType() != Token.TokenType.END_BLOCK){

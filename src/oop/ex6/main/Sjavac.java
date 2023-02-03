@@ -21,13 +21,12 @@ public class Sjavac {
             Tokenizer tokenizer = new Tokenizer(args[ARG_ONE]);
             tokenizer.run();
             System.out.println(SUCCESSFUL_RUN);
-
         }
         catch (IOException e) {
             System.out.println(IO_EXCEPTION);
             System.out.println(e.getMessage());
         }
-        catch (SJavaException | BadLineException | BadLogicException e) {
+        catch (BadLineException | BadLogicException e) {
             System.out.println(ILLEGAL_CODE);
             System.out.println(e.getMessage());
         }

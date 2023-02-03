@@ -41,7 +41,7 @@ public class WhileIfVerifierManager implements Verifier {
     }
 
     @Override
-    public void verify() throws SJavaException, BadLineException, BadLogicException, BadLogicException {
+    public void verify() throws BadLineException, BadLogicException {
         // stack of symbol table
         Stack<VariableSymbolTable> stack = new Stack<>();
 

@@ -14,6 +14,7 @@ import java.util.List;
 
 public class Tokenizer {
     private static final String METHOD_OVERLOADING_ERR = "Method overloading is not allowed";
+    private static final String RETURN_GLOBAL_ERR = "Return statement is not allowed to appear in global space";
     private static Tokenizer tokenizer = null;
     private Token[] tokens;
     private int curTokenIndex;
@@ -29,7 +30,7 @@ public class Tokenizer {
         curTokenIndex = 0;
     }
 
-    public void run() throws SJavaException, BadLogicException, BadLineException {
+    public void run() throws BadLogicException, BadLineException {
         while (curTokenIndex < tokens.length){
             step(new VariableSymbolTable(), globalVariableSymbolTable, methodSymbolTable);
         }
@@ -58,25 +59,21 @@ public class Tokenizer {
             if (tokens[i].getType() == Token.TokenType.END_BLOCK){
                 bracketsCount --;
             }
+            if (tokens[i].getType() == Token.TokenType.RETURN_STATEMENT && bracketsCount == 0){
+                throw new BadLogicException(RETURN_GLOBAL_ERR);
+            }
             curTokenIndex ++;
         }
     }
 
 
     public void step(VariableSymbolTable localVariableSymbolTable,
-                     VariableSymbolTable globalVariableSymbolTable, MethodSymbolTable methodSymbolTable) throws SJavaException, BadLogicException, BadLineException {
+                     VariableSymbolTable globalVariableSymbolTable, MethodSymbolTable methodSymbolTable) throws
+            BadLogicException, BadLineException {
         new VerifierManager(this,
                 localVariableSymbolTable,
                 globalVariableSymbolTable,
                 methodSymbolTable).verify();
-    }
-
-    public MethodSymbolTable getMethodSymbolTable() {
-        return methodSymbolTable;
-    }
-
-    public Token[] getTokens() {
-        return tokens;
     }
 
     public boolean hasNext(){

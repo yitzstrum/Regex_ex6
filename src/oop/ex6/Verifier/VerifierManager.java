@@ -25,7 +25,7 @@ public class VerifierManager implements Verifier {
     }
 
     @Override
-    public void verify() throws SJavaException, BadLogicException, BadLineException {
+    public void verify() throws BadLogicException, BadLineException {
         Token.TokenType type = token.getType();
         switch (type) {
             case VARIABLE_DECLARATION:

@@ -31,7 +31,7 @@ public class FileParser {
     }
 
     private boolean isLineHasCode(String line) {
-        return !line.isEmpty() && !line.startsWith("//");
+        return !line.trim().isEmpty() && !line.startsWith("//");
     }
 
     public List<String> getFileContent() {

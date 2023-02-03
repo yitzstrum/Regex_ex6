@@ -14,7 +14,7 @@ public class MethodDeclarationParser extends Parser{
 
 
     private static final Pattern PARAMS_PATTERN = Pattern.compile(PARAMS_REGEX);
-    private static final String RESERVED_WORDS_ERR = "The method name is a reserved word";
+    private static final String RESERVED_WORDS_ERR = "Can't use a reserved name as the method name";
 
     private String methodName;
     private List<VariableData> methodParams = new ArrayList<>();
