@@ -1,2 +1,4 @@
 void foo() {
-	return;
+char a = 'a';
+return;
+}
