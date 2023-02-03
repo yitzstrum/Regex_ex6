@@ -6,9 +6,6 @@ import oop.ex6.utils.Utils;
 
 public class Token extends Parser{
 
-    private static final String VARIABLE_DECLARATION_REGEX = "\\s*(int|double|char|boolean)\\s";
-    private static final String FINAL_VARIABLE_DECLARATION_REGEX =
-            "\\s*(final)\\s+(String|int|double|char|boolean)\\s";
     private static final String VARIABLE_ASSIGNMENT_REGEX = "\\s*[a-zA-Z]\\w*\\s*=\\s*";
     private static final String BLOCK_END_REGEX = "\\s*}\\s*";
     private static final String IF_WHILE_BLOCK_REGEX = "\\s*(if|while)\\s*";
@@ -48,20 +45,16 @@ public class Token extends Parser{
             return TokenType.METHOD_CALL;
         } else if (isReturnStatement(line)) {
             return TokenType.RETURN_STATEMENT;
-        } else if (isFinalVariableDeclaration(line)) {
-            return TokenType.FINAL_VARIABLE_DECLARATION;
         } else {
             throw new BadLineException(line);
         }
 
     }
 
-    private boolean isFinalVariableDeclaration(String line) {
-        return Utils.isMatch(line, FINAL_VARIABLE_DECLARATION_REGEX);
-    }
+
 
     private boolean isVariableDeclaration(String line) {
-        return Utils.isMatch(line, VARIABLE_DECLARATION_REGEX) ;
+        return line.matches(VARIABLE_DEC) ;
     }
 
     private boolean isVariableAssignment(String line) {

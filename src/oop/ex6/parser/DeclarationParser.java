@@ -1,6 +1,7 @@
 package oop.ex6.parser;
 
 import oop.ex6.SymbolTable.VariableData;
+import oop.ex6.exceptions.BadLogicException;
 import oop.ex6.utils.Pair;
 import oop.ex6.utils.Utils;
 
@@ -42,7 +43,7 @@ public class DeclarationParser {
 
     }
 
-    public DeclarationParser(String content) {
+    public DeclarationParser(String content) throws BadLogicException {
         this.content = content;
         this.isFinal = extractFinal();
         this.type = extractType();
@@ -107,7 +108,7 @@ public class DeclarationParser {
 
     }
 
-    private VariableData.Type extractType() {
+    private VariableData.Type extractType() throws BadLogicException {
         String content = this.content;
         if (isFinal) {
             // remove final prefix
@@ -132,7 +133,7 @@ public class DeclarationParser {
                     return VariableData.Type.CHAR;
             }
         }
-        throw new IllegalArgumentException("Invalid type");
+        throw new BadLogicException("Invalid type");
     }
 
 

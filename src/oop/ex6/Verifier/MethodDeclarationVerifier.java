@@ -52,8 +52,9 @@ public class MethodDeclarationVerifier implements Verifier{
     private void initiateLocalVariables(String methodDecLine) throws BadLineException, BadLogicException {
         String[] varDeclarations = MethodDeclarationParser.getMethodParams(methodDecLine);
         for (String varDec : varDeclarations){
-            Token methodVarToken = new Token(varDec);
+            Token methodVarToken = new Token(varDec + ";");
             new VariableDeclarationVerifier(methodVarToken, localVariableSymbolTable).verify();
+            //ToDo - Handle final variables
         }
     }
 }

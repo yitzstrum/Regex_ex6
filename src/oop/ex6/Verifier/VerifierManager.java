@@ -33,6 +33,10 @@ public class VerifierManager implements Verifier {
                 new VariableDeclarationVerifier(tokenizer.getCurrentToken(), localVariableSymbolTable).verify();
                 tokenizer.advanceToken();
                 break;
+            case VARIABLE_ASSIGNMENT:
+                new VariableAssignmentVerifier(tokenizer, localVariableSymbolTable, globalVariableSymbolTable).verify();
+                tokenizer.advanceToken();
+                break;
             case IF_WHILE_BLOCK:
                 new WhileIfVerifierManager(tokenizer, localVariableSymbolTable,
                         globalVariableSymbolTable, methodSymbolTable).verify();
@@ -52,7 +56,9 @@ public class VerifierManager implements Verifier {
                 break;
 
             case END_BLOCK:
-
+                break;
+            default:
+                throw new BadLogicException(MSG + token.getContent());
         }
     }
 }
