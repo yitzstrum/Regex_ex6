@@ -27,11 +27,12 @@ public class VerifierManager implements Verifier {
         Token.TokenType type = token.getType();
         switch (type) {
             case VARIABLE_DECLARATION:
+            case FINAL_VARIABLE_DECLARATION:
                 new VariableDeclarationVerifier(tokenizer.getCurrentToken(), localVariableSymbolTable).verify();
                 tokenizer.advanceToken();
                 break;
             case VARIABLE_ASSIGNMENT:
-                new VariableAssignmentVerifier(tokenizer, localVariableSymbolTable).verify();
+                new VariableAssignmentVerifier(tokenizer, localVariableSymbolTable, globalVariableSymbolTable).verify();
                 tokenizer.advanceToken();
                 break;
             case IF_WHILE_BLOCK:
@@ -51,8 +52,10 @@ public class VerifierManager implements Verifier {
             case RETURN_STATEMENT:
                 tokenizer.advanceToken();
                 break;
-
             case END_BLOCK:
+                break;
+            default:
+                throw new BadLogicException(MSG + token.getContent());
 
         }
     }

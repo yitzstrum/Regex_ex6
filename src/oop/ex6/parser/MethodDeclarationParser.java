@@ -17,7 +17,7 @@ public class MethodDeclarationParser extends Parser{
     private String methodName;
     private List<VariableData> methodParams = new ArrayList<>();
 
-    public MethodDeclarationParser(Token token) {
+    public MethodDeclarationParser(Token token) throws BadLogicException {
         this.token = token;
         String trimmedDecLine = token.getContent().trim();
         methodName = getName(trimmedDecLine.substring(METHOD_NAME_START_IND)).trim();
@@ -28,7 +28,7 @@ public class MethodDeclarationParser extends Parser{
         return new Pair<>(methodName, methodParams);
     }
 
-    private void setMethodParams(String decLine){
+    private void setMethodParams(String decLine) throws BadLogicException {
         Matcher paramMatcher = PARAMS_PATTERN.matcher(decLine);
         if (paramMatcher.find()){
             String[] params = paramMatcher.group(1).split(COMMA);

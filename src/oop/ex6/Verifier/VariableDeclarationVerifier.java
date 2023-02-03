@@ -12,14 +12,16 @@ import java.util.List;
 
 public class VariableDeclarationVerifier implements Verifier {
 
+    private static final String FINAL_DECLARATION_ERR =
+            "Cannot declare a final variable without an assignment";
     private Token token;
     private final static String ASSIGNMENT_ERR = "The assignment is invalid";
     private final VariableSymbolTable variableSymbolTable;
     private final DeclarationParser declarationParser;
 
 
-    public VariableDeclarationVerifier(Token token, VariableSymbolTable variableSymbolTable) {
-        if (token.getType() != Token.TokenType.VARIABLE_DECLARATION) {
+    public VariableDeclarationVerifier(Token token, VariableSymbolTable variableSymbolTable) throws BadLogicException {
+        if (token.getType() != Token.TokenType.VARIABLE_DECLARATION && token.getType() != Token.TokenType.FINAL_VARIABLE_DECLARATION) {
             throw new IllegalArgumentException("Token is not a variable declaration");
         }
         this.token = token;
@@ -68,7 +70,7 @@ public class VariableDeclarationVerifier implements Verifier {
         String name = variable.getFirst();
         String value = variable.getSecond();
         if (value == null) {
-            // error handle later
+            throw new BadLogicException(FINAL_DECLARATION_ERR);
         } else {
             VariableData.Type type = declarationParser.getType();
             if (!VariableAssignmentVerifier.isValidAssign(type, value)) {
