@@ -17,6 +17,7 @@ public class VariableDeclarationVerifier implements Verifier {
     private final static String ASSIGNMENT_ERR = "The assignment is invalid";
     private final VariableSymbolTable variableSymbolTable;
     private final DeclarationParser declarationParser;
+    private boolean isMethodParam = false;
 
 
     public VariableDeclarationVerifier(Token token, VariableSymbolTable variableSymbolTable) throws BadLogicException {
@@ -26,6 +27,10 @@ public class VariableDeclarationVerifier implements Verifier {
         this.token = token;
         this.variableSymbolTable = variableSymbolTable;
         this.declarationParser = new DeclarationParser(token.getContent());
+    }
+
+    public void setMethodFlag(boolean flag){
+        isMethodParam = flag;
     }
 
     @Override
@@ -68,11 +73,11 @@ public class VariableDeclarationVerifier implements Verifier {
     private void addFinalVariable(Pair<String, String> variable) throws BadLogicException {
         String name = variable.getFirst();
         String value = variable.getSecond();
-        if (value == null) {
+        if (value == null && !isMethodParam) {
             throw new BadLogicException(FINAL_DECLARATION_ERR);
         } else {
             VariableData.Type type = declarationParser.getType();
-            if (!VariableAssignmentVerifier.isValidAssign(type, value)) {
+            if (!VariableAssignmentVerifier.isValidAssign(type, value) && !isMethodParam) {
                 throw new BadLogicException(ASSIGNMENT_ERR);
             }
             VariableData variableData = new VariableData(type, VariableData.Modifier.FINAL);

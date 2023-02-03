@@ -9,6 +9,8 @@ import oop.ex6.parser.*;
 public class MethodDeclarationVerifier implements Verifier{
 
     private Tokenizer tokenizer;
+    private final String FINAL = "final";
+    private final String EMPTY_STRING = "";
     private final String RETURN_ERR = "The method should have a return statement prior to closing brackets";
     private final String CLOSING_BRACKET_ERR = "The method has no closing bracket";
 
@@ -53,8 +55,12 @@ public class MethodDeclarationVerifier implements Verifier{
         String[] varDeclarations = MethodDeclarationParser.getMethodParams(methodDecLine);
         for (String varDec : varDeclarations){
             Token methodVarToken = new Token(varDec + ";");
-            new VariableDeclarationVerifier(methodVarToken, localVariableSymbolTable).verify();
-            //ToDo - Handle final variables
+            VariableDeclarationVerifier variableDeclarationVerifier =
+                    new VariableDeclarationVerifier(methodVarToken, localVariableSymbolTable);
+            if (varDec.trim().startsWith(FINAL)){
+                variableDeclarationVerifier.setMethodFlag(true);
+            }
+            variableDeclarationVerifier.verify();
         }
     }
 }

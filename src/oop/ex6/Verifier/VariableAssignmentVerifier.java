@@ -14,14 +14,14 @@ public class VariableAssignmentVerifier implements Verifier{
 
     private final static String DOESNT_EXIST_ERR = "The variable has not been declared";
     private static final String ASSIGN_FINAL_ERR_MSG = "Cannot assign a value to a final variable";
-    private final VariableSymbolTable variableSymbolTable;
     private final DeclarationParser declarationParser;
     private Tokenizer tokenizer;
+    private final VariableSymbolTable localVariableSymbolTable;
     private VariableSymbolTable globalVariableSymbolTable;
 
     public VariableAssignmentVerifier(Tokenizer tokenizer,
-                                      VariableSymbolTable variableSymbolTable,
-                                      VariableSymbolTable  globalVariableSymbolTable) {
+                                      VariableSymbolTable localVariableSymbolTable,
+                                      VariableSymbolTable globalVariableSymbolTable) {
         this.tokenizer = tokenizer;
         this.globalVariableSymbolTable = globalVariableSymbolTable;
         if (tokenizer.getCurrentToken().getType() != Token.TokenType.VARIABLE_ASSIGNMENT) {
@@ -30,7 +30,7 @@ public class VariableAssignmentVerifier implements Verifier{
 
         this.globalVariableSymbolTable = globalVariableSymbolTable;
         this.tokenizer = tokenizer;
-        this.variableSymbolTable = variableSymbolTable;
+        this.localVariableSymbolTable = localVariableSymbolTable;
         this.declarationParser = new DeclarationParser(tokenizer.getCurrentToken().getContent(), true);
 
     }
@@ -92,11 +92,7 @@ public class VariableAssignmentVerifier implements Verifier{
     public void verify() throws BadLogicException {
         List<Pair<String, String>> assignments = declarationParser.parseAssigment();
         for (Pair<String, String> assignment : assignments) {
-            try {
-                verifySingleAssigment(assignment, variableSymbolTable);
-            } catch (BadLogicException e) {
-                verifySingleAssigment(assignment, globalVariableSymbolTable);
-            }
+            verifySingleAssigment(assignment);
         }
     }
 
@@ -104,19 +100,27 @@ public class VariableAssignmentVerifier implements Verifier{
         return variableSymbolTable.containsKey(variableName);
     }
 
-    private void verifySingleAssigment(Pair<String, String> assignment, VariableSymbolTable symbolTable)
+    private void verifySingleAssigment(Pair<String, String> assignment)
             throws BadLogicException {
+
         String variableName = assignment.getFirst();
         String value = assignment.getSecond();
-        if (!isVariableExists(symbolTable, variableName)) {
+        VariableSymbolTable variableSymbolTable;
+        if (isVariableExists(localVariableSymbolTable, variableName)) {
+            variableSymbolTable = localVariableSymbolTable;
+        }
+        else if (isVariableExists(globalVariableSymbolTable, variableName)){
+            variableSymbolTable = globalVariableSymbolTable;
+        }
+        else{
             throw new BadLogicException(DOESNT_EXIST_ERR);
         }
-        VariableData variableData = symbolTable.get(variableName);
+        VariableData variableData = variableSymbolTable.get(variableName);;
         if (variableData.isFinal()) {
             throw new BadLogicException(ASSIGN_FINAL_ERR_MSG);
         }
         isValidAssign(variableData.getType(), value);
-        symbolTable.put(variableName, new VariableData(variableData.getType(),
+        variableSymbolTable.put(variableName, new VariableData(variableData.getType(),
                 VariableData.Modifier.ASSIGNED));
     }
 }

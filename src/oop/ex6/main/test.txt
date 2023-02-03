@@ -1,12 +1,8 @@
 final int x = 5;
 boolean a = true, b, c = false;
-void method(int x, int y){
-    return;
-}
-void main() {
-    x = 3;
+void main(final boolean a) {
+    a = true;
     int y = 10;
-    jack(4);
     return;
 }
 int y = 8;
