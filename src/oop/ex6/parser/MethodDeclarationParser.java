@@ -14,6 +14,7 @@ public class MethodDeclarationParser extends Parser{
 
 
     private static final Pattern PARAMS_PATTERN = Pattern.compile(PARAMS_REGEX);
+    private static final String RESERVED_WORDS_ERR = "The method name is a reserved word";
 
     private String methodName;
     private List<VariableData> methodParams = new ArrayList<>();
@@ -22,6 +23,9 @@ public class MethodDeclarationParser extends Parser{
         this.token = token;
         String trimmedDecLine = token.getContent().trim();
         methodName = getName(trimmedDecLine.substring(METHOD_NAME_START_IND)).trim();
+        if (methodName.matches(RESERVED_WORDS)){
+            throw new BadLogicException(RESERVED_WORDS_ERR);
+        }
         setMethodParams(trimmedDecLine);
     }
 

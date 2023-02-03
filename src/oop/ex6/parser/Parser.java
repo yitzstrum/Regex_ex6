@@ -14,14 +14,28 @@ public abstract class Parser {
     protected static final String VARIABLE_NAME_REGEX = "(_+[\\w]|[a-zA-Z])[\\w]*";
     protected static final String VOID_REGEX = "void";
     protected static final String METHOD_NAME_REGEX = "([a-zA-Z]+[\\w]*)";
+    protected static final String UNASSIGNED_VARIABLE_REGEX = "^\\s*[a-zA-Z]\\w*\\s*";
+    protected static final String ASSIGNED_VARIABLE_REGEX = "^\\s*[a-zA-Z]\\w*\\s*=\\s*\\w+\\s*";
     protected static final String OPEN_PAREN_REGEX = "\\(";
     protected static final String CLOSE_PAREN_REGEX = "\\)";
     protected static final String OPEN_BRACKET_REGEX = "\\{";
     protected static final String TYPE_REGEX = "\\s*(int|double|String|boolean|char)\\s*";
     protected static final String SPACE_PLUS = "\\s+";
+    protected static final String EQUALS = "=";
+    protected static final String EMPTY_STRING = "";
     protected static final String FINAL_REGEX = "(final\\s+)?";
     protected static final String EQUAL_REGEX = SPACE_REGEX + "=" + SPACE_REGEX + "\\w+" + SPACE_REGEX;
     protected static final String SEMI_COLON_REGEX = SPACE_REGEX + ";" + SPACE_REGEX + END_LINE_REGEX;
+    protected static final String INT_TYPE = "int";
+    protected static final String DOUBLE_TYPE = "double";
+    protected static final String STRING_TYPE = "String";
+    protected static final String BOOLEAN_TYPE = "boolean";
+    protected static final String CHAR_TYPE = "char";
+    protected final String FINAL_PREFIX_REGEX = "^\\s*final\\s*";
+
+
+    protected static final String RESERVED_WORDS = "(int|double|String|boolean|char|" +
+            "void|final|if|while|true|false|return)";
 
     protected static final String FINAL_TYPE_REGEX = "^" +
             SPACE_REGEX +

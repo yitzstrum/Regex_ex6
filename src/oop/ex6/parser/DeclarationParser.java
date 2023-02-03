@@ -4,35 +4,19 @@ import oop.ex6.SymbolTable.VariableData;
 import oop.ex6.exceptions.BadLogicException;
 import oop.ex6.utils.Pair;
 import oop.ex6.utils.Utils;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static oop.ex6.utils.Utils.EMPTY_STRING;
+public class DeclarationParser extends Parser{
 
-public class DeclarationParser {
-
-    private static final String COMMA = ",";
-    private static final String EQUALS = "=";
+    private static final String VAR_RESERVED_WORDS_ERR = "The variable name is a reserved word";
     private final String TYPE_REGEX = "^\\s*(int|double|String|boolean|char)\\s*";
 
-    private static final String EMPTY_STRING = "";
-    private final String VARIABLE_ASSIGMENT_REGEX =
-            "((([a-zA-Z]\\w*\\s*)|([a-zA-Z]\\w*\\s*\\=\\s*\\w+))(,\\s*|;$))";
-    private static final String UNASSIGNED_VARIABLE_REGEX = "^\\s*[a-zA-Z]\\w*\\s*";
-    private static final String ASSIGNED_VARIABLE_REGEX = "^\\s*[a-zA-Z]\\w*\\s*=\\s*\\w+\\s*";
     private final VariableData.Type type;
     private final String content;
-    private final String FINAL_PREFIX_REGEX = "^\\s*final\\s*";
     private final boolean isFinal;
-
-    private static final String INT_TYPE = "int";
-    private static final String DOUBLE_TYPE = "double";
-    private static final String STRING_TYPE = "String";
-    private static final String BOOLEAN_TYPE = "boolean";
-    private static final String CHAR_TYPE = "char";
     private final String assigment;
 
     public DeclarationParser(String content, boolean isAssigment) {
@@ -40,7 +24,6 @@ public class DeclarationParser {
         this.isFinal = false;
         this.type = null;
         this.assigment = extractAssigment();
-
     }
 
     public DeclarationParser(String content) throws BadLogicException {
@@ -58,19 +41,14 @@ public class DeclarationParser {
         return type;
     }
 
-    public String getAssigment() {
-        return assigment;
-    }
-
     private boolean extractFinal() {
         // check if line start with final
         return Utils.isMatch(content, FINAL_PREFIX_REGEX);
     }
 
 
-    public List<Pair<String, String>> parseAssigment() {
+    public List<Pair<String, String>> parseAssigment() throws BadLogicException {
         // add syntax check later
-
         List<Pair<String, String>> variables = new ArrayList<>();
         for (String arg: assigment.split(COMMA)) {
             parseSingleArg(arg, variables);
@@ -78,7 +56,7 @@ public class DeclarationParser {
         return variables;
 
     }
-    private void parseSingleArg(String arg, List<Pair<String, String>> variables) {
+    private void parseSingleArg(String arg, List<Pair<String, String>> variables) throws BadLogicException {
         String[] regexes = {ASSIGNED_VARIABLE_REGEX, UNASSIGNED_VARIABLE_REGEX};
 
         for (int i = 0; i < regexes.length; i++) {
@@ -94,16 +72,22 @@ public class DeclarationParser {
             }
         }
     }
-    private void addUninitializedVariable(String arg, List<Pair<String, String>> variables) {
+    private void addUninitializedVariable(String arg, List<Pair<String, String>> variables) throws BadLogicException {
         arg = Utils.removeSpaces(arg);
+        if (arg.matches(RESERVED_WORDS)){
+            throw new BadLogicException(VAR_RESERVED_WORDS_ERR);
+        }
         Pair<String, String> pair = new Pair<>(arg, null);
         variables.add(pair);
     }
-    private void addInitializedVariable(String arg, List<Pair<String, String>> variables) {
+    private void addInitializedVariable(String arg, List<Pair<String, String>> variables) throws BadLogicException {
         // remove spaces and then split
         arg = Utils.removeSpaces(arg);
         String[] split = arg.split(EQUALS);
         Pair<String, String> pair = new Pair<>(split[0], split[1]);
+        if(split[0].matches(RESERVED_WORDS)){
+            throw new BadLogicException(VAR_RESERVED_WORDS_ERR);
+        }
         variables.add(pair);
 
     }
@@ -117,7 +101,6 @@ public class DeclarationParser {
         Pattern pattern = Pattern.compile(TYPE_REGEX);
         Matcher matcher = pattern.matcher(content);
         if (matcher.lookingAt()) {
-            content = matcher.replaceFirst("");
             String type = matcher.group();
             type = Utils.removeSpaces(type);
             switch (type) {
