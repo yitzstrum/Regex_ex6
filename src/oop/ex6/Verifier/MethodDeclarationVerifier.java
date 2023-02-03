@@ -10,7 +10,6 @@ public class MethodDeclarationVerifier implements Verifier{
 
     private Tokenizer tokenizer;
     private final String FINAL = "final";
-    private final String EMPTY_STRING = "";
     private final String RETURN_ERR = "The method should have a return statement prior to closing brackets";
     private final String CLOSING_BRACKET_ERR = "The method has no closing bracket";
 
@@ -35,10 +34,10 @@ public class MethodDeclarationVerifier implements Verifier{
         Token currToken = tokenizer.getCurrentToken();
         Token prevToken = currToken;
         while (currToken.getType() != Token.TokenType.END_BLOCK){
+            tokenizer.step(localVariableSymbolTable, globalVariableSymbolTable, methodSymbolTable);
             if (!tokenizer.hasNext()){
                 throw new BadLogicException(CLOSING_BRACKET_ERR);
             }
-            tokenizer.step(localVariableSymbolTable, globalVariableSymbolTable, methodSymbolTable);
             prevToken = currToken;
             currToken = tokenizer.getCurrentToken();
         }

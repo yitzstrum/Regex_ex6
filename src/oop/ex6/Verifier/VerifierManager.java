@@ -54,9 +54,6 @@ public class VerifierManager implements Verifier {
             case RETURN_STATEMENT:
                 tokenizer.advanceToken();
                 break;
-
-            case END_BLOCK:
-                break;
             default:
                 throw new BadLogicException(MSG + token.getContent());
         }

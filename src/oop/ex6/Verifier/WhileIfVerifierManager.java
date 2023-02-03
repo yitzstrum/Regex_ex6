@@ -23,6 +23,8 @@ public class WhileIfVerifierManager implements Verifier {
     private static final String BAD_IF_WHILE_SYNTAX_MSG = "ERROR: Bad syntax for if/while statement. ";
     private static final String BAD_IF_WHILE_PARAMS_MSG = "ERROR: Bad parameters for if/while statement. ";
 
+    private static final String BOOLEAN_REGEX = "\\s*(true)|(false)\\s*";
+
     private final Tokenizer tokenizer;
     private VariableSymbolTable localVariableSymbolTable;
 
@@ -84,8 +86,10 @@ public class WhileIfVerifierManager implements Verifier {
         String[] params = bracketsContent.split("(&&|\\|\\|)");
         for (String param : params) {
             param = Utils.removeSpaces(param);
-            if (!(globalVariableSymbolTable.containsKey(param) && globalVariableSymbolTable.get(param).isInitialized())) {
-                System.out.println(param);
+            boolean isBoolean = param.matches(BOOLEAN_REGEX);
+            if (!isBoolean &&
+                    !(globalVariableSymbolTable.containsKey(param)
+                            && globalVariableSymbolTable.get(param).isInitialized())) {
                 throw new BadLogicException(tokenizer.getCurrentToken().getContent());
             }
         }
