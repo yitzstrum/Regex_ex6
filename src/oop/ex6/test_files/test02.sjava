@@ -1,0 +1,5 @@
+// Test: Invalid method name
+// Result: Fail
+void 12(){
+    return;
+}

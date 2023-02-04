@@ -1,0 +1,5 @@
+// Test: No return statement
+// Result: Fail
+void main(){
+
+}

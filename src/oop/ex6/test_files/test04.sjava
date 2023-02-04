@@ -1,0 +1,5 @@
+// Test: Syntax error, method declaration doesn't start with void
+// Result: Fail
+method(){
+    return;
+}

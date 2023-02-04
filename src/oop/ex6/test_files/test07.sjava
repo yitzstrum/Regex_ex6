@@ -1,0 +1,7 @@
+// Test: Variable declared twice in the same scope
+// Result: Fail
+void method(){
+    int a;
+    int a;
+    return;
+}

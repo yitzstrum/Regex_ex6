@@ -1,0 +1,6 @@
+// Test: Variable assignment without being declared
+// Result: Fail
+void method(){
+    a = 5;
+    return;
+}

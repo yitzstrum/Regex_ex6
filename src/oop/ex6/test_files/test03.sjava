@@ -1,0 +1,5 @@
+// Test: Syntax error, no semi-collen after return
+// Result: Fail
+void method(){
+    return
+}

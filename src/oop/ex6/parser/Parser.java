@@ -15,8 +15,9 @@ public abstract class Parser {
     protected static final String VOID_REGEX = "void";
     protected static final String METHOD_NAME_REGEX = "([a-zA-Z]+[\\w]*)";
     protected static final String UNASSIGNED_VARIABLE_REGEX = "^\\s*[a-zA-Z]\\w*\\s*";
+    protected static final String NUMBER_REGEX = "(-?\\d+(\\.\\d+)?)";
 
-    private static final String EQUAL_RHS_REGEX = SPACE_REGEX + "[^=;,\\s{}]+" + SPACE_REGEX;
+    protected static final String EQUAL_RHS_REGEX = SPACE_REGEX + "[^=;,\\s{}]+" + SPACE_REGEX;
     protected static final String ASSIGNED_VARIABLE_REGEX = "^\\s*[a-zA-Z]\\w*\\s*=" + EQUAL_RHS_REGEX;
     protected static final String OPEN_PAREN_REGEX = "\\(";
     protected static final String CLOSE_PAREN_REGEX = "\\)";
@@ -39,6 +40,8 @@ public abstract class Parser {
 
     protected static final String RESERVED_WORDS = "(int|double|String|boolean|char|" +
             "void|final|if|while|true|false|return)";
+
+    protected static final String VALUES_REGEX = "(" + VARIABLE_NAME_REGEX + "|" + NUMBER_REGEX + "|true|false)";
 
     protected static final String FINAL_TYPE_REGEX = "^" +
             SPACE_REGEX +

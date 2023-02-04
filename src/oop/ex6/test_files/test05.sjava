@@ -1,0 +1,6 @@
+// Test: comment line starts with a space
+// Result: Fail
+void method(){
+ // this is an empty method
+    return;
+}

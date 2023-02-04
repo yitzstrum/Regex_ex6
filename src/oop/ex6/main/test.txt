@@ -1,6 +1,6 @@
-void bar() {
-	void foo() {
-		return;
-	}
-	return;
+// RecursiveCall
+void foo(){
+foo();
+foo();
+return;
 }

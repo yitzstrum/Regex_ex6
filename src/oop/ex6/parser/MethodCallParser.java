@@ -25,7 +25,7 @@ public class MethodCallParser extends Parser{
         return new Pair<>(methodName, callValues);
     }
 
-    private void setMethodValues(){
+    private void setMethodValues() throws BadLineException {
         Matcher valuesMatcher = METHOD_CALL_PATTERN.matcher(line);
         valuesMatcher.find();
         String values = valuesMatcher.group(2);
@@ -35,6 +35,11 @@ public class MethodCallParser extends Parser{
             }
             else{
                 callValues = values.split(COMMA);
+            }
+        }
+        for (String value : callValues){
+            if (!value.matches(VALUES_REGEX)){
+                throw new BadLineException(value);
             }
         }
     }
