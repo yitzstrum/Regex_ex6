@@ -95,7 +95,7 @@ public class WhileIfVerifierManager implements Verifier {
         // split the content by || or && and check each part is valid
         String[] params = bracketsContent.split("(&&|\\|\\|)");
         for (String param : params) {
-            param = Utils.removeSpaces(param);
+            param = param.trim();
             boolean isBoolean = param.matches(BOOLEAN_REGEX);
             if (!(isBoolean || isVariableBoolean(globalVariableSymbolTable, param))) {
                 throw new BadLogicException(tokenizer.getCurrentToken().getContent());
