@@ -30,7 +30,12 @@ public class MethodCallParser extends Parser{
         valuesMatcher.find();
         String values = valuesMatcher.group(2);
         if (values != null){
-            callValues = values.split(COMMA);
+            if (values.equals(EMPTY_STRING)){
+                callValues = new String[0];
+            }
+            else{
+                callValues = values.split(COMMA);
+            }
         }
     }
 

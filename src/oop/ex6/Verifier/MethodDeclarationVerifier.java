@@ -12,6 +12,7 @@ public class MethodDeclarationVerifier implements Verifier{
     private final String FINAL = "final";
     private final String RETURN_ERR = "The method should have a return statement prior to closing brackets";
     private final String CLOSING_BRACKET_ERR = "The method has no closing bracket";
+    private final String INNER_METHOD_ERR = "Can't declare a method within a method";
 
     private final VariableSymbolTable localVariableSymbolTable;
     private final VariableSymbolTable globalVariableSymbolTable;
@@ -34,6 +35,9 @@ public class MethodDeclarationVerifier implements Verifier{
         Token currToken = tokenizer.getCurrentToken();
         Token prevToken = currToken;
         while (currToken.getType() != Token.TokenType.END_BLOCK){
+            if(currToken.getType() == Token.TokenType.METHOD_DECLARATION){
+                throw new BadLogicException(INNER_METHOD_ERR);
+            }
             tokenizer.step(localVariableSymbolTable, globalVariableSymbolTable, methodSymbolTable);
             if (!tokenizer.hasNext()){
                 throw new BadLogicException(CLOSING_BRACKET_ERR);
