@@ -30,7 +30,8 @@ public class VerifierManager implements Verifier {
         switch (type) {
             case VARIABLE_DECLARATION:
             case FINAL_VARIABLE_DECLARATION:
-                new VariableDeclarationVerifier(tokenizer.getCurrentToken(), localVariableSymbolTable).verify();
+                new VariableDeclarationVerifier(tokenizer.getCurrentToken(), localVariableSymbolTable,
+                        globalVariableSymbolTable).verify();
                 tokenizer.advanceToken();
                 break;
             case VARIABLE_ASSIGNMENT:

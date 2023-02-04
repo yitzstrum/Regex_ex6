@@ -44,7 +44,8 @@ public class Tokenizer {
         for (int i = 0; i < tokens.length; i++) {
             tokens[i] = new Token(fileContent.get(i));
             if (bracketsCount == 0 && tokens[i].getType() == Token.TokenType.VARIABLE_DECLARATION){
-                new VariableDeclarationVerifier(getCurrentToken(), globalVariableSymbolTable).verify();
+                new VariableDeclarationVerifier(getCurrentToken(), globalVariableSymbolTable,
+                        new VariableSymbolTable()).verify();
             }
             if (tokens[i].getType() == Token.TokenType.METHOD_DECLARATION){
                 Pair<String, List<VariableData>> methodData = new MethodDeclarationParser(tokens[i]).getMethodData();

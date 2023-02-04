@@ -56,7 +56,8 @@ public class MethodDeclarationVerifier implements Verifier{
         for (String varDec : varDeclarations){
             Token methodVarToken = new Token(varDec + ";");
             VariableDeclarationVerifier variableDeclarationVerifier =
-                    new VariableDeclarationVerifier(methodVarToken, localVariableSymbolTable);
+                    new VariableDeclarationVerifier(methodVarToken, localVariableSymbolTable,
+                            globalVariableSymbolTable);
             if (varDec.trim().startsWith(FINAL)){
                 variableDeclarationVerifier.setMethodFlag(true); // TODO CHECK LATER
 
