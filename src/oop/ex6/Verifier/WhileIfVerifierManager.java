@@ -1,6 +1,7 @@
 package oop.ex6.Verifier;
 
 import oop.ex6.SymbolTable.MethodSymbolTable;
+import oop.ex6.SymbolTable.VariableData;
 import oop.ex6.SymbolTable.VariableSymbolTable;
 import oop.ex6.exceptions.BadLineException;
 import oop.ex6.exceptions.BadLogicException;
@@ -23,8 +24,8 @@ public class WhileIfVerifierManager implements Verifier {
     private static final String BAD_IF_WHILE_SYNTAX_MSG = "ERROR: Bad syntax for if/while statement. ";
     private static final String BAD_IF_WHILE_PARAMS_MSG = "ERROR: Bad parameters for if/while statement. ";
 
-    private static final String BOOLEAN_REGEX = "\\s*(true)|(false)\\s*";
-
+    private static final String NUMBER_REGEX = "(-?\\d+(\\.\\d+)?)";
+    private static final String BOOLEAN_REGEX = "\\s*(true)|(false)" +"|" + NUMBER_REGEX + "\\s*";
     private final Tokenizer tokenizer;
     private VariableSymbolTable localVariableSymbolTable;
 
@@ -80,6 +81,15 @@ public class WhileIfVerifierManager implements Verifier {
         }
     }
 
+    private boolean isVariableBoolean(VariableSymbolTable globalVariableSymbolTable, String param) {
+        if (!globalVariableSymbolTable.containsKey(param)) {
+            return false;
+        }
+        VariableData variableData = globalVariableSymbolTable.get(param);
+        return variableData.isRepresentBoolean() && variableData.isInitialized();
+
+    }
+
     private void validateBrackets(VariableSymbolTable globalVariableSymbolTable) throws BadLogicException {
         String bracketsContent = extractBrackets(tokenizer.getCurrentToken().getContent());
         // split the content by || or && and check each part is valid
@@ -87,9 +97,7 @@ public class WhileIfVerifierManager implements Verifier {
         for (String param : params) {
             param = Utils.removeSpaces(param);
             boolean isBoolean = param.matches(BOOLEAN_REGEX);
-            if (!isBoolean &&
-                    !(globalVariableSymbolTable.containsKey(param)
-                            && globalVariableSymbolTable.get(param).isInitialized())) {
+            if (!(isBoolean || isVariableBoolean(globalVariableSymbolTable, param))) {
                 throw new BadLogicException(tokenizer.getCurrentToken().getContent());
             }
         }

@@ -37,6 +37,10 @@ public class VariableData {
         return type;
     }
 
+    public boolean isRepresentBoolean() {
+        return type == Type.BOOLEAN || type == Type.DOUBLE || type == Type.INT;
+    }
+
     public String toString() {
         return "Type: " + type + ", Value: " + modifier;
     }
