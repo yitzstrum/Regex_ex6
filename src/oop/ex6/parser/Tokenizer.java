@@ -3,6 +3,7 @@ package oop.ex6.parser;
 import oop.ex6.SymbolTable.MethodSymbolTable;
 import oop.ex6.SymbolTable.VariableData;
 import oop.ex6.SymbolTable.VariableSymbolTable;
+import oop.ex6.Verifier.VariableAssignmentVerifier;
 import oop.ex6.Verifier.VariableDeclarationVerifier;
 import oop.ex6.Verifier.VerifierManager;
 import oop.ex6.exceptions.BadLineException;
@@ -16,6 +17,7 @@ public class Tokenizer {
     private static final String METHOD_OVERLOADING_ERR = "Method overloading is not allowed";
     private static final String RETURN_GLOBAL_ERR = "Return statement is not allowed to appear in global space";
     private static final String METHOD_CALL_ERR = "Method call is not allowed to appear in global space";
+    private static final String IF_WHILE_GLOBAL_ERR = "if/while statements are not allowed to appear in global space";
     private static Tokenizer tokenizer = null;
     private Token[] tokens;
     private int curTokenIndex;
@@ -47,6 +49,10 @@ public class Tokenizer {
                 new VariableDeclarationVerifier(getCurrentToken(), globalVariableSymbolTable,
                         new VariableSymbolTable()).verify();
             }
+            if (bracketsCount == 0 && tokens[i].getType() == Token.TokenType.VARIABLE_ASSIGNMENT){
+                new VariableAssignmentVerifier(this, globalVariableSymbolTable,
+                        new VariableSymbolTable()).verify();
+            }
             if (tokens[i].getType() == Token.TokenType.METHOD_DECLARATION){
                 Pair<String, List<VariableData>> methodData = new MethodDeclarationParser(tokens[i]).getMethodData();
                 if (methodSymbolTable.containsKey(methodData.getFirst())){
@@ -56,6 +62,9 @@ public class Tokenizer {
                 bracketsCount ++;
             }
             if (tokens[i].getType() == Token.TokenType.IF_WHILE_BLOCK) {
+                if (bracketsCount == 0){
+                    throw new BadLogicException(IF_WHILE_GLOBAL_ERR);
+                }
                 bracketsCount ++;
             }
             if (tokens[i].getType() == Token.TokenType.END_BLOCK){

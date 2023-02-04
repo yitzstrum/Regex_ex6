@@ -45,5 +45,15 @@ public class VariableData {
         return "Type: " + type + ", Value: " + modifier;
     }
 
+    public boolean canBeAssignedWith(VariableData.Type type) {
+        switch (type) {
+            case DOUBLE:
+                return this.type == type || this.type == Type.INT;
+            case BOOLEAN:
+                return this.type == type || this.type == Type.INT || this.type == Type.DOUBLE;
+            default:
+                return this.type == type;
+        }
+    }
 
 }

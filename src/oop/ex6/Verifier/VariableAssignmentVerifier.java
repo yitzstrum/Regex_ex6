@@ -87,7 +87,7 @@ public class VariableAssignmentVerifier implements Verifier{
         } else {
             return false;
         }
-        return symbolTable.get(value).getType() == type && symbolTable.get(value).isInitialized();
+        return symbolTable.get(value).canBeAssignedWith(type) && symbolTable.get(value).isInitialized();
     }
 
     private static boolean isValidInt(String value) {

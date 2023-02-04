@@ -91,18 +91,18 @@ public class VariableDeclarationVerifier implements Verifier {
     private void addFinalVariable(Pair<String, String> variable) throws BadLogicException {
         String name = variable.getFirst();
         String value = variable.getSecond();
-        // TODO CHECK LATER
         if (isMethodParam) {
             VariableData.Type type = declarationParser.getType();
             VariableData variableData = new VariableData(type, VariableData.Modifier.FINAL);
             localVariableSymbolTable.put(name, variableData);
         }
 
-        else if (value == null && !isMethodParam) {
+        else if (value == null) {
             throw new BadLogicException(FINAL_DECLARATION_ERR);
         } else {
             VariableData.Type type = declarationParser.getType();
-            if (!VariableAssignmentVerifier.isValidAssign(type, value) && !isMethodParam) {
+            if (!VariableAssignmentVerifier.isGeneralValidAssign(globalVariableSymbolTable,
+                    localVariableSymbolTable, type, value) && !isMethodParam) {
                 throw new BadLogicException(ASSIGNMENT_ERR);
             }
             VariableData variableData = new VariableData(type, VariableData.Modifier.FINAL);

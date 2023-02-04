@@ -38,7 +38,7 @@ public class MethodCallParser extends Parser{
             }
         }
         for (String value : callValues){
-            if (!value.matches(VALUES_REGEX)){
+            if (!value.trim().matches(VALUES_REGEX)){
                 throw new BadLineException(value);
             }
         }

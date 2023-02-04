@@ -1,8 +1,5 @@
-// Char As Value
-void foo(char c){
-return;
-}
-void foo2(){
-foo('a');
-return;
-}
+int eger = 8;
+char mander = 'a';
+double d = 0;
+String attached = "    spaces   			";
+boolean sheu = true;
