@@ -35,7 +35,7 @@ public class Tokenizer {
 
     public void run() throws BadLogicException, BadLineException {
         while (curTokenIndex < tokens.length){
-            step(new VariableSymbolTable(), globalVariableSymbolTable, methodSymbolTable);
+            step(new VariableSymbolTable(), globalVariableSymbolTable, methodSymbolTable, false);
         }
     }
 
@@ -51,7 +51,7 @@ public class Tokenizer {
             }
             else if (bracketsCount == 0 && tokens[i].getType() == Token.TokenType.VARIABLE_ASSIGNMENT){
                 new VariableAssignmentVerifier(this, globalVariableSymbolTable,
-                        new VariableSymbolTable()).verify();
+                        new VariableSymbolTable(), false).verify();
             }
             else if (tokens[i].getType() == Token.TokenType.METHOD_DECLARATION){
                 Pair<String, List<VariableData>> methodData = new MethodDeclarationParser(tokens[i]).getMethodData();
@@ -82,12 +82,13 @@ public class Tokenizer {
 
 
     public void step(VariableSymbolTable localVariableSymbolTable,
-                     VariableSymbolTable globalVariableSymbolTable, MethodSymbolTable methodSymbolTable) throws
+                     VariableSymbolTable globalVariableSymbolTable,
+                     MethodSymbolTable methodSymbolTable, boolean inMethod) throws
             BadLogicException, BadLineException {
         new VerifierManager(this,
                 localVariableSymbolTable,
                 globalVariableSymbolTable,
-                methodSymbolTable).verify();
+                methodSymbolTable, inMethod).verify();
     }
 
     public boolean hasNext(){

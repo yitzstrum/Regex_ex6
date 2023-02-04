@@ -65,7 +65,7 @@ public class WhileIfVerifierManager implements Verifier {
                     tokenizer.advanceToken();
                     break;
                 default:
-                    tokenizer.step(localVariableSymbolTable, stack.lastElement(), methodSymbolTable);
+                    tokenizer.step(localVariableSymbolTable, stack.lastElement(), methodSymbolTable, true);
             }
         } while (stack.size() > 0);
     }

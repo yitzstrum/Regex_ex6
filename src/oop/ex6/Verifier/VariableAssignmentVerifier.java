@@ -25,12 +25,15 @@ public class VariableAssignmentVerifier implements Verifier{
     private Tokenizer tokenizer;
     private final VariableSymbolTable localVariableSymbolTable;
     private VariableSymbolTable globalVariableSymbolTable;
+    private boolean inMethod;
 
     public VariableAssignmentVerifier(Tokenizer tokenizer,
                                       VariableSymbolTable localVariableSymbolTable,
-                                      VariableSymbolTable globalVariableSymbolTable) {
+                                      VariableSymbolTable globalVariableSymbolTable,
+                                      boolean inMethod) {
         this.tokenizer = tokenizer;
         this.globalVariableSymbolTable = globalVariableSymbolTable;
+        this.inMethod = inMethod;
         if (tokenizer.getCurrentToken().getType() != Token.TokenType.VARIABLE_ASSIGNMENT) {
             throw new IllegalArgumentException("Token is not a variable assignment");
         }
@@ -140,7 +143,21 @@ public class VariableAssignmentVerifier implements Verifier{
             variableSymbolTable = localVariableSymbolTable;
         }
         else if (isVariableExists(globalVariableSymbolTable, variableName)){
-            variableSymbolTable = globalVariableSymbolTable;
+            if (inMethod){
+                VariableData tempVar = globalVariableSymbolTable.get(variableName);
+                if (tempVar.isFinal()){
+                    localVariableSymbolTable.put(variableName, new VariableData(tempVar.getType(),
+                            VariableData.Modifier.FINAL));
+                }
+                else {
+                    localVariableSymbolTable.put(variableName, new VariableData(tempVar.getType(),
+                            VariableData.Modifier.ASSIGNED));
+                }
+                variableSymbolTable = localVariableSymbolTable;
+            }
+            else{
+                variableSymbolTable = globalVariableSymbolTable;
+            }
         }
         else{
             throw new BadLogicException(DOESNT_EXIST_ERR);
@@ -154,7 +171,9 @@ public class VariableAssignmentVerifier implements Verifier{
         if (!isGeneralValidAssign(localVariableSymbolTable, globalVariableSymbolTable, variableData.getType(), value)){
             throw new BadLogicException(ASSIGN_TYPE_ERR);
         }
-        variableSymbolTable.put(variableName, new VariableData(variableData.getType(),
-                VariableData.Modifier.ASSIGNED));
+        if (!inMethod){
+            variableSymbolTable.put(variableName, new VariableData(variableData.getType(),
+                    VariableData.Modifier.ASSIGNED));
+        }
     }
 }

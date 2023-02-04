@@ -14,14 +14,17 @@ public class VerifierManager implements Verifier {
     private final VariableSymbolTable localVariableSymbolTable;
     private final VariableSymbolTable globalVariableSymbolTable;
     private final MethodSymbolTable methodSymbolTable;
+    private boolean inMethod;
 
     public VerifierManager(Tokenizer tokenizer, VariableSymbolTable localVariableSymbolTable,
-                           VariableSymbolTable globalVariableSymbolTable, MethodSymbolTable methodSymbolTable) {
+                           VariableSymbolTable globalVariableSymbolTable, MethodSymbolTable methodSymbolTable,
+                           boolean inMethod) {
         this.tokenizer = tokenizer;
         this.token = tokenizer.getCurrentToken();
         this.localVariableSymbolTable = localVariableSymbolTable;
         this.globalVariableSymbolTable = globalVariableSymbolTable;
         this.methodSymbolTable = methodSymbolTable;
+        this.inMethod = inMethod;
     }
 
     @Override
@@ -35,7 +38,8 @@ public class VerifierManager implements Verifier {
                 tokenizer.advanceToken();
                 break;
             case VARIABLE_ASSIGNMENT:
-                new VariableAssignmentVerifier(tokenizer, localVariableSymbolTable, globalVariableSymbolTable).verify();
+                new VariableAssignmentVerifier(tokenizer, localVariableSymbolTable,
+                        globalVariableSymbolTable, inMethod).verify();
                 tokenizer.advanceToken();
                 break;
             case IF_WHILE_BLOCK:

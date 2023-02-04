@@ -38,7 +38,7 @@ public class MethodDeclarationVerifier implements Verifier{
             if(currToken.getType() == Token.TokenType.METHOD_DECLARATION){
                 throw new BadLogicException(INNER_METHOD_ERR);
             }
-            tokenizer.step(localVariableSymbolTable, globalVariableSymbolTable, methodSymbolTable);
+            tokenizer.step(localVariableSymbolTable, globalVariableSymbolTable, methodSymbolTable, true);
             if (!tokenizer.hasNext()){
                 throw new BadLogicException(CLOSING_BRACKET_ERR);
             }
