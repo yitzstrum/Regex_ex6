@@ -1,4 +1,4 @@
 void foo() {
-char a = 'a';
+int a = -5;
 return;
 }

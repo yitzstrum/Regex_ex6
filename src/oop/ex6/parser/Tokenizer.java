@@ -15,6 +15,7 @@ import java.util.List;
 public class Tokenizer {
     private static final String METHOD_OVERLOADING_ERR = "Method overloading is not allowed";
     private static final String RETURN_GLOBAL_ERR = "Return statement is not allowed to appear in global space";
+    private static final String METHOD_CALL_ERR = "Method call is not allowed to appear in global space";
     private static Tokenizer tokenizer = null;
     private Token[] tokens;
     private int curTokenIndex;
@@ -61,6 +62,9 @@ public class Tokenizer {
             }
             if (tokens[i].getType() == Token.TokenType.RETURN_STATEMENT && bracketsCount == 0){
                 throw new BadLogicException(RETURN_GLOBAL_ERR);
+            }
+            if (tokens[i].getType() == Token.TokenType.METHOD_CALL && bracketsCount == 0){
+                throw new BadLogicException(METHOD_CALL_ERR);
             }
             curTokenIndex ++;
         }
