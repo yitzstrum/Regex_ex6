@@ -27,6 +27,8 @@ public abstract class Parser {
     protected static final String EQUALS = "=";
     protected static final String EMPTY_STRING = "";
     protected static final String FINAL_REGEX = "(final\\s+)?";
+    protected static final String STRING_REGEX = "\"[^\"].*\"";
+    protected static final String CHAR_REGEX = "'[^'].*'";
 
     protected static final String EQUAL_REGEX = SPACE_REGEX + EQUALS + SPACE_REGEX + EQUAL_RHS_REGEX + SPACE_REGEX;
     protected static final String SEMI_COLON_REGEX = SPACE_REGEX + ";" + SPACE_REGEX + END_LINE_REGEX;
@@ -41,7 +43,8 @@ public abstract class Parser {
     protected static final String RESERVED_WORDS = "(int|double|String|boolean|char|" +
             "void|final|if|while|true|false|return)";
 
-    protected static final String VALUES_REGEX = "(" + VARIABLE_NAME_REGEX + "|" + NUMBER_REGEX + "|true|false)";
+    protected static final String VALUES_REGEX = "(" + VARIABLE_NAME_REGEX + "|" +
+            NUMBER_REGEX + "|" + CHAR_REGEX + "|" + STRING_REGEX + "|true|false)";
 
     protected static final String FINAL_TYPE_REGEX = "^" +
             SPACE_REGEX +
