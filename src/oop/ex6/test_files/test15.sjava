@@ -1,0 +1,10 @@
+// Test: Syntax error in 'if' condition
+// Result: Fail
+
+void main(){
+    if (tr ue){
+
+    }
+    return;
+}
+

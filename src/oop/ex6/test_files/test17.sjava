@@ -1,0 +1,9 @@
+// Test: final variable can't be modified
+// Result: Fail
+
+void main(){
+    final int a = 5;
+    a = 8;
+    return;
+}
+

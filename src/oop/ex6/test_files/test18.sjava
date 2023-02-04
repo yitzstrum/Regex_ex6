@@ -1,0 +1,7 @@
+// Test: final variable declaration must be initialized
+// Result: Fail
+
+void main(){
+    final int a;
+    return;
+}

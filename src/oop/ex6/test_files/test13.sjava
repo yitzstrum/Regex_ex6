@@ -1,0 +1,4 @@
+// Test: Reserved word as variable name
+// Result: Fail
+
+int int;

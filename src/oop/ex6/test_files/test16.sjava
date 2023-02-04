@@ -1,0 +1,10 @@
+// Test: 'if' statement can receive constant numbers
+// Result: Success
+
+void main(){
+    if (5){
+
+    }
+    return;
+}
+

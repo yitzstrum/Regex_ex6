@@ -1,0 +1,8 @@
+// Test: Method called in global scope
+// Result: Fail
+
+void main(){
+    return;
+}
+
+main();

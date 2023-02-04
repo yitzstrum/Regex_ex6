@@ -1,0 +1,12 @@
+// Test: a method may not receive a not assigned variable
+// Result: Fail
+
+void main(int a){
+    return;
+}
+
+void foo(){
+    int b;
+    main(b);
+    return;
+}

@@ -14,6 +14,7 @@ public class MethodCallVerifier implements Verifier{
 
     private final static String METHOD_DOESNT_EXIST_ERR = "The method you are trying to call doesn't exist";
     private final static String VAR_TYPE_ERR = "The variable types don't match";
+    private final static String VAR_NOT_ASSIGNED_ERR = "The variable has not been initialized";
     private final static String VARIABLE_COUNT_ERR = "The number of variables sent " +
             "don't match the method variable count";
     private Tokenizer tokenizer;
@@ -54,10 +55,16 @@ public class MethodCallVerifier implements Verifier{
                 if (localVariableSymbolTable.get(value).getType() != variableDataList.get(i).getType()){
                     throw new BadLogicException(VAR_TYPE_ERR);
                 }
+                if (!localVariableSymbolTable.get(value).isInitialized()){
+                    throw new BadLogicException(VAR_NOT_ASSIGNED_ERR);
+                }
             }
             else if (globalVariableSymbolTable.containsKey(value)){
                 if (globalVariableSymbolTable.get(value).getType() != variableDataList.get(i).getType()){
                     throw new BadLogicException(VAR_TYPE_ERR);
+                }
+                if (!globalVariableSymbolTable.get(value).isInitialized()){
+                    throw new BadLogicException(VAR_NOT_ASSIGNED_ERR);
                 }
             }
             else{

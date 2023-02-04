@@ -1,0 +1,7 @@
+// Test: Recursive call
+// Result: Success
+
+void method(){
+    method();
+    return;
+}

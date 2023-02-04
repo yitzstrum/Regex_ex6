@@ -1,0 +1,12 @@
+// Test: a method may receive a non final variable to a final variable
+// Result: Success
+
+void main(final int a){
+    return;
+}
+
+void foo(){
+    int b = 5;
+    main(b);
+    return;
+}
