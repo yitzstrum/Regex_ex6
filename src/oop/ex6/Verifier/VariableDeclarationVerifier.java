@@ -18,17 +18,22 @@ public class VariableDeclarationVerifier implements Verifier {
             "Cannot declare a final variable without an assignment";
     private final static String ASSIGNMENT_ERR = "The assignment is invalid";
     private final static String DOUBLE_DEC_ERR = "The variable can't be declared twice in the same scope";
-    private final VariableSymbolTable variableSymbolTable;
+    private final VariableSymbolTable localVariableSymbolTable;
     private final DeclarationParser declarationParser;
     private boolean isMethodParam = false;
+    private VariableSymbolTable globalVariableSymbolTable;
 
 
-    public VariableDeclarationVerifier(Token token, VariableSymbolTable variableSymbolTable) throws BadLogicException {
+    public VariableDeclarationVerifier(Token token, VariableSymbolTable localVariableSymbolTable,
+                                       VariableSymbolTable globalVariableSymbolTable) throws BadLogicException
+    {
         if (token.getType() != Token.TokenType.VARIABLE_DECLARATION && token.getType() != Token.TokenType.FINAL_VARIABLE_DECLARATION) {
             throw new IllegalArgumentException("Token is not a variable declaration");
         }
+
         this.token = token;
-        this.variableSymbolTable = variableSymbolTable;
+        this.globalVariableSymbolTable = globalVariableSymbolTable;
+        this.localVariableSymbolTable = localVariableSymbolTable;
         this.declarationParser = new DeclarationParser(token.getContent());
     }
 
@@ -44,7 +49,7 @@ public class VariableDeclarationVerifier implements Verifier {
     private void addToTable() throws BadLogicException {
         List<Pair<String, String>> variables = declarationParser.parseAssigment();
         for (Pair<String, String> variable: variables) {
-            if (variableSymbolTable.containsKey(variable.getFirst())) {
+            if (localVariableSymbolTable.containsKey(variable.getFirst())) {
                 throw new BadLogicException(VARIABLE_ALREADY_DECLARED_ERR);
             }
             addSingleArgument(variable);
@@ -52,7 +57,7 @@ public class VariableDeclarationVerifier implements Verifier {
     }
 
     private void addSingleArgument(Pair<String, String> variable) throws BadLogicException {
-        if (variableSymbolTable.containsKey(variable.getFirst())){
+        if (localVariableSymbolTable.containsKey(variable.getFirst())){
             throw new BadLogicException(DOUBLE_DEC_ERR);
         }
         if (declarationParser.getIsFinal()) {
@@ -76,10 +81,11 @@ public class VariableDeclarationVerifier implements Verifier {
         else {
             variableData = new VariableData(type,  VariableData.Modifier.ASSIGNED);
         }
-        if (!VariableAssignmentVerifier.isValidAssign(type, value)) {
+        if (!VariableAssignmentVerifier.isGeneralValidAssign(localVariableSymbolTable,
+                globalVariableSymbolTable, variableData.getType(), value)) {
             throw new BadLogicException(ASSIGNMENT_ERR);
         }
-        variableSymbolTable.put(name, variableData);
+        localVariableSymbolTable.put(name, variableData);
     }
 
     private void addFinalVariable(Pair<String, String> variable) throws BadLogicException {
@@ -89,7 +95,7 @@ public class VariableDeclarationVerifier implements Verifier {
         if (isMethodParam) {
             VariableData.Type type = declarationParser.getType();
             VariableData variableData = new VariableData(type, VariableData.Modifier.FINAL);
-            variableSymbolTable.put(name, variableData);
+            localVariableSymbolTable.put(name, variableData);
         }
 
         else if (value == null && !isMethodParam) {
@@ -100,7 +106,7 @@ public class VariableDeclarationVerifier implements Verifier {
                 throw new BadLogicException(ASSIGNMENT_ERR);
             }
             VariableData variableData = new VariableData(type, VariableData.Modifier.FINAL);
-            variableSymbolTable.put(name, variableData);
+            localVariableSymbolTable.put(name, variableData);
         }
     }
 }

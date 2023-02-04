@@ -45,7 +45,7 @@ public class VariableAssignmentVerifier implements Verifier{
         if (value == null) {
             return true;
         }
-        if (value.matches(VARIABLE_NAME_REGEX)) {
+        if (localVariableSymbolTable.containsKey(value) || globalVariableSymbolTable.containsKey(value)) {
             return isValidVariableAssign(localVariableSymbolTable, globalVariableSymbolTable, type, value);
         }
         return isValidAssign(type, value);
