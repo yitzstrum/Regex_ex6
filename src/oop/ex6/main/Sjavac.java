@@ -28,7 +28,7 @@ public class Sjavac {
         }
         catch (BadLineException | BadLogicException e) {
             System.out.println(ILLEGAL_CODE);
-//            System.out.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 

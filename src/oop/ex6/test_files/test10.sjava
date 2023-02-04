@@ -1,0 +1,10 @@
+// Test: Wrong variable assignment
+// Result: Fail
+
+String a;
+
+void method(){
+    int a;
+    a = "hello";
+    return;
+}

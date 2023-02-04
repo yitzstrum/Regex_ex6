@@ -1,0 +1,6 @@
+// Test: method called with wrong number of values
+// Result: Fail
+void method(){
+    method(5);
+    return;
+}

@@ -1,0 +1,6 @@
+// Test: method called with wrong value type
+// Result: Fail
+void method(Char a){
+    method(5);
+    return;
+}

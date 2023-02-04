@@ -18,6 +18,7 @@ public class VariableAssignmentVerifier implements Verifier{
 
     private final static String DOESNT_EXIST_ERR = "The variable has not been declared";
     private static final String ASSIGN_FINAL_ERR_MSG = "Cannot assign a value to a final variable";
+    private static final String ASSIGN_TYPE_ERR = "The value doesn't match the variable type";
     private final DeclarationParser declarationParser;
     private Tokenizer tokenizer;
     private final VariableSymbolTable localVariableSymbolTable;
@@ -156,8 +157,9 @@ public class VariableAssignmentVerifier implements Verifier{
         }
 
 
-        isGeneralValidAssign(localVariableSymbolTable, globalVariableSymbolTable, variableData.getType(),
-                value);
+        if (!isGeneralValidAssign(localVariableSymbolTable, globalVariableSymbolTable, variableData.getType(), value)){
+            throw new BadLogicException(ASSIGN_TYPE_ERR);
+        }
         variableSymbolTable.put(variableName, new VariableData(variableData.getType(),
                 VariableData.Modifier.ASSIGNED));
     }

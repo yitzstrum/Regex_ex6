@@ -1,1 +1,10 @@
+// Test: Variable override within function
+// Result: Success
 
+int a;
+
+void method(){
+    String a;
+    a = "hello";
+    return;
+}
