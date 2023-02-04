@@ -102,7 +102,7 @@ public class DeclarationParser extends Parser{
         Matcher matcher = pattern.matcher(content);
         if (matcher.lookingAt()) {
             String type = matcher.group();
-            type = Utils.removeSpaces(type);
+            type = type.trim();
             switch (type) {
                 case INT_TYPE:
                     return VariableData.Type.INT;
