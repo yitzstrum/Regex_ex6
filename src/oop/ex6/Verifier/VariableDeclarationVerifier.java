@@ -12,6 +12,8 @@ import java.util.List;
 public class VariableDeclarationVerifier implements Verifier {
 
     private Token token;
+
+    private static final String VARIABLE_ALREADY_DECLARED_ERR = "Variable already declared";
     private static final String FINAL_DECLARATION_ERR =
             "Cannot declare a final variable without an assignment";
     private final static String ASSIGNMENT_ERR = "The assignment is invalid";
@@ -41,6 +43,9 @@ public class VariableDeclarationVerifier implements Verifier {
     private void addToTable() throws BadLogicException {
         List<Pair<String, String>> variables = declarationParser.parseAssigment();
         for (Pair<String, String> variable: variables) {
+            if (variableSymbolTable.containsKey(variable.getFirst())) {
+                throw new BadLogicException(VARIABLE_ALREADY_DECLARED_ERR);
+            }
             addSingleArgument(variable);
         }
     }
@@ -58,7 +63,10 @@ public class VariableDeclarationVerifier implements Verifier {
         String value = variable.getSecond();
         VariableData.Type type = declarationParser.getType();
         VariableData variableData;
-        if (value == null) {
+        if (isMethodParam) {
+            variableData = new VariableData(type,  VariableData.Modifier.ASSIGNED);
+        }
+        else if (value == null) {
             variableData = new VariableData(type,  VariableData.Modifier.NONE);
         }
         else {
@@ -73,7 +81,14 @@ public class VariableDeclarationVerifier implements Verifier {
     private void addFinalVariable(Pair<String, String> variable) throws BadLogicException {
         String name = variable.getFirst();
         String value = variable.getSecond();
-        if (value == null && !isMethodParam) {
+        // TODO CHECK LATER
+        if (isMethodParam) {
+            VariableData.Type type = declarationParser.getType();
+            VariableData variableData = new VariableData(type, VariableData.Modifier.FINAL);
+            variableSymbolTable.put(name, variableData);
+        }
+
+        else if (value == null && !isMethodParam) {
             throw new BadLogicException(FINAL_DECLARATION_ERR);
         } else {
             VariableData.Type type = declarationParser.getType();

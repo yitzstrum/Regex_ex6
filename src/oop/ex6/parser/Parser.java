@@ -1,5 +1,6 @@
 package oop.ex6.parser;
 
+import javax.swing.text.html.HTML;
 import java.util.regex.Pattern;
 
 public abstract class Parser {
@@ -15,7 +16,9 @@ public abstract class Parser {
     protected static final String VOID_REGEX = "void";
     protected static final String METHOD_NAME_REGEX = "([a-zA-Z]+[\\w]*)";
     protected static final String UNASSIGNED_VARIABLE_REGEX = "^\\s*[a-zA-Z]\\w*\\s*";
-    protected static final String ASSIGNED_VARIABLE_REGEX = "^\\s*[a-zA-Z]\\w*\\s*=\\s*\\w+\\s*";
+
+    private static final String EQUAL_RHS_REGEX = "\\s*[^;,\\s{}]+\\s*";
+    protected static final String ASSIGNED_VARIABLE_REGEX = "^\\s*[a-zA-Z]\\w*\\s*=" + EQUAL_RHS_REGEX;
     protected static final String OPEN_PAREN_REGEX = "\\(";
     protected static final String CLOSE_PAREN_REGEX = "\\)";
     protected static final String OPEN_BRACKET_REGEX = "\\{";
@@ -24,7 +27,8 @@ public abstract class Parser {
     protected static final String EQUALS = "=";
     protected static final String EMPTY_STRING = "";
     protected static final String FINAL_REGEX = "(final\\s+)?";
-    protected static final String EQUAL_REGEX = SPACE_REGEX + "=" + SPACE_REGEX + "\\w+" + SPACE_REGEX;
+
+    protected static final String EQUAL_REGEX = SPACE_REGEX + "=" + SPACE_REGEX + ".+" + SPACE_REGEX;
     protected static final String SEMI_COLON_REGEX = SPACE_REGEX + ";" + SPACE_REGEX + END_LINE_REGEX;
     protected static final String INT_TYPE = "int";
     protected static final String DOUBLE_TYPE = "double";
