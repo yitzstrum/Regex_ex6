@@ -12,6 +12,10 @@ import java.util.List;
 
 public class VariableAssignmentVerifier implements Verifier{
 
+    private static final String STRING_REGEX = "\"[^\"]*\"";
+
+    protected static final String VARIABLE_NAME_REGEX = "(_+[\\w]|[a-zA-Z])[\\w]*";
+
     private final static String DOESNT_EXIST_ERR = "The variable has not been declared";
     private static final String ASSIGN_FINAL_ERR_MSG = "Cannot assign a value to a final variable";
     private final DeclarationParser declarationParser;
@@ -35,10 +39,23 @@ public class VariableAssignmentVerifier implements Verifier{
 
     }
 
+    public static boolean isGeneralValidAssign(VariableSymbolTable localVariableSymbolTable,
+                                               VariableSymbolTable globalVariableSymbolTable,
+                                               VariableData.Type type , String value) {
+        if (value == null) {
+            return true;
+        }
+        if (value.matches(VARIABLE_NAME_REGEX)) {
+            return isValidVariableAssign(localVariableSymbolTable, globalVariableSymbolTable, type, value);
+        }
+        return isValidAssign(type, value);
+    }
+
     public static boolean isValidAssign(VariableData.Type type , String value) {
         if (value == null) {
             return true;
         }
+
         switch (type) {
             case INT:
                 return isValidInt(value);
@@ -53,6 +70,23 @@ public class VariableAssignmentVerifier implements Verifier{
             default:
                 throw new IllegalArgumentException("Invalid type");
         }
+    }
+
+    private static boolean isValidVariableAssign(VariableSymbolTable localVariableSymbolTable,
+                                                 VariableSymbolTable globalVariableSymbolTable,
+                                                 VariableData.Type type , String value) {
+        if (!value.matches(VARIABLE_NAME_REGEX)) {
+            return false;
+        }
+        VariableSymbolTable symbolTable;
+        if (globalVariableSymbolTable.containsKey(value)) {
+            symbolTable = globalVariableSymbolTable;
+        } else if (localVariableSymbolTable.containsKey(value)) {
+            symbolTable = localVariableSymbolTable;
+        } else {
+            return false;
+        }
+        return symbolTable.get(value).getType() == type && symbolTable.get(value).isInitialized();
     }
 
     private static boolean isValidInt(String value) {
@@ -76,7 +110,7 @@ public class VariableAssignmentVerifier implements Verifier{
     }
 
     private static boolean isValidString(String value) {
-        return value.startsWith("\"") && value.endsWith("\"");
+        return value.matches(STRING_REGEX);
     }
 
     private static boolean isValidBoolean(String value) {
@@ -100,6 +134,7 @@ public class VariableAssignmentVerifier implements Verifier{
         return variableSymbolTable.containsKey(variableName);
     }
 
+
     private void verifySingleAssigment(Pair<String, String> assignment)
             throws BadLogicException {
 
@@ -119,7 +154,10 @@ public class VariableAssignmentVerifier implements Verifier{
         if (variableData.isFinal()) {
             throw new BadLogicException(ASSIGN_FINAL_ERR_MSG);
         }
-        isValidAssign(variableData.getType(), value);
+
+
+        isGeneralValidAssign(localVariableSymbolTable, globalVariableSymbolTable, variableData.getType(),
+                value);
         variableSymbolTable.put(variableName, new VariableData(variableData.getType(),
                 VariableData.Modifier.ASSIGNED));
     }
