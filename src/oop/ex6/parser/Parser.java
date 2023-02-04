@@ -1,6 +1,5 @@
 package oop.ex6.parser;
 
-import javax.swing.text.html.HTML;
 import java.util.regex.Pattern;
 
 public abstract class Parser {
