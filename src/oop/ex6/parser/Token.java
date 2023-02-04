@@ -64,9 +64,9 @@ public class Token extends Parser{
     private boolean isMethodDeclaration(String line) {
         return line.matches(METHOD_DEC_REGEX);
     }
-    
+
     private boolean isEndBlock(String line) {
-        return Utils.isMatch(line, BLOCK_END_REGEX);
+        return line.matches(BLOCK_END_REGEX);
     }
 
     private boolean ifIsWhileBlock(String line) {
@@ -93,7 +93,3 @@ public class Token extends Parser{
         return  ("Token type: " + type + " content: " + content); // for debug edit it later
     }
 }
-
-
-
-

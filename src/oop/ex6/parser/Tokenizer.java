@@ -49,11 +49,11 @@ public class Tokenizer {
                 new VariableDeclarationVerifier(getCurrentToken(), globalVariableSymbolTable,
                         new VariableSymbolTable()).verify();
             }
-            if (bracketsCount == 0 && tokens[i].getType() == Token.TokenType.VARIABLE_ASSIGNMENT){
+            else if (bracketsCount == 0 && tokens[i].getType() == Token.TokenType.VARIABLE_ASSIGNMENT){
                 new VariableAssignmentVerifier(this, globalVariableSymbolTable,
                         new VariableSymbolTable()).verify();
             }
-            if (tokens[i].getType() == Token.TokenType.METHOD_DECLARATION){
+            else if (tokens[i].getType() == Token.TokenType.METHOD_DECLARATION){
                 Pair<String, List<VariableData>> methodData = new MethodDeclarationParser(tokens[i]).getMethodData();
                 if (methodSymbolTable.containsKey(methodData.getFirst())){
                     throw new BadLogicException(METHOD_OVERLOADING_ERR);
@@ -61,19 +61,19 @@ public class Tokenizer {
                 methodSymbolTable.put(methodData.getFirst(), methodData.getSecond());
                 bracketsCount ++;
             }
-            if (tokens[i].getType() == Token.TokenType.IF_WHILE_BLOCK) {
+            else if (tokens[i].getType() == Token.TokenType.IF_WHILE_BLOCK) {
                 if (bracketsCount == 0){
                     throw new BadLogicException(IF_WHILE_GLOBAL_ERR);
                 }
                 bracketsCount ++;
             }
-            if (tokens[i].getType() == Token.TokenType.END_BLOCK){
+            else if (tokens[i].getType() == Token.TokenType.END_BLOCK){
                 bracketsCount --;
             }
-            if (tokens[i].getType() == Token.TokenType.RETURN_STATEMENT && bracketsCount == 0){
+            else if (tokens[i].getType() == Token.TokenType.RETURN_STATEMENT && bracketsCount == 0){
                 throw new BadLogicException(RETURN_GLOBAL_ERR);
             }
-            if (tokens[i].getType() == Token.TokenType.METHOD_CALL && bracketsCount == 0){
+            else if (tokens[i].getType() == Token.TokenType.METHOD_CALL && bracketsCount == 0){
                 throw new BadLogicException(METHOD_CALL_ERR);
             }
             curTokenIndex ++;

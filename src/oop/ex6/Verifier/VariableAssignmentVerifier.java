@@ -14,6 +14,8 @@ public class VariableAssignmentVerifier implements Verifier{
 
     private static final String STRING_REGEX = "\"[^\"]*\"";
 
+    protected static final String NUMBER_REGEX = "(-?\\d+(\\.\\d+)?)";
+
     protected static final String VARIABLE_NAME_REGEX = "(_+[\\w]|[a-zA-Z])[\\w]*";
 
     private final static String DOESNT_EXIST_ERR = "The variable has not been declared";
@@ -99,15 +101,7 @@ public class VariableAssignmentVerifier implements Verifier{
         }
     }
     private static boolean isValidDouble(String value) {
-        if (isValidInt(value)) {
-            return true;
-        }
-        try {
-            Double.parseDouble(value);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
+        return value.matches(NUMBER_REGEX);
     }
 
     private static boolean isValidString(String value) {
@@ -151,7 +145,7 @@ public class VariableAssignmentVerifier implements Verifier{
         else{
             throw new BadLogicException(DOESNT_EXIST_ERR);
         }
-        VariableData variableData = variableSymbolTable.get(variableName);;
+        VariableData variableData = variableSymbolTable.get(variableName);
         if (variableData.isFinal()) {
             throw new BadLogicException(ASSIGN_FINAL_ERR_MSG);
         }
