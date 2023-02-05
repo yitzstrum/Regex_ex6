@@ -1,0 +1,74 @@
+yitzstrum
+danielalfia
+
+File description:
+Package oop.ex6:
+
+Package exceptions:
+BadLineException: Exception class, inherits from Exception and is thrown when there is a syntax error.
+BadLogicException: Exception class, inherits from Exception and is thrown when there is a logic error.
+
+package main:
+Sjavac: Main class which runs the program
+
+Package parser:
+DeclarationParser: The declaration parser class parses variable assignment and declaration lines,
+                   the class inherits from Parser.
+FileParser: The class is in charge of reading the file and inserting its lines into a List of Strings
+MethodCallParser: The class is in charge of parsing a method call line, the class inherits from Parser.
+MethodDeclarationParser: The class is in charge of parsing a method declaration line,
+                         the class inherits from Parser.
+Parser: the class is an abstract class and it contains all of the needed regex's for the different parser classes
+Token: The class is in charge of creating a token from a single line and checking its syntax,
+       the class inherits from Parser.
+Tokenizer: The class runs is in charge of the pre processing of the code (in order to save the global variables as
+           well as the method properties) and the validation of the entire code.
+
+Package SymbolTable:
+MethodSymbolTable:
+
+
+
+
+
+Test-files:
+1 - Description: a function with no return statement
+    Outcome: Fail
+2 - Description: Invalid method name
+    Outcome: Fail
+3 - Description: Syntax error, no semi-collen after return
+    Outcome: Fail
+4 - Description: Syntax error, method declaration doesn't start with void
+    Outcome: Fail
+5 - Description: comment line starts with a space
+    Outcome: Fail
+6 - Description: Variable assignment without being declared
+    Outcome: Fail
+7 - Description: Variable declared twice in the same scope
+    Outcome: Fail
+8 - Description: method called with wrong number of values
+    Outcome: Fail
+9 - Description: method called with wrong value type
+    Outcome: Fail
+10 - Description: Wrong variable assignment type
+     Outcome: Fail
+11 - Description: Variable override within function
+     Outcome: Success
+12 - Description: Recursive call
+     Outcome: Success
+13 - Description: Reserved word as variable name
+     Outcome: Fail
+14 - Description: Method called in global scope
+     Outcome: Fail
+15 - Description: Syntax error in 'if' condition
+     Outcome: Fail
+16 - Description: 'if' statement can receive constant numbers
+     Outcome: Success
+17 - Description: final variable can't be modified
+     Outcome: Fail
+18 - Description: final variable declaration must be initialized
+     Outcome: Fail
+19 - Description: a method may receive a non final variable to a final variable
+     Outcome: Success
+20 - Description: a method may not receive a not assigned variable
+     Outcome: Fail

@@ -1,4 +1,4 @@
-// Test: Wrong variable assignment
+// Test: Wrong variable assignment type
 // Result: Fail
 
 String a;
