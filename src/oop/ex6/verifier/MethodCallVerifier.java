@@ -3,8 +3,7 @@ package oop.ex6.verifier;
 import oop.ex6.symbol_table.MethodSymbolTable;
 import oop.ex6.symbol_table.VariableData;
 import oop.ex6.symbol_table.VariableSymbolTable;
-import oop.ex6.exceptions.BadLineException;
-import oop.ex6.exceptions.BadLogicException;
+import oop.ex6.parser.BadLineException;
 import oop.ex6.parser.*;
 import oop.ex6.utils.Pair;
 

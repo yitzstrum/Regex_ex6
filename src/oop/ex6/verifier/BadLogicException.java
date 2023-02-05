@@ -1,4 +1,4 @@
-package oop.ex6.exceptions;
+package oop.ex6.verifier;
 
 /**
  * BadLogicException class, inherits from Exception and is thrown when there is a logic error

@@ -6,8 +6,7 @@ import oop.ex6.symbol_table.VariableSymbolTable;
 import oop.ex6.verifier.VariableAssignmentVerifier;
 import oop.ex6.verifier.VariableDeclarationVerifier;
 import oop.ex6.verifier.VerifierManager;
-import oop.ex6.exceptions.BadLineException;
-import oop.ex6.exceptions.BadLogicException;
+import oop.ex6.verifier.BadLogicException;
 import oop.ex6.utils.Pair;
 
 import java.io.IOException;

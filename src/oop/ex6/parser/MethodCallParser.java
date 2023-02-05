@@ -1,6 +1,5 @@
 package oop.ex6.parser;
 
-import oop.ex6.exceptions.BadLineException;
 import oop.ex6.utils.Pair;
 
 import java.util.regex.Matcher;

@@ -1,7 +1,7 @@
 package oop.ex6.main;
 
-import oop.ex6.exceptions.BadLineException;
-import oop.ex6.exceptions.BadLogicException;
+import oop.ex6.parser.BadLineException;
+import oop.ex6.verifier.BadLogicException;
 import oop.ex6.parser.*;
 import java.io.IOException;
 

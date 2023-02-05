@@ -4,14 +4,11 @@ danielalfia
 File description:
 Package oop.ex6:
 
-Package exceptions:
-BadLineException: Exception class, inherits from Exception and is thrown when there is a syntax error.
-BadLogicException: Exception class, inherits from Exception and is thrown when there is a logic error.
-
 package main:
 Sjavac: Main class which runs the program
 
 Package parser:
+BadLineException: Exception class, inherits from Exception and is thrown when there is a syntax error.
 DeclarationParser: The declaration parser class parses variable assignment and declaration lines,
                    the class inherits from Parser.
 FileParser: The class is in charge of reading the file and inserting its lines into a List of Strings
@@ -25,7 +22,49 @@ Tokenizer: The class runs is in charge of the pre processing of the code (in ord
            well as the method properties) and the validation of the entire code.
 
 Package SymbolTable:
-MethodSymbolTable:
+MethodSymbolTable: The class represents a symbol table for the programs methods,
+                   the class inherits from HashMap<String, List<VariableData>> (typedef)
+VariableData: The class represents a single variable, it consists of its type and modifier
+VariableSymbolTable: The class represents a symbol table for the programs variables,
+                     the class inherits from HashMap<String, VariableData> (typedef)
+
+Package Utils:
+Pair: The class represents a pair which has two generic values
+Utils: The class holds utility function used across the program
+
+Package verifier:
+BadLogicException: Exception class, inherits from Exception and is thrown when there is a logic error.
+MethodCallVerifier: The class implements the Verifier interface and is in
+                    charge of verifying the logic of a method call line.
+MethodDeclarationVerifier: The class implements the Verifier interface and is in
+                           charge of verifying the logic of a method declaration line.
+VariableAssignmentVerifier: The class implements the Verifier interface and is in
+                            charge of verifying the logic of a variable assignment line.
+VariableDeclarationVerifier: The class implements the Verifier interface and is in
+                             charge of verifying the logic of a variable declaration line.
+Verifier: An interface for the verifiers, has one function called verify
+VerifierManager: A factory class which is in charge of running each of the verifiers
+WhileIfVerifierManager: The class implements the Verifier interface and is in
+                        charge of verifying the logic of a if/while statement.
+
+Design: The design of our program divides into two main components, the first is to validate the syntax of the given
+        file and the second id the validate the logic of the sjava class. the first part is handled by the parser
+        package and the second is handled by the verifier package.
+        in the parser package we understood the all of the parsers will need to use similar regex's therefore we create
+        the abstract class Parser (we decided to make it abstract because there is no reason to create an instance of
+        that class) which hold all of the regex's and the different parser classes inherit from it.
+        In the verifier package we decided to make use of the factory design pattern, where the VerifierManeger will
+        decide for each given token which verifier will handle it. The reason we chose the implement a Factory was
+        that we wanted that our verifier to have one place where it decides which verifier to run
+        (Single Choice principle) and that it would be easy to add new verifiers in the future
+        (Modularity and the open-close principle).
+
+Implementation Issues: One of the issues we encountered was that we needed to know if we where within a method or not
+                       and handle it accordingly, the solution we used is that we don't call the verifierManager for
+                       every token from the same location. We divided it up between calls made from the global scope
+                       and calls made from within a function, that way we could handle each case accordingly
+
+
 
 
 

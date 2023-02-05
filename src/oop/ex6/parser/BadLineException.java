@@ -1,4 +1,4 @@
-package oop.ex6.exceptions;
+package oop.ex6.parser;
 
 /**
  * BadLineException class, inherits from Exception and is thrown when there is a syntax error

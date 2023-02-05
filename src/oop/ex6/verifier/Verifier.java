@@ -1,7 +1,6 @@
 package oop.ex6.verifier;
 
-import oop.ex6.exceptions.BadLineException;
-import oop.ex6.exceptions.BadLogicException;
+import oop.ex6.parser.BadLineException;
 
 public interface Verifier {
 
