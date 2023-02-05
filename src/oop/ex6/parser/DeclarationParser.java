@@ -16,8 +16,7 @@ public class DeclarationParser extends Parser{
 
     private static final String VAR_RESERVED_WORDS_ERR = "Can't use a reserved name as the variable name";
     private static final String INVALID_TYPE_ERR = "Invalid type";
-    private final String TYPE_REGEX = "^\\s*(int|double|String|boolean|char)\\s*";
-
+    private final String TYPE_REGEX = "^" + Parser.TYPE_REGEX;
     private final VariableData.Type type;
     private final String content;
     private final boolean isFinal;
@@ -32,7 +31,7 @@ public class DeclarationParser extends Parser{
         this.content = content;
         this.isFinal = isAssigment;
         this.type = null;
-        this.assigment = extractAssigment();
+        this.assigment = content;
     }
 
     /**
@@ -110,6 +109,7 @@ public class DeclarationParser extends Parser{
                 }
             }
         }
+
     }
 
     /**
@@ -140,7 +140,7 @@ public class DeclarationParser extends Parser{
         arg = arg.trim();
         String[] split = arg.split(EQUALS);
         Pair<String, String> pair = new Pair<>(split[0].trim(), split[1].trim());
-        if(split[0].matches(RESERVED_WORDS)){
+        if(split[0].trim().matches(RESERVED_WORDS)){
             throw new BadLogicException(VAR_RESERVED_WORDS_ERR);
         }
         variables.add(pair);
