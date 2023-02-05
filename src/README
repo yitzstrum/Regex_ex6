@@ -93,7 +93,8 @@ Regex: Two main regex's we used in our code:
           following components of the variable, it might be final, it must have a valid type and that the variable
           name must be valid.
        2. "((_+[\w]|[a-zA-Z])[\w]*|(-?\d+(\.\d+)?)|'[^'].*'|\s*"[^"].*"\s*|true|false)":
-          we used the above regex in order to validate that the values sent in a method call are valid.
+          we used the above regex in order to validate that the values sent in a method call are valid from a
+          syntax perspective.
 
 
 
