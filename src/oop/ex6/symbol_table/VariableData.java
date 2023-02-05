@@ -21,7 +21,7 @@ public class VariableData {
     }
 
     private final Type type;
-    private final Modifier modifier;
+    private Modifier modifier;
 
     /**
      * Constructor for the class
@@ -79,6 +79,13 @@ public class VariableData {
             default:
                 return this.type == type;
         }
+    }
+
+    /**
+     * Setter function for the variables modifier, sets the modifier to assigned
+     */
+    public void setAssigned() {
+        this.modifier = Modifier.ASSIGNED;
     }
 
 }

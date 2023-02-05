@@ -261,8 +261,7 @@ public class VariableAssignmentVerifier implements Verifier{
             throw new BadLogicException(ASSIGN_TYPE_ERR);
         }
         if (!inMethod){
-            variableSymbolTable.put(variableName, new VariableData(variableData.getType(),
-                    VariableData.Modifier.ASSIGNED));
+            variableData.setAssigned();
         }
     }
 }

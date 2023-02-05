@@ -71,7 +71,7 @@ public class WhileIfVerifierManager implements Verifier {
                     break;
                 default:
                     tokenizer.step(localVariableSymbolTable, stack.lastElement(), methodSymbolTable,
-                            true);
+                            false);
             }
         } while (stack.size() > 0);
     }
