@@ -82,7 +82,7 @@ public class DeclarationParser extends Parser{
         }
     }
     private void addUninitializedVariable(String arg, List<Pair<String, String>> variables) throws BadLogicException {
-        arg = Utils.removeSpaces(arg);
+        arg = arg.trim();
         if (arg.matches(RESERVED_WORDS)){
             throw new BadLogicException(VAR_RESERVED_WORDS_ERR);
         }
@@ -91,9 +91,9 @@ public class DeclarationParser extends Parser{
     }
     private void addInitializedVariable(String arg, List<Pair<String, String>> variables) throws BadLogicException {
         // remove spaces and then split
-        arg = Utils.removeSpaces(arg);
+        arg = arg.trim();
         String[] split = arg.split(EQUALS);
-        Pair<String, String> pair = new Pair<>(split[0], split[1]);
+        Pair<String, String> pair = new Pair<>(split[0].trim(), split[1].trim());
         if(split[0].matches(RESERVED_WORDS)){
             throw new BadLogicException(VAR_RESERVED_WORDS_ERR);
         }

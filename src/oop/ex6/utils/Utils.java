@@ -31,8 +31,6 @@ public class Utils {
         return EMPTY_STRING;
     }
 
-    public static String removeSpaces(String line) {
-        return line.replaceAll("\\s+", EMPTY_STRING);
-    }
+
 
 }
