@@ -1,4 +1,4 @@
-package oop.ex6.SymbolTable;
+package oop.ex6.symbol_table;
 
 public class VariableData {
 

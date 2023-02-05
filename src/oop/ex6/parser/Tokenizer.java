@@ -1,11 +1,11 @@
 package oop.ex6.parser;
 
-import oop.ex6.SymbolTable.MethodSymbolTable;
-import oop.ex6.SymbolTable.VariableData;
-import oop.ex6.SymbolTable.VariableSymbolTable;
-import oop.ex6.Verifier.VariableAssignmentVerifier;
-import oop.ex6.Verifier.VariableDeclarationVerifier;
-import oop.ex6.Verifier.VerifierManager;
+import oop.ex6.symbol_table.MethodSymbolTable;
+import oop.ex6.symbol_table.VariableData;
+import oop.ex6.symbol_table.VariableSymbolTable;
+import oop.ex6.verifier.VariableAssignmentVerifier;
+import oop.ex6.verifier.VariableDeclarationVerifier;
+import oop.ex6.verifier.VerifierManager;
 import oop.ex6.exceptions.BadLineException;
 import oop.ex6.exceptions.BadLogicException;
 import oop.ex6.utils.Pair;

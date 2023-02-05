@@ -1,4 +1,4 @@
-package oop.ex6.Verifier;
+package oop.ex6.verifier;
 
 import oop.ex6.exceptions.BadLineException;
 import oop.ex6.exceptions.BadLogicException;
