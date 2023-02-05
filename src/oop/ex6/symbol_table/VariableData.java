@@ -1,7 +1,7 @@
 package oop.ex6.symbol_table;
 
 /**
- * Variable
+ * Variable data class, represents a single variable
  */
 public class VariableData {
 
@@ -23,6 +23,11 @@ public class VariableData {
     private final Type type;
     private final Modifier modifier;
 
+    /**
+     * Constructor for the class
+     * @param type The variable type
+     * @param modifier The variables modifier
+     */
     public VariableData(Type type, Modifier modifier) {
         this.type = type;
         this.modifier = modifier;

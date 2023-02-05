@@ -9,6 +9,9 @@ import oop.ex6.utils.Pair;
 
 import java.util.List;
 
+/**
+ * MethodCallVerifier class which inherits from Verifier and is in charge of validating the method call logic
+ */
 public class MethodCallVerifier implements Verifier{
 
     private final static String METHOD_DOESNT_EXIST_ERR = "The method you are trying to call doesn't exist";
@@ -21,6 +24,13 @@ public class MethodCallVerifier implements Verifier{
     private VariableSymbolTable globalVariableSymbolTable;
     private MethodSymbolTable methodSymbolTable;
 
+    /**
+     * Constructor for the class
+     * @param tokenizer the tokenizer
+     * @param localVariableSymbolTable the local variable symbol table
+     * @param globalVariableSymbolTable the global variable symbol table
+     * @param methodSymbolTable the method symbol table
+     */
     public MethodCallVerifier(Tokenizer tokenizer,
                               VariableSymbolTable localVariableSymbolTable,
                               VariableSymbolTable globalVariableSymbolTable,

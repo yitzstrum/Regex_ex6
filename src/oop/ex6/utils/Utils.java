@@ -3,6 +3,9 @@ package oop.ex6.utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Class from the programs utils
+ */
 public class Utils {
     private static final String SEARCH_BEGINNING = "^";
     public static final String EMPTY_STRING = "";
@@ -33,5 +36,4 @@ public class Utils {
         }
         return EMPTY_STRING;
     }
-
 }

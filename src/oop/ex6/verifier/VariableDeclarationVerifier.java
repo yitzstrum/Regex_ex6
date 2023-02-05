@@ -33,7 +33,8 @@ public class VariableDeclarationVerifier implements Verifier {
     public VariableDeclarationVerifier(Token token, VariableSymbolTable localVariableSymbolTable,
                                        VariableSymbolTable globalVariableSymbolTable) throws BadLogicException
     {
-        if (token.getType() != Token.TokenType.VARIABLE_DECLARATION && token.getType() != Token.TokenType.FINAL_VARIABLE_DECLARATION) {
+        if (token.getType() != Token.TokenType.VARIABLE_DECLARATION && token.getType() !=
+                Token.TokenType.FINAL_VARIABLE_DECLARATION) {
             throw new IllegalArgumentException("Token is not a variable declaration");
         }
 
