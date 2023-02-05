@@ -14,6 +14,11 @@ public class MethodCallParser extends Parser{
     private String line;
     private static final Pattern METHOD_CALL_PATTERN = Pattern.compile(METHOD_CALL_REGEX);
 
+    /**
+     * Constructor
+     * @param token - the token to parse
+     * @throws BadLineException - if the line is not a valid method call
+     */
     public MethodCallParser(Token token) throws BadLineException {
         this.token = token;
         line = token.getContent();
@@ -21,10 +26,18 @@ public class MethodCallParser extends Parser{
         setMethodValues();
     }
 
+    /**
+     * get the method name and the values of the method call
+     * @return
+     */
     public Pair<String, String[]> getMethodData(){
         return new Pair<>(methodName, callValues);
     }
 
+    /**
+     * set the values of the method call
+     * @throws BadLineException - if the values are not valid
+     */
     private void setMethodValues() throws BadLineException {
         Matcher valuesMatcher = METHOD_CALL_PATTERN.matcher(line);
         valuesMatcher.find();
@@ -44,6 +57,10 @@ public class MethodCallParser extends Parser{
         }
     }
 
+    /**
+     * get the method name
+     * @return - the method name
+     */
     private String getMethodName(){
         Matcher matchMethodName = METHOD_NAME_PATTERN.matcher(line);
         matchMethodName.find();

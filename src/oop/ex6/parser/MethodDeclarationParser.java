@@ -19,6 +19,12 @@ public class MethodDeclarationParser extends Parser{
     private String methodName;
     private List<VariableData> methodParams = new ArrayList<>();
 
+
+    /**
+     * Constructor
+     * @param token - the token to parse
+     * @throws BadLogicException - if the method name is a reserved word
+     */
     public MethodDeclarationParser(Token token) throws BadLogicException {
         this.token = token;
         String trimmedDecLine = token.getContent().trim();
@@ -29,10 +35,20 @@ public class MethodDeclarationParser extends Parser{
         setMethodParams(trimmedDecLine);
     }
 
+    /**
+     * get the method name and the values of the method call
+     * @return - a pair of the method name and the method params
+     */
     public Pair<String, List<VariableData>> getMethodData(){
         return new Pair<>(methodName, methodParams);
     }
 
+
+    /**
+     * set the params of the method
+     * @param decLine - the method declaration line
+     * @throws BadLogicException - if the params are not valid
+     */
     private void setMethodParams(String decLine) throws BadLogicException {
         Matcher paramMatcher = PARAMS_PATTERN.matcher(decLine);
         if (paramMatcher.find()){
@@ -44,6 +60,11 @@ public class MethodDeclarationParser extends Parser{
         }
     }
 
+    /**
+     * get the method params
+     * @param methodDec - the method declaration line
+     * @return - an array of the method params
+     */
     public static String[] getMethodParams(String methodDec){
         Matcher paramMatcher = PARAMS_PATTERN.matcher(methodDec);
         if(paramMatcher.find()){
@@ -52,6 +73,11 @@ public class MethodDeclarationParser extends Parser{
         return new String[0];
     }
 
+    /**
+     * get the method name
+     * @param decLine - the method declaration line
+     * @return - the method name
+     */
     private String getName(String decLine) {
         Matcher matchMethodName = METHOD_NAME_PATTERN.matcher(decLine);
         matchMethodName.find();

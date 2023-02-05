@@ -4,6 +4,9 @@ package oop.ex6.parser;
 import oop.ex6.exceptions.BadLineException;
 import oop.ex6.utils.Utils;
 
+/**
+ * Token class, inherits from Parser
+ */
 public class Token extends Parser{
 
     private static final String VARIABLE_ASSIGNMENT_REGEX = "\\s*[a-zA-Z]\\w*\\s*=\\s*";
@@ -25,11 +28,22 @@ public class Token extends Parser{
         RETURN_STATEMENT
     }
 
+    /**
+     * Constructor
+     * @param line - the line to parse
+     * @throws BadLineException - if the line is not a valid token
+     */
     public Token(String line) throws BadLineException {
         this.type = getTokenType(line);
         this.content = line;
     }
 
+    /**
+     * get the token type
+     * @param line - the line to parse
+     * @return - the token type
+     * @throws BadLineException - if the line is not a valid token
+     */
     private TokenType getTokenType(String line) throws BadLineException {
         if (isVariableAssignment(line)) {
             return TokenType.VARIABLE_ASSIGNMENT;
@@ -51,45 +65,87 @@ public class Token extends Parser{
 
     }
 
-
-
+    /**
+     * check if the line is a variable declaration
+     * @param line - the line to check
+     * @return - true if the line is a variable declaration, false otherwise
+     */
     private boolean isVariableDeclaration(String line) {
         return line.matches(VARIABLE_DEC) ;
     }
 
+    /**
+     * check if the line is a variable assignment
+     * @param line - the line to check
+     * @return - true if the line is a variable assignment, false otherwise
+     */
     private boolean isVariableAssignment(String line) {
-        return Utils.isMatch(line, VARIABLE_ASSIGNMENT_REGEX);
+        return Utils.isStartWith(line, VARIABLE_ASSIGNMENT_REGEX);
     }
 
+
+    /**
+     * check if the line is a method declaration
+     * @param line - the line to check
+     * @return - true if the line is a method declaration, false otherwise
+     */
     private boolean isMethodDeclaration(String line) {
         return line.matches(METHOD_DEC_REGEX);
     }
 
+    /**
+     * check if the line is a block end
+     * @param line - the line to check
+     * @return - true if the line is a block end, false otherwise
+     */
     private boolean isEndBlock(String line) {
         return line.matches(BLOCK_END_REGEX);
     }
 
+    /**
+     * check if the line is a if/while block
+     * @param line - the line to check
+     * @return - true if the line is a if/while block, false otherwise
+     */
+
     private boolean ifIsWhileBlock(String line) {
-        return Utils.isMatch(line, IF_WHILE_BLOCK_REGEX);
+        return Utils.isStartWith(line, IF_WHILE_BLOCK_REGEX);
     }
 
+    /**
+     * check if the line is a method call
+     * @param line - the line to check
+     * @return - true if the line is a method call, false otherwise
+     */
     private boolean isMethodCall(String line) {return line.matches(METHOD_CALL_REGEX);
     }
 
+    /**
+     * check if the line is a return statement
+     * @param line - the line to check
+     * @return - true if the line is a return statement, false otherwise
+     */
+
     private boolean isReturnStatement(String line) {
-        return Utils.isMatch(line, RETURN_STATEMENT_REGEX);
+        return Utils.isStartWith(line, RETURN_STATEMENT_REGEX);
     }
+
+    /**
+     * get the token type
+     * @return - the token type
+     */
 
     public TokenType getType() {
         return type;
     }
 
+    /**
+     * get the token content
+     * @return - the token content
+     */
+
     public String getContent() {
         return content;
     }
 
-    @Override
-    public String toString() {
-        return  ("Token type: " + type + " content: " + content); // for debug edit it later
-    }
 }

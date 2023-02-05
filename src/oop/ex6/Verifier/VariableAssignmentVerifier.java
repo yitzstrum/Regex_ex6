@@ -12,11 +12,17 @@ import java.util.List;
 
 public class VariableAssignmentVerifier implements Verifier{
 
+    private static final String TRUE = "true";
+    private static final String FALSE = "false";
+    private static final String APOSTROPHE = "'";
+    private static final String DOUBLE_QUOTES = "\"";
+    private static final int CHAR_LENGTH = 3;
+
     private static final String STRING_REGEX = "\"[^\"]*\"";
 
-    protected static final String NUMBER_REGEX = "(-?\\d+(\\.\\d+)?)";
+    private static final String NUMBER_REGEX = "(-?\\d+(\\.\\d+)?)";
 
-    protected static final String VARIABLE_NAME_REGEX = "(_+[\\w]|[a-zA-Z])[\\w]*";
+    private static final String VARIABLE_NAME_REGEX = "(_+[\\w]|[a-zA-Z])[\\w]*";
 
     private final static String DOESNT_EXIST_ERR = "The variable has not been declared";
     private static final String ASSIGN_FINAL_ERR_MSG = "Cannot assign a value to a final variable";
@@ -27,6 +33,13 @@ public class VariableAssignmentVerifier implements Verifier{
     private VariableSymbolTable globalVariableSymbolTable;
     private boolean inMethod;
 
+    /**
+     * Constructor
+     * @param tokenizer - the tokenizer
+     * @param localVariableSymbolTable - the local variable symbol table
+     * @param globalVariableSymbolTable - the global variable symbol table
+     * @param inMethod - if the variable is in a method
+     */
     public VariableAssignmentVerifier(Tokenizer tokenizer,
                                       VariableSymbolTable localVariableSymbolTable,
                                       VariableSymbolTable globalVariableSymbolTable,
@@ -41,10 +54,19 @@ public class VariableAssignmentVerifier implements Verifier{
         this.globalVariableSymbolTable = globalVariableSymbolTable;
         this.tokenizer = tokenizer;
         this.localVariableSymbolTable = localVariableSymbolTable;
-        this.declarationParser = new DeclarationParser(tokenizer.getCurrentToken().getContent(), true);
+        this.declarationParser = new DeclarationParser(tokenizer.getCurrentToken().getContent(),
+                true);
 
     }
 
+    /**
+     * Checks if the assignment is valid
+     * @param localVariableSymbolTable - the local variable symbol table
+     * @param globalVariableSymbolTable - the global variable symbol table
+     * @param type - the type of the variable
+     * @param value - the value of the variable
+     * @return true if the assignment is valid
+     */
     public static boolean isGeneralValidAssign(VariableSymbolTable localVariableSymbolTable,
                                                VariableSymbolTable globalVariableSymbolTable,
                                                VariableData.Type type , String value) {
@@ -57,6 +79,12 @@ public class VariableAssignmentVerifier implements Verifier{
         return isValidAssign(type, value);
     }
 
+    /**
+     * Checks if the assignment is valid
+     * @param type - the type of the variable
+     * @param value - the value of the variable
+     * @return true if the assignment is valid
+     */
     public static boolean isValidAssign(VariableData.Type type , String value) {
         if (value == null) {
             return true;
@@ -78,6 +106,14 @@ public class VariableAssignmentVerifier implements Verifier{
         }
     }
 
+    /**
+     * Verifies a assigment of variable
+     * @param localVariableSymbolTable - the local variable symbol table
+     * @param globalVariableSymbolTable - the global variable symbol table
+     * @param type - the type of the variable
+     * @param value - the value of the variable
+     * @return true if the assignment is valid
+     */
     private static boolean isValidVariableAssign(VariableSymbolTable localVariableSymbolTable,
                                                  VariableSymbolTable globalVariableSymbolTable,
                                                  VariableData.Type type , String value) {
@@ -95,6 +131,11 @@ public class VariableAssignmentVerifier implements Verifier{
         return symbolTable.get(value).canBeAssignedWith(type) && symbolTable.get(value).isInitialized();
     }
 
+    /**
+     * Checks if the value is a valid int
+     * @param value - the value
+     * @return true if the value is a valid int
+     */
     private static boolean isValidInt(String value) {
         try {
             Integer.parseInt(value);
@@ -103,23 +144,48 @@ public class VariableAssignmentVerifier implements Verifier{
             return false;
         }
     }
+
+
+    /**
+     * Checks if the value is a valid double
+     * @param value - the value
+     * @return true if the value is a valid double
+     */
     private static boolean isValidDouble(String value) {
         return value.matches(NUMBER_REGEX);
     }
 
+    /**
+     * Checks if the value is a valid string
+     * @param value - the value
+     * @return true if the value is a valid string
+     */
     private static boolean isValidString(String value) {
         return value.matches(STRING_REGEX);
     }
 
+    /**
+     * Checks if the value is a valid boolean
+     * @param value - the value
+     * @return true if the value is a valid boolean
+     */
     private static boolean isValidBoolean(String value) {
-        return value.equals("true") || value.equals("false") || isValidDouble(value);
+        return value.equals(TRUE) || value.equals(FALSE) || isValidDouble(value);
     }
 
-    public static boolean isValidChar(String value) {
-        return value.length() == 3 && value.startsWith("'") && value.endsWith("'");
+    /**
+     * Checks if the value is a valid char
+     * @param value - the value
+     * @return true if the value is a valid char
+     */
+    private static boolean isValidChar(String value) {
+        return value.length() == CHAR_LENGTH && value.startsWith(APOSTROPHE) && value.endsWith(APOSTROPHE);
     }
 
-
+    /**
+     * Verifies the assignment
+     * @throws BadLogicException - if the assignment is invalid
+     */
     @Override
     public void verify() throws BadLogicException {
         List<Pair<String, String>> assignments = declarationParser.parseAssigment();
@@ -128,11 +194,22 @@ public class VariableAssignmentVerifier implements Verifier{
         }
     }
 
-    public static boolean  isVariableExists(VariableSymbolTable variableSymbolTable, String variableName) {
+    /**
+     * Checks if the variable exists in the symbol table
+     * @param variableSymbolTable - the symbol table
+     * @param variableName - the variable name
+     * @return true if the variable exists
+     */
+    private static boolean  isVariableExists(VariableSymbolTable variableSymbolTable, String variableName) {
         return variableSymbolTable.containsKey(variableName);
     }
 
 
+    /**
+     * Verifies a single assignment
+     * @param assignment - the assignment
+     * @throws BadLogicException - if the assignment is invalid
+     */
     private void verifySingleAssigment(Pair<String, String> assignment)
             throws BadLogicException {
 
@@ -168,7 +245,8 @@ public class VariableAssignmentVerifier implements Verifier{
         }
 
 
-        if (!isGeneralValidAssign(localVariableSymbolTable, globalVariableSymbolTable, variableData.getType(), value)){
+        if (!isGeneralValidAssign(localVariableSymbolTable, globalVariableSymbolTable,
+                variableData.getType(), value)){
             throw new BadLogicException(ASSIGN_TYPE_ERR);
         }
         if (!inMethod){

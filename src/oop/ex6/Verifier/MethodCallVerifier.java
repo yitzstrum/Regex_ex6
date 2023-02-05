@@ -32,6 +32,11 @@ public class MethodCallVerifier implements Verifier{
         this.methodSymbolTable = methodSymbolTable;
     }
 
+    /**
+     * Verifies that the method call is valid
+     * @throws BadLogicException - if the method call is invalid
+     * @throws BadLineException  - if the line is invalid
+     */
     @Override
     public void verify() throws BadLogicException, BadLineException {
         MethodCallParser methodCallParser = new MethodCallParser(tokenizer.getCurrentToken());
@@ -45,7 +50,14 @@ public class MethodCallVerifier implements Verifier{
         verifyValues(methodValues, variableDataList);
     }
 
-    private void verifyValues(String[] methodValues, List<VariableData> variableDataList) throws BadLogicException {
+    /**
+     * Verifies that the values sent to the method are valid
+     * @param methodValues - the values sent to the method
+     * @param variableDataList - the method variable data
+     * @throws BadLogicException - if the values are invalid
+     */
+    private void verifyValues(String[] methodValues, List<VariableData> variableDataList)
+            throws BadLogicException {
         if (methodValues.length != variableDataList.size()){
             throw new BadLogicException(VARIABLE_COUNT_ERR);
         }
@@ -74,7 +86,6 @@ public class MethodCallVerifier implements Verifier{
             }
         }
     }
-
 
 
 }

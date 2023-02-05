@@ -42,20 +42,38 @@ public class DeclarationParser extends Parser{
         this.assigment = extractAssigment();
     }
 
+    /**
+     * check if the Variable is represented as a final variable
+     * @return
+     */
     public boolean getIsFinal() {
         return isFinal;
     }
+
+    /**
+     * get the type of the variable
+     * @return the type of the variable
+     */
 
     public VariableData.Type getType() {
         return type;
     }
 
+    /**
+     * check if line start with final
+     * @return true if line start with final, false otherwise
+     */
     private boolean extractFinal() {
         // check if line start with final
-        return Utils.isMatch(content, FINAL_PREFIX_REGEX);
+        return Utils.isStartWith(content, FINAL_PREFIX_REGEX);
     }
 
 
+    /**
+     * parse the assigment part of the line returns string with a pair of the variable name and the value
+     * @return list of pairs of the variable name and the value
+     * @throws BadLogicException - if the assigment is invalid
+     */
     public List<Pair<String, String>> parseAssigment() throws BadLogicException {
         // add syntax check later
         List<Pair<String, String>> variables = new ArrayList<>();
@@ -65,6 +83,13 @@ public class DeclarationParser extends Parser{
         return variables;
 
     }
+
+    /**
+     * extract the assigment part of the line
+     * @param arg - the argument to parse
+     * @param variables - the list of variables to add to
+     * @throws BadLogicException - if the assigment is invalid
+     */
     private void parseSingleArg(String arg, List<Pair<String, String>> variables) throws BadLogicException {
         String[] regexes = {ASSIGNED_VARIABLE_REGEX, UNASSIGNED_VARIABLE_REGEX};
 
@@ -81,7 +106,15 @@ public class DeclarationParser extends Parser{
             }
         }
     }
-    private void addUninitializedVariable(String arg, List<Pair<String, String>> variables) throws BadLogicException {
+
+    /**
+     * add an uninitialized variable to the list
+     * @param arg - the argument to parse
+     * @param variables - the list of variables to add to
+     * @throws BadLogicException - if the assigment is invalid
+     */
+    private void addUninitializedVariable(String arg, List<Pair<String, String>> variables)
+            throws BadLogicException {
         arg = arg.trim();
         if (arg.matches(RESERVED_WORDS)){
             throw new BadLogicException(VAR_RESERVED_WORDS_ERR);
@@ -89,7 +122,15 @@ public class DeclarationParser extends Parser{
         Pair<String, String> pair = new Pair<>(arg, null);
         variables.add(pair);
     }
-    private void addInitializedVariable(String arg, List<Pair<String, String>> variables) throws BadLogicException {
+
+    /**
+     * add an initialized variable to the list
+     * @param arg - the argument to parse
+     * @param variables - the list of variables to add to
+     * @throws BadLogicException - if the assigment is invalid
+     */
+    private void addInitializedVariable(String arg, List<Pair<String, String>> variables) throws
+            BadLogicException {
         // remove spaces and then split
         arg = arg.trim();
         String[] split = arg.split(EQUALS);
@@ -101,6 +142,11 @@ public class DeclarationParser extends Parser{
 
     }
 
+    /**
+     * extract the type of the assigment
+     * @return the type of the assigment
+     * @throws BadLogicException -
+     */
     private VariableData.Type extractType() throws BadLogicException {
         String content = this.content;
         if (isFinal) {
@@ -128,8 +174,13 @@ public class DeclarationParser extends Parser{
         throw new BadLogicException(INVALID_TYPE_ERR);
     }
 
+    /**
+     * extract the assigment part of the line
+     * @return the assigment part of the line
+     */
     private String extractAssigment() {
-        return (content.replaceFirst(FINAL_PREFIX_REGEX, EMPTY_STRING)).replaceFirst(TYPE_REGEX, EMPTY_STRING);
+        return (content.replaceFirst(FINAL_PREFIX_REGEX, EMPTY_STRING)).replaceFirst
+                (TYPE_REGEX, EMPTY_STRING);
     }
 
 }
