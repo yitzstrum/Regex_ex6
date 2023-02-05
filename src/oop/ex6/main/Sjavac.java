@@ -3,9 +3,11 @@ package oop.ex6.main;
 import oop.ex6.exceptions.BadLineException;
 import oop.ex6.exceptions.BadLogicException;
 import oop.ex6.parser.*;
-
 import java.io.IOException;
 
+/**
+ * Sjavac class, responsible for validating an Sjavac file
+ */
 public class Sjavac {
 
     private static final int VALID_ARGS_COUNT = 1;
@@ -15,6 +17,10 @@ public class Sjavac {
     private static final int IO_EXCEPTION = 2;
     private static final String ARGS_ERR_MSG = "ERROR: The number of arguments is invalid";
 
+    /**
+     * Main function to run the validation
+     * @param args the user input arguments, the first arg is the file path
+     */
     public static void main(String[] args) {
         try {
             checkArguments(args);

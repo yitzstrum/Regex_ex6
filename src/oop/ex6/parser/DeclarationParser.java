@@ -9,9 +9,13 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * DeclarationParser class, inherits from Parser
+ */
 public class DeclarationParser extends Parser{
 
     private static final String VAR_RESERVED_WORDS_ERR = "Can't use a reserved name as the variable name";
+    private static final String INVALID_TYPE_ERR = "Invalid type";
     private final String TYPE_REGEX = "^\\s*(int|double|String|boolean|char)\\s*";
 
     private final VariableData.Type type;
@@ -19,6 +23,11 @@ public class DeclarationParser extends Parser{
     private final boolean isFinal;
     private final String assigment;
 
+    /**
+     * class constructor
+     * @param content
+     * @param isAssigment
+     */
     public DeclarationParser(String content, boolean isAssigment) {
         this.content = content;
         this.isFinal = false;
@@ -116,22 +125,11 @@ public class DeclarationParser extends Parser{
                     return VariableData.Type.CHAR;
             }
         }
-        throw new BadLogicException("Invalid type");
+        throw new BadLogicException(INVALID_TYPE_ERR);
     }
-
 
     private String extractAssigment() {
         return (content.replaceFirst(FINAL_PREFIX_REGEX, EMPTY_STRING)).replaceFirst(TYPE_REGEX, EMPTY_STRING);
     }
 
-    // for debug
-    @Override
-    public String toString() {
-        return "DeclarationParser{" +
-                ", content='" + content + '\'' +
-                "type=" + type +
-                ", isFinal=" + isFinal +
-                ", assigment='" + assigment + '\'' +
-                '}';
-    }
 }

@@ -2,6 +2,9 @@ package oop.ex6.parser;
 
 import java.util.regex.Pattern;
 
+/**
+ * Parser class, contains all the Parser's regex's
+ */
 public abstract class Parser {
     protected static final int METHOD_NAME_START_IND = 4;
     protected static final String SPACE_REGEX = "\\s*";
@@ -17,8 +20,9 @@ public abstract class Parser {
     protected static final String UNASSIGNED_VARIABLE_REGEX = "^\\s*[a-zA-Z]\\w*\\s*";
     protected static final String NUMBER_REGEX = "(-?\\d+(\\.\\d+)?)";
 
-    protected static final String STRING_REGEX = "\"[^\"].*\"";
-    protected static final String EQUAL_RHS_REGEX = SPACE_REGEX + "([^=;,\\s{}]+|" + STRING_REGEX + ")" + SPACE_REGEX;
+    protected static final String STRING_REGEX = SPACE_REGEX + "\"[^\"].*\"" + SPACE_REGEX;
+    protected static final String EQUAL_RHS_REGEX =
+            SPACE_REGEX + "((" + STRING_REGEX + ")|([^=;,\\s{}]+|))"  + SPACE_REGEX;
     protected static final String ASSIGNED_VARIABLE_REGEX = "^\\s*[a-zA-Z]\\w*\\s*=" + EQUAL_RHS_REGEX;
     protected static final String OPEN_PAREN_REGEX = "\\(";
     protected static final String CLOSE_PAREN_REGEX = "\\)";
