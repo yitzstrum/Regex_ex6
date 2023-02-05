@@ -8,15 +8,19 @@ import oop.ex6.utils.Pair;
 
 import java.util.List;
 
+/**
+ * VariableDeclarationVerifier class which inherits from Verifier and is in charge of validating the
+ * variable declaration logic
+ */
 public class VariableDeclarationVerifier implements Verifier {
-
-    private Token token;
 
     private static final String VARIABLE_ALREADY_DECLARED_ERR = "Variable already declared";
     private static final String FINAL_DECLARATION_ERR =
             "Cannot declare a final variable without an assignment";
     private final static String ASSIGNMENT_ERR = "The assignment is invalid";
     private final static String DOUBLE_DEC_ERR = "The variable can't be declared twice in the same scope";
+
+    private Token token;
     private final VariableSymbolTable localVariableSymbolTable;
     private final DeclarationParser declarationParser;
     private boolean isMethodParam = false;
@@ -63,7 +67,7 @@ public class VariableDeclarationVerifier implements Verifier {
 
     /**
      * Adds the variables to the symbol table
-     * @throws BadLogicException
+     * @throws BadLogicException Exception for a logic error
      */
     private void addToTable() throws BadLogicException {
         List<Pair<String, String>> variables = declarationParser.parseAssigment();

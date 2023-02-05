@@ -33,26 +33,43 @@ public class VariableData {
         this.modifier = modifier;
     }
 
+    /**
+     * The function checks whether the variable is final
+     * @return true if final, false otherwise
+     */
     public boolean isFinal() {
         return modifier == Modifier.FINAL;
     }
 
+    /**
+     * The function checks whether the variable is initialized
+     * @return true if initialized, false otherwise
+     */
     public boolean isInitialized() {
         return modifier != Modifier.NONE;
     }
 
+    /**
+     * Getter function for the variables type
+     * @return the variables type
+     */
     public Type getType() {
         return type;
     }
 
+    /**
+     * Boolean function that checks if the variable is a boolean
+     * @return true if the variable represents a boolean, false otherwise
+     */
     public boolean isRepresentBoolean() {
         return type == Type.BOOLEAN || type == Type.DOUBLE || type == Type.INT;
     }
 
-    public String toString() {
-        return "Type: " + type + ", Value: " + modifier;
-    }
-
+    /**
+     * The function checks if the variable can be assigned with the given type
+     * @param type the type we want to assign to the variable
+     * @return true if we can assign the given type to the variable, false otherwise
+     */
     public boolean canBeAssignedWith(VariableData.Type type) {
         switch (type) {
             case DOUBLE:

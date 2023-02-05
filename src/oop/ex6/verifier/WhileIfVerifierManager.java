@@ -16,19 +16,14 @@ import static oop.ex6.utils.Utils.extractBrackets;
  */
 public class WhileIfVerifierManager implements Verifier {
 
-
-
     private static final String BAD_IF_WHILE_PARAMS_MSG = "ERROR: Bad parameters for if/while statement. ";
-
     private static final String NUMBER_REGEX = "(-?\\d+(\\.\\d+)?)";
     private static final String BOOLEAN_REGEX = "\\s*(true)|(false)" +"|" + NUMBER_REGEX + "\\s*";
-
     private static final String SUPPORTED_OPERATORS = "(&&|\\|\\|)";
+
     private final Tokenizer tokenizer;
     private VariableSymbolTable localVariableSymbolTable;
-
     private VariableSymbolTable globalVariableSymbolTable;
-
     private final MethodSymbolTable methodSymbolTable;
 
 
@@ -42,7 +37,6 @@ public class WhileIfVerifierManager implements Verifier {
     public WhileIfVerifierManager(Tokenizer tokenizer, VariableSymbolTable localVariableSymbolTable,
                                   VariableSymbolTable globalVariableSymbolTable,
                                   MethodSymbolTable methodSymbolTable) {
-
         this.tokenizer = tokenizer;
         this.localVariableSymbolTable = unionSymbolTables(globalVariableSymbolTable, localVariableSymbolTable);
         this.globalVariableSymbolTable = globalVariableSymbolTable;
@@ -59,7 +53,6 @@ public class WhileIfVerifierManager implements Verifier {
     public void verify() throws BadLineException, BadLogicException {
         // stack of symbol table
         Stack<VariableSymbolTable> stack = new Stack<>();
-
         do {
             switch (tokenizer.getCurrentToken().getType()) {
                 case IF_WHILE_BLOCK:

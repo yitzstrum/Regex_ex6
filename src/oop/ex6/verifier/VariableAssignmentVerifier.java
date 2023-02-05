@@ -9,22 +9,23 @@ import oop.ex6.utils.Pair;
 
 import java.util.List;
 
+/**
+ * VariableAssignmentVerifier class which inherits from Verifier and is in charge of validating the
+ * variable assignment logic
+ */
 public class VariableAssignmentVerifier implements Verifier{
 
     private static final String TRUE = "true";
     private static final String FALSE = "false";
     private static final String APOSTROPHE = "'";
     private static final int CHAR_LENGTH = 3;
-
     private static final String STRING_REGEX = "\"[^\"]*\"";
-
     private static final String NUMBER_REGEX = "(-?\\d+(\\.\\d+)?)";
-
     private static final String VARIABLE_NAME_REGEX = "(_+[\\w]|[a-zA-Z])[\\w]*";
-
     private final static String DOESNT_EXIST_ERR = "The variable has not been declared";
     private static final String ASSIGN_FINAL_ERR_MSG = "Cannot assign a value to a final variable";
     private static final String ASSIGN_TYPE_ERR = "The value doesn't match the variable type";
+
     private final DeclarationParser declarationParser;
     private Tokenizer tokenizer;
     private final VariableSymbolTable localVariableSymbolTable;

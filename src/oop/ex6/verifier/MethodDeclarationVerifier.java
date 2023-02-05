@@ -5,6 +5,10 @@ import oop.ex6.symbol_table.VariableSymbolTable;
 import oop.ex6.parser.BadLineException;
 import oop.ex6.parser.*;
 
+/**
+ * MethodDeclarationVerifier class which inherits from Verifier and is in charge of validating the
+ * method declaration logic
+ */
 public class MethodDeclarationVerifier implements Verifier{
 
     private final Tokenizer tokenizer;
