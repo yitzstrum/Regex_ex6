@@ -21,18 +21,6 @@ public class Utils {
     }
 
     /**
-     * check if the line is a complete match to the regex
-     * @param line - the line to check
-     * @param regex - the regex to check
-     * @return true if the line is a complete match to the regex, false otherwise
-     */
-    public static boolean isCompleteMatch(String line, String regex) {
-        Pattern pattern = Pattern.compile(SEARCH_BEGINNING + regex);
-        Matcher matcher = pattern.matcher(line);
-        return matcher.matches();
-    }
-
-    /**
      * extract the content of the brackets
      * @param line - the line to extract from
      * @return the content of the brackets

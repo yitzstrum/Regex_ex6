@@ -108,7 +108,7 @@ public class Token extends Parser{
      */
 
     private boolean ifIsWhileBlock(String line) {
-        return Utils.isStartWith(line, IF_WHILE_BLOCK_REGEX);
+        return line.matches(IF_WHILE_LINE_REGEX);
     }
 
     /**

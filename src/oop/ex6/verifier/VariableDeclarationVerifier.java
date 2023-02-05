@@ -23,6 +23,13 @@ public class VariableDeclarationVerifier implements Verifier {
     private VariableSymbolTable globalVariableSymbolTable;
 
 
+    /**
+     * Constructor
+     * @param token - the token to verify
+     * @param localVariableSymbolTable - the local variable symbol table
+     * @param globalVariableSymbolTable - the global variable symbol table
+     * @throws BadLogicException - if the token is not a variable declaration
+     */
     public VariableDeclarationVerifier(Token token, VariableSymbolTable localVariableSymbolTable,
                                        VariableSymbolTable globalVariableSymbolTable) throws BadLogicException
     {
@@ -36,15 +43,27 @@ public class VariableDeclarationVerifier implements Verifier {
         this.declarationParser = new DeclarationParser(token.getContent());
     }
 
+    /**
+     * Sets the method flag
+     * @param flag - the flag to set
+     */
     public void setMethodFlag(boolean flag){
         isMethodParam = flag;
     }
 
+    /**
+     * Verity the token
+     * @throws BadLogicException - if the token is not valid
+     */
     @Override
     public void verify() throws BadLogicException {
         addToTable();
     }
 
+    /**
+     * Adds the variables to the symbol table
+     * @throws BadLogicException
+     */
     private void addToTable() throws BadLogicException {
         List<Pair<String, String>> variables = declarationParser.parseAssigment();
         for (Pair<String, String> variable: variables) {
@@ -55,6 +74,11 @@ public class VariableDeclarationVerifier implements Verifier {
         }
     }
 
+    /**
+     * Adds a single variable to the symbol table
+     * @param variable - the variable to add
+     * @throws BadLogicException - if the variable is not valid
+     */
     private void addSingleArgument(Pair<String, String> variable) throws BadLogicException {
         if (localVariableSymbolTable.containsKey(variable.getFirst())){
             throw new BadLogicException(DOUBLE_DEC_ERR);
@@ -66,6 +90,12 @@ public class VariableDeclarationVerifier implements Verifier {
             addNonFinalVariable(variable);
         }
     }
+
+    /**
+     * Adds a non-final variable to the symbol table
+     * @param variable - the variable to add
+     * @throws BadLogicException - if the variable is not valid
+     */
     private void addNonFinalVariable(Pair<String, String> variable) throws BadLogicException {
         String name = variable.getFirst();
         String value = variable.getSecond();
@@ -87,6 +117,12 @@ public class VariableDeclarationVerifier implements Verifier {
         localVariableSymbolTable.put(name, variableData);
     }
 
+
+    /**
+     * Adds a final variable to the symbol table
+     * @param variable - the variable to add
+     * @throws BadLogicException - if the variable is not valid
+     */
     private void addFinalVariable(Pair<String, String> variable) throws BadLogicException {
         String name = variable.getFirst();
         String value = variable.getSecond();
