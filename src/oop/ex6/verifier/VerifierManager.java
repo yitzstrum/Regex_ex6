@@ -11,7 +11,7 @@ import oop.ex6.parser.*;
  */
 public class VerifierManager implements Verifier {
 
-    private static final String MSG = "ERROR: Call to an unassigned variable. ";
+    private static final String MSG = "unexpected token - ";
     private final Tokenizer tokenizer;
     private Token token;
     private final VariableSymbolTable localVariableSymbolTable;

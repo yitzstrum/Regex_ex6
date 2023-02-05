@@ -8,7 +8,6 @@ import oop.ex6.utils.Utils;
  */
 public class Token extends Parser{
 
-    private static final String VARIABLE_ASSIGNMENT_REGEX = "\\s*[a-zA-Z]\\w*\\s*=\\s*";
     private static final String BLOCK_END_REGEX = "\\s*}\\s*";
     private static final String RETURN_STATEMENT_REGEX = "\\s*return\\s*;\\s*"; // assume it valid
 
@@ -78,7 +77,7 @@ public class Token extends Parser{
      * @return - true if the line is a variable assignment, false otherwise
      */
     private boolean isVariableAssignment(String line) {
-        return Utils.isStartWith(line, VARIABLE_ASSIGNMENT_REGEX);
+        return line.matches(VARIABLE_ASSIGMENT_REGEX);
     }
 
 
