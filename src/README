@@ -64,8 +64,36 @@ Implementation Issues: One of the issues we encountered was that we needed to kn
                        every token from the same location. We divided it up between calls made from the global scope
                        and calls made from within a function, that way we could handle each case accordingly
 
+Error Handling: First we thought to design out code using boolean validation functions, which upon failing would
+                return 'false' to the calling method. When we thought it through we decided that using the method would
+                limit us to not understanding the reason for each fail and on what line did the program fail exactly.
+                Therefore we decided to implement the error handling using exceptions, we implemented two types of
+                exceptions, one for a syntax error and one for a logic error.
+                The benefit of using the exceptions is that when the program fails we are able to catch the exact line
+                where the program fails and give it us a parameter to the exception instance we created and that way
+                when we catch the exception in the main method we are able to give the user a described message for the
+                reason that his program failed
 
+Code modifications: In order to add new types of variables we would need to modify our code in two locations, the first
+                    is to add the new type to the VariableData enum Type, and the second is to handle the new type in
+                    declaration parser.
 
+                    In order to add different return type all we need to do is add a verifier for the return statement
+                    which all it needs to do is validate that the return value is legal when comparing to the methods
+                    symbol table. after adding the verifier we will add a case to the VerifierManager Factory.
+
+                    In order to add support for the methods of the standard java library all we need to do is hold a
+                    set of all the legal methods and when we parse the syntax of the program we will add a case
+                    (in the Token class) which checks if the given line is a method from the standard java.
+                    handling the logic of those methods will be done in the same way we verify a regular method call.
+
+Regex: Two main regex's we used in our code:
+       1. "^\s*(final\s+)?\s*(int|double|String|boolean|char)\s*\s+(_+[\w]|[a-zA-Z])[\w]*\s*":
+          we used this regex in order to validate the syntax of a variable written in the code, we validated the
+          following components of the variable, it might be final, it must have a valid type and that the variable
+          name must be valid.
+       2. "((_+[\w]|[a-zA-Z])[\w]*|(-?\d+(\.\d+)?)|'[^'].*'|\s*"[^"].*"\s*|true|false)":
+          we used the above regex in order to validate that the values sent in a method call are valid.
 
 
 
