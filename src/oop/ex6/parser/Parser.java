@@ -108,5 +108,34 @@ public abstract class Parser {
             CLOSE_PAREN_REGEX +
             SEMI_COLLEEN;
 
+
+    private static final String IF_WHILE_DEC_REGEX = "(while|if)";
+    private static final String SUPPORTED_IF_WHILE_OPERATORS = "(&&|\\|\\|)";
+
+    private static final String UN_SUPPORTED_VALUE_REGEX = "[^&| )(]+";
+
+
+    protected static final String IF_WHILE_LINE_REGEX =
+            SPACE_REGEX +
+                    IF_WHILE_DEC_REGEX +
+                    SPACE_REGEX +
+                    OPEN_PAREN_REGEX +
+                    SPACE_REGEX +
+                    UN_SUPPORTED_VALUE_REGEX +
+                    SPACE_REGEX +
+                    '(' +
+                    SUPPORTED_IF_WHILE_OPERATORS +
+                    SPACE_REGEX +
+                    UN_SUPPORTED_VALUE_REGEX +
+                    SPACE_REGEX +
+                    ")*" +
+                    CLOSE_PAREN_REGEX +
+                    SPACE_REGEX +
+                    OPEN_BRACKET_REGEX +
+                    SPACE_REGEX +
+                    END_LINE_REGEX;
+
     protected static final Pattern METHOD_NAME_PATTERN = Pattern.compile(METHOD_NAME_REGEX);
+
+
 }

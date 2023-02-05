@@ -15,7 +15,6 @@ public class VariableAssignmentVerifier implements Verifier{
     private static final String TRUE = "true";
     private static final String FALSE = "false";
     private static final String APOSTROPHE = "'";
-    private static final String DOUBLE_QUOTES = "\"";
     private static final int CHAR_LENGTH = 3;
 
     private static final String STRING_REGEX = "\"[^\"]*\"";
@@ -204,6 +203,42 @@ public class VariableAssignmentVerifier implements Verifier{
         return variableSymbolTable.containsKey(variableName);
     }
 
+    private void verifySingleAssigmentInMethod(VariableSymbolTable variableSymbolTable, String variableName) {
+        VariableData tempVar = globalVariableSymbolTable.get(variableName);
+        if (tempVar.isFinal()){
+            localVariableSymbolTable.put(variableName, new VariableData(tempVar.getType(),
+                    VariableData.Modifier.FINAL));
+        }
+        else {
+            localVariableSymbolTable.put(variableName, new VariableData(tempVar.getType(),
+                    VariableData.Modifier.ASSIGNED));
+        }
+    }
+
+    /**
+     * Verifies that the variable exists and returns the symbol table it exists in
+     * @param variableName - the variable name
+     * @return the symbol table the variable exists in
+     * @throws BadLogicException - if the variable doesn't exist
+     */
+    private VariableSymbolTable verifyVarExists(String variableName)
+            throws BadLogicException {
+        if (isVariableExists(localVariableSymbolTable, variableName)) {
+            return localVariableSymbolTable;
+        }
+        else if (isVariableExists(globalVariableSymbolTable, variableName)){
+            if (inMethod){
+                verifySingleAssigmentInMethod(globalVariableSymbolTable, variableName);
+                return localVariableSymbolTable;
+            }
+            else{
+                return globalVariableSymbolTable;
+            }
+        }
+        else{
+            throw new BadLogicException(DOESNT_EXIST_ERR);
+        }
+    }
 
     /**
      * Verifies a single assignment
@@ -215,36 +250,12 @@ public class VariableAssignmentVerifier implements Verifier{
 
         String variableName = assignment.getFirst();
         String value = assignment.getSecond();
-        VariableSymbolTable variableSymbolTable;
-        if (isVariableExists(localVariableSymbolTable, variableName)) {
-            variableSymbolTable = localVariableSymbolTable;
-        }
-        else if (isVariableExists(globalVariableSymbolTable, variableName)){
-            if (inMethod){
-                VariableData tempVar = globalVariableSymbolTable.get(variableName);
-                if (tempVar.isFinal()){
-                    localVariableSymbolTable.put(variableName, new VariableData(tempVar.getType(),
-                            VariableData.Modifier.FINAL));
-                }
-                else {
-                    localVariableSymbolTable.put(variableName, new VariableData(tempVar.getType(),
-                            VariableData.Modifier.ASSIGNED));
-                }
-                variableSymbolTable = localVariableSymbolTable;
-            }
-            else{
-                variableSymbolTable = globalVariableSymbolTable;
-            }
-        }
-        else{
-            throw new BadLogicException(DOESNT_EXIST_ERR);
-        }
+        VariableSymbolTable variableSymbolTable = verifyVarExists(variableName);
+
         VariableData variableData = variableSymbolTable.get(variableName);
         if (variableData.isFinal()) {
             throw new BadLogicException(ASSIGN_FINAL_ERR_MSG);
         }
-
-
         if (!isGeneralValidAssign(localVariableSymbolTable, globalVariableSymbolTable,
                 variableData.getType(), value)){
             throw new BadLogicException(ASSIGN_TYPE_ERR);
