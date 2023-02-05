@@ -25,16 +25,21 @@ public class DeclarationParser extends Parser{
 
     /**
      * class constructor
-     * @param content
-     * @param isAssigment
+     * @param content The files content
+     * @param isAssigment boolean value for whether the variable is final
      */
     public DeclarationParser(String content, boolean isAssigment) {
         this.content = content;
-        this.isFinal = false;
+        this.isFinal = isAssigment;
         this.type = null;
         this.assigment = extractAssigment();
     }
 
+    /**
+     * class constructor
+     * @param content The files content
+     * @throws BadLogicException Exception for a syntax error
+     */
     public DeclarationParser(String content) throws BadLogicException {
         this.content = content;
         this.isFinal = extractFinal();
@@ -44,7 +49,7 @@ public class DeclarationParser extends Parser{
 
     /**
      * check if the Variable is represented as a final variable
-     * @return
+     * @return true if the variable is final, false otherwise
      */
     public boolean getIsFinal() {
         return isFinal;

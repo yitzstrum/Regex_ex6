@@ -53,7 +53,7 @@ public class VariableAssignmentVerifier implements Verifier{
         this.tokenizer = tokenizer;
         this.localVariableSymbolTable = localVariableSymbolTable;
         this.declarationParser = new DeclarationParser(tokenizer.getCurrentToken().getContent(),
-                true);
+                false);
 
     }
 
