@@ -8,17 +8,16 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * MethodDeclarationParser class which inherits from Parser, is in charge parsing a method declaration line
+ */
 public class MethodDeclarationParser extends Parser{
-
-    private Token token;
-
-
     private static final Pattern PARAMS_PATTERN = Pattern.compile(PARAMS_REGEX);
     private static final String RESERVED_WORDS_ERR = "Can't use a reserved name as the method name";
 
+    private Token token;
     private String methodName;
     private List<VariableData> methodParams = new ArrayList<>();
-
 
     /**
      * Constructor

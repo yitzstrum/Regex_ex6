@@ -5,6 +5,9 @@ import oop.ex6.utils.Pair;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * MethodCallParser class which inherits from Parser, is in charge parsing a method call line
+ */
 public class MethodCallParser extends Parser{
 
     private Token token;

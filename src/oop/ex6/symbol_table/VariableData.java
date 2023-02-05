@@ -1,5 +1,8 @@
 package oop.ex6.symbol_table;
 
+/**
+ * Variable
+ */
 public class VariableData {
 
     public enum Type {

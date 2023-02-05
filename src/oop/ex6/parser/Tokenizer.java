@@ -12,6 +12,9 @@ import oop.ex6.utils.Pair;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Tokenizer class, in charge of running the programs validation
+ */
 public class Tokenizer {
     private static final String METHOD_OVERLOADING_ERR =
             "Method overloading is not allowed";
@@ -21,12 +24,18 @@ public class Tokenizer {
             "Method call is not allowed to appear in global space";
     private static final String IF_WHILE_GLOBAL_ERR =
             "if/while statements are not allowed to appear in global space";
-    private static Tokenizer tokenizer = null;
     private Token[] tokens;
     private int curTokenIndex;
     MethodSymbolTable methodSymbolTable;
     VariableSymbolTable globalVariableSymbolTable;
 
+    /**
+     * constructor for the class, initiates the preprocessing
+     * @param filePath The file path which we want to validate
+     * @throws IOException Exception for I/O error
+     * @throws BadLineException Exception for syntax errors
+     * @throws BadLogicException Exception for logic errors
+     */
     public Tokenizer(String filePath) throws IOException, BadLineException, BadLogicException {
         methodSymbolTable = new MethodSymbolTable();
         globalVariableSymbolTable = new VariableSymbolTable();
@@ -36,12 +45,23 @@ public class Tokenizer {
         curTokenIndex = 0;
     }
 
+    /**
+     * The function runs the validation on the input
+     * @throws BadLineException Exception for syntax errors
+     * @throws BadLogicException Exception for logic errors
+     */
     public void run() throws BadLogicException, BadLineException {
         while (curTokenIndex < tokens.length){
             step(new VariableSymbolTable(), globalVariableSymbolTable, methodSymbolTable, false);
         }
     }
 
+    /**
+     * The function runs the preprocessing
+     * @param parser The parser for the file
+     * @throws BadLineException Exception for syntax errors
+     * @throws BadLogicException Exception for logic errors
+     */
     private void initTokens(FileParser parser) throws BadLineException, BadLogicException {
         List<String> fileContent = parser.getFileContent();
         tokens = new Token[fileContent.size()];

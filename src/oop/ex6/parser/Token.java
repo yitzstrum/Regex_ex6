@@ -10,7 +10,6 @@ public class Token extends Parser{
 
     private static final String VARIABLE_ASSIGNMENT_REGEX = "\\s*[a-zA-Z]\\w*\\s*=\\s*";
     private static final String BLOCK_END_REGEX = "\\s*}\\s*";
-    private static final String IF_WHILE_BLOCK_REGEX = "\\s*(if|while)\\s*";
     private static final String RETURN_STATEMENT_REGEX = "\\s*return\\s*;\\s*"; // assume it valid
 
     private final TokenType type;
