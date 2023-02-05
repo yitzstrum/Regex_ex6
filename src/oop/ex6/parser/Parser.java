@@ -68,8 +68,8 @@ public abstract class Parser {
                     VARIABLE_NAME_REGEX + SPACE_REGEX + MAYBE_EQUAL_REGEX + SPACE_REGEX +
                     ")*" + SEMI_COLON_REGEX;
 
-    protected static final String VARIABLE_ASSIGMENT_REGEX =
-            VARIABLE_NAME_REGEX + "(" + EQUAL_REGEX + ")?";
+    protected static final String VARIABLE_ASSIGMENT_REGEX = START_LINE_REGEX + SPACE_REGEX +
+            VARIABLE_NAME_REGEX + SPACE_REGEX + EQUAL_REGEX + SPACE_REGEX + SEMI_COLON_REGEX;
 
 
     protected static final String TYPE_AND_NAME_REGEX =

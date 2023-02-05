@@ -1,5 +1,6 @@
 package oop.ex6.verifier;
 
+import oop.ex6.parser.BadLineException;
 import oop.ex6.symbol_table.VariableData;
 import oop.ex6.symbol_table.VariableSymbolTable;
 import oop.ex6.parser.DeclarationParser;
@@ -61,7 +62,7 @@ public class VariableDeclarationVerifier implements Verifier {
      * @throws BadLogicException - if the token is not valid
      */
     @Override
-    public void verify() throws BadLogicException {
+    public void verify() throws BadLogicException, BadLineException {
         addToTable();
     }
 
@@ -69,7 +70,7 @@ public class VariableDeclarationVerifier implements Verifier {
      * Adds the variables to the symbol table
      * @throws BadLogicException Exception for a logic error
      */
-    private void addToTable() throws BadLogicException {
+    private void addToTable() throws BadLogicException, BadLineException {
         List<Pair<String, String>> variables = declarationParser.parseAssigment();
         for (Pair<String, String> variable: variables) {
             if (localVariableSymbolTable.containsKey(variable.getFirst())) {

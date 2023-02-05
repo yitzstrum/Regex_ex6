@@ -1,5 +1,6 @@
 package oop.ex6.verifier;
 
+import oop.ex6.parser.BadLineException;
 import oop.ex6.symbol_table.VariableData;
 import oop.ex6.symbol_table.VariableSymbolTable;
 import oop.ex6.parser.DeclarationParser;
@@ -186,7 +187,7 @@ public class VariableAssignmentVerifier implements Verifier{
      * @throws BadLogicException - if the assignment is invalid
      */
     @Override
-    public void verify() throws BadLogicException {
+    public void verify() throws BadLogicException, BadLineException {
         List<Pair<String, String>> assignments = declarationParser.parseAssigment();
         for (Pair<String, String> assignment : assignments) {
             verifySingleAssigment(assignment);

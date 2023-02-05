@@ -79,7 +79,7 @@ public class DeclarationParser extends Parser{
      * @return list of pairs of the variable name and the value
      * @throws BadLogicException - if the assigment is invalid
      */
-    public List<Pair<String, String>> parseAssigment() throws BadLogicException {
+    public List<Pair<String, String>> parseAssigment() throws BadLogicException, BadLineException {
         // add syntax check later
         List<Pair<String, String>> variables = new ArrayList<>();
         for (String arg: assigment.split(COMMA)) {
@@ -95,7 +95,7 @@ public class DeclarationParser extends Parser{
      * @param variables - the list of variables to add to
      * @throws BadLogicException - if the assigment is invalid
      */
-    private void parseSingleArg(String arg, List<Pair<String, String>> variables) throws BadLogicException {
+    private void parseSingleArg(String arg, List<Pair<String, String>> variables) throws BadLogicException, BadLineException {
         String[] regexes = {ASSIGNED_VARIABLE_REGEX, UNASSIGNED_VARIABLE_REGEX};
 
         for (int i = 0; i < regexes.length; i++) {
@@ -108,8 +108,10 @@ public class DeclarationParser extends Parser{
                 } else {
                     addUninitializedVariable(matcher.group(), variables);
                 }
+                return;
             }
         }
+        throw new BadLineException(arg);
     }
 
     /**

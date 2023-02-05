@@ -30,11 +30,11 @@ public class Sjavac {
         }
         catch (IOException e) {
             System.out.println(IO_EXCEPTION);
-            System.out.println(e.getMessage());
+//            System.out.println(e.getMessage());
         }
         catch (BadLineException | BadLogicException e) {
             System.out.println(ILLEGAL_CODE);
-            System.out.println(e.getMessage());
+//            System.out.println(e.getMessage());
         }
     }
 
